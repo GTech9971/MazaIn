@@ -10,6 +10,8 @@ import { ListPage } from './list.page';
 import { HeaderComponentModule } from '../share/header/header.component.module';
 
 import { SwiperModule } from 'swiper/angular';
+import { MazainCardComponentModule } from '../share/mazain-card/mazain-card.module';
+import { MazainCardPlusComponentModule } from '../share/mazain-card-plus/mazain-card-plus.module';
 
 @NgModule({
   imports: [
@@ -19,6 +21,8 @@ import { SwiperModule } from 'swiper/angular';
     ListPageRoutingModule,
     HeaderComponentModule,
     SwiperModule,
+    MazainCardComponentModule,
+    MazainCardPlusComponentModule,
   ],
   declarations: [ListPage]
 })
