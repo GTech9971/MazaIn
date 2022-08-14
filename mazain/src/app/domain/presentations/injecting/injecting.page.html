@@ -1,0 +1,16 @@
+<app-header></app-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid fixed style="height: 100%;">
+    <ion-row style="height: 100%;">
+      <ion-progress-bar class="injection" type="determinate" [value]="this.processValue" color="success">
+      </ion-progress-bar>
+
+      <ion-text style="width: 100%; text-align: center;" color="primary">
+        <h1>カフェイン注入中...</h1>
+      </ion-text>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

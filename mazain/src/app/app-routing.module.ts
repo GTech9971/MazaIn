@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'list',
     loadChildren: () => import('./domain/presentations/list/list.module').then(m => m.ListPageModule)
   },
+  {
+    path: 'injecting',
+    loadChildren: () => import('./domain/presentations/injecting/injecting.module').then( m => m.InjectingPageModule)
+  },
 ];
 
 @NgModule({
