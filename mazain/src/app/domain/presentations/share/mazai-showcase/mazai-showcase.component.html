@@ -1,0 +1,10 @@
+<div class="root">
+  <ng-container *ngFor="let mstyle of this.mazaiStyles">
+    <ion-img src="../../../../../assets/samples/IMG_0087.PNG" [style.transform]="'rotate(' + mstyle.deg + 'deg)'">
+    </ion-img>
+  </ng-container>
+</div>
+
+<ion-text color="primary" style="text-align: end;">
+  <h5>注入数：{{this.mazaiStyles.length}}本</h5>
+</ion-text>

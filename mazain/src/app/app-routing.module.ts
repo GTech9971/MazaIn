@@ -17,7 +17,11 @@ const routes: Routes = [
   },
   {
     path: 'injecting',
-    loadChildren: () => import('./domain/presentations/injecting/injecting.module').then( m => m.InjectingPageModule)
+    loadChildren: () => import('./domain/presentations/injecting/injecting.module').then(m => m.InjectingPageModule)
+  },
+  {
+    path: 'detail',
+    loadChildren: () => import('./domain/presentations/detail/detail.module').then(m => m.DetailPageModule)
   },
 ];
 
