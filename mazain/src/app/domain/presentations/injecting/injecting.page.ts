@@ -18,7 +18,7 @@ export class InjectingPage implements OnInit {
     for (let i = 0; i <= 100; i++) {
       await this.setPercentBar(i);
     }
-    await this.router.navigate(['detail']);
+    await this.router.navigate(['tab/detail']);
   }
 
   private async setPercentBar(i: number): Promise<void> {

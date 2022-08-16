@@ -1,5 +1,9 @@
+:host{
+    height: 100%;
+}
+
 ion-card{
-    height: 573px;
+    height: 533px;
     width: 300px;
 
     ion-card-subtitle{
@@ -9,5 +13,6 @@ ion-card{
 
 ion-img{
     max-width: 145px;
-    max-height: 355px;
+    //max-height: 355px;
+    max-height: 295px;
 }
