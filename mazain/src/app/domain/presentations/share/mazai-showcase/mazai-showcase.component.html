@@ -1,7 +1,17 @@
 <div class="root">
   <ng-container *ngFor="let mstyle of this.mazaiStyles">
-    <ion-img src="../../../../../assets/samples/IMG_0087.PNG" [style.transform]="'rotate(' + mstyle.deg + 'deg)'">
+    <ion-img id="{{mstyle.deg}}" src="../../../../../assets/samples/IMG_0087.PNG"
+      [style.transform]="'rotate(' + mstyle.deg + 'deg)'">
     </ion-img>
+
+    <ion-popover trigger="{{mstyle.deg}}">
+      <ng-template>
+        <ion-content class="ion-padding">
+          2022/08/15 21:42注入
+        </ion-content>
+      </ng-template>
+    </ion-popover>
+
   </ng-container>
 </div>
 

@@ -7,14 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MazaiShowcaseComponent implements OnInit {
 
-  mazaiCount: number = 5;
+  readonly mazaiCount: number = 15;
 
 
   mazaiStyles: MazaiStyle[];
 
   constructor() {
     this.mazaiStyles = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < this.mazaiCount; i++) {
       let deg: number = Math.random() * 90;
       deg = Math.floor(deg);
       this.mazaiStyles.push({ deg: deg });
