@@ -5,13 +5,12 @@
   <ion-grid fixed style="height: 100%;">
     <ion-row>
       <swiper [pagination]="true">
-        <ng-template swiperSlide>
-          <mazain-card></mazain-card>
-        </ng-template>
 
-        <ng-template swiperSlide>
-          <mazain-card></mazain-card>
-        </ng-template>
+        <ng-container *ngFor="let mazai of this.mazaiObserver | async;">
+          <ng-template swiperSlide>
+            <mazain-card></mazain-card>
+          </ng-template>
+        </ng-container>
 
         <ng-template swiperSlide>
           <mazain-card-plus></mazain-card-plus>

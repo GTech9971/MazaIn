@@ -4,9 +4,9 @@
     <ion-card-title>魔剤追加</ion-card-title>
 
   </ion-card-header>
-  <ion-card-content style="margin-top: 40%; height: 100%;">
+  <ion-card-content style="margin-top: 35%; height: 100%;">
     <ion-text>
-      <h1>新しい魔剤を追加して支配する</h1>
+      <h1>新しい魔剤を追加</h1>
     </ion-text>
 
   </ion-card-content>
@@ -29,23 +29,23 @@
         </ion-buttons>
         <ion-title>MazaIn</ion-title>
         <ion-buttons slot="end">
-          <ion-button [strong]="true" [disabled]="this.inputForm.valid === false" (click)="onClickRegistryBtn()">追加
+          <ion-button [strong]="true" [disabled]="this.inputForm.invalid" (click)="onClickRegistryBtn()">
+            追加
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <form [formGroup]="inputForm">
+      <form [formGroup]="this.inputForm">
         <!-- テンプレート -->
         <ion-item-group>
           <ion-item>
             <ion-label position="stacked">テンプレートから選ぶ</ion-label>
 
-            <ion-select multiple="false" placeholder="魔剤を選択">
-              <ion-select-option value="peperoni">モンスターエナジー330ml</ion-select-option>
-              <ion-select-option value="hawaii">モンスターエナジー500ml</ion-select-option>
-              <ion-select-option value="hawaii">コカ・コーラ500ml</ion-select-option>
-              <ion-select-option value="hawaii">コカ・コーラ・ゼロ500ml</ion-select-option>
+            <ion-select multiple="false" placeholder="魔剤を選択" (ionChange)="onSelectTemplate($event)">
+              <ng-container *ngFor="let template of this.templateObserver | async">
+                <ion-select-option value="{{template.MazaiId}}">{{template.MazaiName}}</ion-select-option>
+              </ng-container>
             </ion-select>
           </ion-item>
         </ion-item-group>
@@ -55,38 +55,39 @@
         <ion-item-group>
 
           <ion-item>
-            <ion-label position="stacked">魔剤名</ion-label>
+            <ion-label position="stacked">魔剤名<span style="color: red;">*</span></ion-label>
             <ion-input formControlName="name" type="text"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label position="stacked">カフェイン(mg)</ion-label>
+            <ion-label position="stacked">カフェイン(mg)<span style="color: red;">*</span></ion-label>
             <ion-input formControlName="coffeIn" type="number"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label position="stacked">糖質(mg)</ion-label>
+            <ion-label position="stacked">糖質(mg)<span style="color: red;">*</span></ion-label>
             <ion-input formControlName="sugar" type="number"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label position="stacked">カロリー(kcal)</ion-label>
+            <ion-label position="stacked">カロリー(kcal)<span style="color: red;">*</span></ion-label>
             <ion-input formControlName="kcal" type="number"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-col size="8">
+            <ion-label position="stacked">画像をアップロード<span style="color: red;">*</span></ion-label>
 
-              <ion-label position="stacked">画像をアップロード</ion-label>
-              <ion-input formControlName="imgData" type="file" placeholder="画像"></ion-input>
-            </ion-col>
+            <label for="upload-photo">
+              <ion-icon size="large" color="primary" name="image-outline"></ion-icon>
+              <input type="file" hidden accept="image/*" id="upload-photo" (change)="previewPhoto($event)">
+            </label>
+          </ion-item>
 
-            <ion-col size="4">
-              <ion-img></ion-img>
-            </ion-col>
+          <ion-item>
+            <ion-img *ngIf="this.uploadedPhoto" [src]="this.inputForm.get('image').value.src">
+            </ion-img>
           </ion-item>
         </ion-item-group>
-
 
       </form>
 

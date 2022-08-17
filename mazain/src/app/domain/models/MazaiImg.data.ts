@@ -10,7 +10,4 @@ export interface MazaiImgData {
     ImageDataMedium: string;
     /** 魔剤画像データ大 */
     ImageDataLarge: string;
-
-    /** 画像の傾き */
-    ImageDeg: number;
 }

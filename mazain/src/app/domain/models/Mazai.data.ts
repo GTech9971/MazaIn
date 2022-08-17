@@ -3,7 +3,7 @@ import { MazaiInjectionRecordData } from "./MazaiInjectionRecord.data";
 
 export interface MazaiData {
     /** 魔剤ID */
-    MazaiId: number;
+    MazaiId: string;
     /** 魔剤名 */
     MazaiName: string;
     /** カフェイン量 */
