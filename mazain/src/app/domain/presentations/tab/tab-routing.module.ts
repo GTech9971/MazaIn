@@ -13,15 +13,15 @@ const routes: Routes = [
     children: [
       {
         path: 'detail',
-        component: DetailPage
+        loadChildren: () => import('../detail/detail.module').then(m => m.DetailPageModule)
       },
       {
         path: 'record',
-        component: RecordPage
+        loadChildren: () => import('../record/record.module').then(m => m.RecordPageModule)
       },
       {
         path: 'list',
-        component: ListPage
+        loadChildren: () => import('../list/list.module').then(m => m.ListPageModule)
       }
     ]
   }
