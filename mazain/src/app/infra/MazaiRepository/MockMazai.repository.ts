@@ -8,15 +8,31 @@ import { MazaiRepository } from "src/app/domain/repositories/Mazai.repository";
 export class MockMazaiRepository extends MazaiRepository {
 
     private uuid: number;
-    private mazaiList: MazaiData[];
+    public mazaiList: MazaiData[];
 
     constructor() {
         super();
-        this.mazaiList = [];
-        this.fetchTemplateMazaiList().then(tmps => {
-            this.mazaiList.push(tmps[0]);
-        });
         this.uuid = 0;
+        this.mazaiList = [{
+            MazaiId: this.generateUUID(),
+            MazaiName: 'モンスターエナジー355ml',
+            MzaiCoffeIn: 126,
+            MazaiKcal: 147,
+            MazaiSugar: 38.5,
+            MazaiImg: {
+                ImageDataLarge: '',
+                ImageDataMedium: '',
+                ImageDateSmall: '',
+                ImageUrl: '../../../../../assets/samples/IMG_0087.PNG',
+            },
+            MazaiInjectionDataList: [{
+                InjecionDateTime: Date.now(),
+                ImageDeg: 0,
+            }, {
+                InjecionDateTime: Date.now(),
+                ImageDeg: 90
+            }]
+        },];
     }
 
 
@@ -51,17 +67,20 @@ export class MockMazaiRepository extends MazaiRepository {
         return [
             {
                 MazaiId: this.generateUUID(),
-                MazaiName: 'モンスターエナジー500ml',
-                MzaiCoffeIn: 30,
-                MazaiKcal: 100,
-                MazaiSugar: 30,
+                MazaiName: 'モンスターエナジー355ml',
+                MzaiCoffeIn: 126,
+                MazaiKcal: 147,
+                MazaiSugar: 38.5,
                 MazaiImg: {
                     ImageDataLarge: '',
                     ImageDataMedium: '',
                     ImageDateSmall: '',
                     ImageUrl: '../../../../../assets/samples/IMG_0087.PNG',
                 },
-                MazaiInjectionDataList: []
+                MazaiInjectionDataList: [{
+                    InjecionDateTime: Date.now(),
+                    ImageDeg: 0,
+                }]
             },
             {
                 MazaiId: this.generateUUID(),

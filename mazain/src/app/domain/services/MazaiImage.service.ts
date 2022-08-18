@@ -15,9 +15,6 @@ export class MazaiImageService {
     public readonly SMALL_WIDTH: number = 14;
     public readonly SMALL_HEIGHT: number = 35;
 
-    //サムネ用角度テーブル //TODO 仮
-    readonly DEG_TABLE: number[] = [0, 90, 180, 360];
-
     constructor() { }
 
     /**
@@ -73,11 +70,6 @@ export class MazaiImageService {
         return mazaiImage;
     }
 
-
-    public getRandomImageDeg(): number {
-        let rand: number = Math.floor(Math.random() * this.DEG_TABLE.length);
-        return this.DEG_TABLE[rand];
-    }
 
     private resizeImageBig(image: HTMLImageElement): string {
         return this.resizeImage(image, this.BIG_WIDTH, this.BIG_HEIGHT);

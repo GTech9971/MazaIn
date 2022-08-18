@@ -7,3 +7,10 @@ ion-img{
     display: inline-block;
     vertical-align: top;
 }
+
+.injection-count-root{
+    margin-right: 15px;
+    ion-text{
+        text-align: end;
+    }
+}

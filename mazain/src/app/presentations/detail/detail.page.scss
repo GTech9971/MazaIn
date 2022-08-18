@@ -2,6 +2,8 @@ ion-row{
     margin-top:5px;
 }
 
-ion-progress-bar{
+.mazai-progress-bar{
     height: 20px;
+    --buffer-background: #F01D09;
+    //TODO 色変わらない
 }

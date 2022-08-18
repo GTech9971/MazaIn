@@ -1,31 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { MazaiData } from 'src/app/domain/models/Mazai.data';
+import { MazaiImageService } from 'src/app/domain/services/MazaiImage.service';
+import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInjectionReport.service';
 
 @Component({
   selector: 'app-mazai-showcase',
   templateUrl: './mazai-showcase.component.html',
   styleUrls: ['./mazai-showcase.component.scss'],
 })
-export class MazaiShowcaseComponent implements OnInit {
+export class MazaiShowcaseComponent implements OnInit, OnDestroy {
 
-  readonly mazaiCount: number = 15;
+  private readonly destroy$: Subject<void> = new Subject<void>();
 
+  //今日接種した魔剤の本数
+  _todayMazaiInjectionCount: number;
+  readonly mazaiInjectionCountObserver: Observable<number>;
 
-  mazaiStyles: MazaiStyle[];
+  //今日接種した魔剤リスト
+  _todayMazaiInjectionList: MazaiData[];
+  readonly mazaiInjectionListObserver: Observable<MazaiData[]>;
 
-  constructor() {
-    this.mazaiStyles = [];
-    for (let i = 0; i < this.mazaiCount; i++) {
-      let deg: number = Math.random() * 90;
-      deg = Math.floor(deg);
-      this.mazaiStyles.push({ deg: deg });
-    }
+  constructor(private injectionReportService: MazaiInjectionReportService,
+    private mazaiImageService: MazaiImageService) {
 
+    this._todayMazaiInjectionCount = 0;
+    this.mazaiInjectionCountObserver = this.injectionReportService.TodayMazaiInjectionCountObserver;
+    this.mazaiInjectionCountObserver.pipe(takeUntil(this.destroy$)).subscribe(count => {
+      this._todayMazaiInjectionCount = count;
+    });
+
+    this._todayMazaiInjectionList = [];
+    this.mazaiInjectionListObserver = this.injectionReportService.TodayMazaiInjectionListObserver;
+    this.mazaiInjectionListObserver.pipe(takeUntil(this.destroy$)).subscribe(list => {
+      this._todayMazaiInjectionList = list;
+    });
   }
 
-  ngOnInit() { }
+  async ngOnInit() {
+    await this.injectionReportService.fetchTodayMazaiInjectionCount();
+    await this.injectionReportService.fetchTodayMazaiInjectionList();
+  }
 
-}
+  async ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
-interface MazaiStyle {
-  deg: number;
+  getAvailableImgSrc(mazai: MazaiData): string {
+    return this.mazaiImageService.getAvalableImage(mazai.MazaiImg);
+  }
 }

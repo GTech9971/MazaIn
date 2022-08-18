@@ -4,6 +4,7 @@ import { AlertController, IonPopover, ToastController } from '@ionic/angular';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
 import { MazaiService } from 'src/app/domain/services/Mazai.service';
 import { MazaiImageService } from 'src/app/domain/services/MazaiImage.service';
+import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInjectionReport.service';
 import { MazaiInputModalComponent } from '../mazai-input-modal/mazai-input-modal.component';
 
 @Component({
@@ -27,6 +28,7 @@ export class MazainCardComponent implements OnInit {
   constructor(private router: Router,
     private mazaiService: MazaiService,
     private mazaiImageSercvice: MazaiImageService,
+    private injectionRecordService: MazaiInjectionReportService,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,) { }
 
@@ -35,8 +37,10 @@ export class MazainCardComponent implements OnInit {
 
   /**
    * 注入ボタン押下時
+   * 魔剤注入処理
    */
   async onClickInjectingBtn() {
+    await this.injectionRecordService.injectionMazai(this.mazai);
     await this.router.navigate(['injecting']);
   }
 
