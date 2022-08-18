@@ -52,6 +52,15 @@ export class MazaiService {
         await this.repository.deleteMazai(mazai);
     }
 
+    /**
+     * 魔剤を更新する
+     * 魔剤注入履歴は変更しない
+     * @param mazai 
+     */
+    public async updateMazai(mazai: MazaiData): Promise<void> {
+        await this.repository.updateMazai(mazai);
+    }
+
     private nextMazaiList() {
         this._mazaiListSubject$.next(this._mazaiList);
     }

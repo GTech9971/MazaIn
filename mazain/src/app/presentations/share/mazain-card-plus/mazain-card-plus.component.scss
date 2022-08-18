@@ -5,6 +5,11 @@
 ion-card{
     height: 533px;
     width: 300px;
+
+    ion-card-content{
+        margin-top: 35%;
+        height: 100%;
+    }
 }
 
 ion-fab{

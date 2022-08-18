@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { MazainCardPlusComponent } from './mazain-card-plus.component';
+import { MazaiInputModalComponentModule } from '../mazai-input-modal/mazai-input.modal.component.module';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { MazainCardPlusComponent } from './mazain-card-plus.component';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    MazaiInputModalComponentModule,
   ],
   declarations: [MazainCardPlusComponent],
   exports: [MazainCardPlusComponent]

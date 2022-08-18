@@ -4,6 +4,7 @@ import { AlertController, IonPopover, ToastController } from '@ionic/angular';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
 import { MazaiService } from 'src/app/domain/services/Mazai.service';
 import { MazaiImageService } from 'src/app/domain/services/MazaiImage.service';
+import { MazaiInputModalComponent } from '../mazai-input-modal/mazai-input-modal.component';
 
 @Component({
   selector: 'mazain-card',
@@ -11,6 +12,7 @@ import { MazaiImageService } from 'src/app/domain/services/MazaiImage.service';
   styleUrls: ['./mazain-card.component.scss'],
 })
 export class MazainCardComponent implements OnInit {
+  @ViewChild('mazaiInputModal') modal: MazaiInputModalComponent;
   @ViewChild('popver') popver: IonPopover;
 
   /**
@@ -69,6 +71,15 @@ export class MazainCardComponent implements OnInit {
       const toast: HTMLIonToastElement = await this.toastCtrl.create({ message: `${this.mazai.MazaiName}を削除しました。`, duration: 1500 });
       await toast.present();
     }
+  }
+
+  /**
+   * 編集ボタン押下
+   */
+  async onClickEditBtn() {
+    await this.modal.present();
+    await this.modal.onDidDissmiss();
+    await this.popver.dismiss();
   }
 
 }
