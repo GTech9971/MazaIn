@@ -3,8 +3,8 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import SwiperCore, { Pagination } from 'swiper';
-import { MazaiData } from '../../models/Mazai.data';
-import { MazaiService } from '../../services/Mazai.service';
+import { MazaiData } from '../../domain/models/Mazai.data';
+import { MazaiService } from '../../domain/services/Mazai.service';
 
 SwiperCore.use([Pagination]);
 
