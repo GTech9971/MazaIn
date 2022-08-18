@@ -12,6 +12,8 @@ export abstract class MazaiRepository {
 
     abstract updateMazai(mazai: MazaiData): Promise<void>;
 
+    abstract deleteMazai(mazai: MazaiData): Promise<void>;
+
     abstract generateUUID(): string;
 
     abstract fetchTemplateMazaiList(): Promise<MazaiData[]>;

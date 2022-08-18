@@ -1,22 +1,49 @@
-<ion-card>
-  <div style="display: flex; justify-content: center; margin: 5px;">
-    <ion-img src="../../../../../assets/samples/IMG_0087.PNG"></ion-img>
+<ion-card tappable>
+
+  <div class="img-box">
+    <ion-img [src]="this.ImageSrc"></ion-img>
+
+    <ion-icon class="menu-icon" id="menu-button" name="ellipsis-horizontal-outline">
+    </ion-icon>
+
+    <ion-popover #popver trigger="menu-button">
+      <ng-template>
+        <ion-list>
+          <ion-item button="true" (click)="onClickDeleteBtn()">
+            <ion-label color="danger">削除</ion-label>
+            <ion-icon color="danger" name="trash-outline"></ion-icon>
+          </ion-item>
+        </ion-list>
+      </ng-template>
+    </ion-popover>
+
   </div>
 
   <ion-card-header>
-    <ion-card-title>モンスターエナジー</ion-card-title>
+    <ion-card-title>{{this.mazai.MazaiName}}</ion-card-title>
     <ion-card-subtitle>
-      <p>カフェイン：100mg</p>
-      <p>糖質：200ml</p>
-      <p>カロリー：2000kcal</p>
+
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="6" style="text-align: right;">カフェイン:</ion-col>
+          <ion-col size="6" style="text-align: left;">{{this.mazai.MzaiCoffeIn}}mg</ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="6" style="text-align: right;">糖質:</ion-col>
+          <ion-col size="6" style="text-align: left;">{{this.mazai.MazaiSugar}}mg</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" style="text-align: right;">カロリー:</ion-col>
+          <ion-col size="6" style="text-align: left;">{{this.mazai.MazaiKcal}}kcal</ion-col>
+        </ion-row>
+      </ion-grid>
+
     </ion-card-subtitle>
   </ion-card-header>
   <ion-card-content>
-
     <ion-button shape="round" color="success" (click)="onClickInjectingBtn()">
       注入
     </ion-button>
-
-
   </ion-card-content>
 </ion-card>

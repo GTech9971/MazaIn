@@ -13,6 +13,9 @@ export class MockMazaiRepository extends MazaiRepository {
     constructor() {
         super();
         this.mazaiList = [];
+        this.fetchTemplateMazaiList().then(tmps => {
+            this.mazaiList.push(tmps[0]);
+        });
         this.uuid = 0;
     }
 
@@ -30,6 +33,12 @@ export class MockMazaiRepository extends MazaiRepository {
             if (m.MazaiId === mazai.MazaiId) {
                 m = mazai;
             }
+        });
+    }
+
+    async deleteMazai(mazai: MazaiData): Promise<void> {
+        this.mazaiList = this.mazaiList.filter(m => {
+            return m.MazaiId !== mazai.MazaiId;
         });
     }
 

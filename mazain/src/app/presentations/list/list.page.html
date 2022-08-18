@@ -8,7 +8,7 @@
 
         <ng-container *ngFor="let mazai of this.mazaiObserver | async;">
           <ng-template swiperSlide>
-            <mazain-card></mazain-card>
+            <mazain-card [mazai]="mazai"></mazain-card>
           </ng-template>
         </ng-container>
 

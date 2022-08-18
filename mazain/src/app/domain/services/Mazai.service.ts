@@ -44,6 +44,14 @@ export class MazaiService {
         await this.repository.registryMazai(mazai);
     }
 
+    /**
+     * 魔剤を削除する
+     * @param mazai 
+     */
+    public async deleteMazai(mazai: MazaiData): Promise<void> {
+        await this.repository.deleteMazai(mazai);
+    }
+
     private nextMazaiList() {
         this._mazaiListSubject$.next(this._mazaiList);
     }

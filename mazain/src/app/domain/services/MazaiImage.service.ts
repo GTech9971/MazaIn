@@ -21,6 +21,36 @@ export class MazaiImageService {
     constructor() { }
 
     /**
+     * 取得可能な画像データを返す
+     * 優先順位
+     * 1.スマホサイズ
+     * 2.タブレットサイズ
+     * 3.画像URL
+     * 4.サムネサイズ
+     * @param mazaiImage 
+     * @returns 
+     */
+    public getAvalableImage(mazaiImage: MazaiImgData): string {
+        if (mazaiImage.ImageDataMedium) {
+            return mazaiImage.ImageDataMedium;
+        }
+
+        if (mazaiImage.ImageDataLarge) {
+            return mazaiImage.ImageDataLarge;
+        }
+
+        if (mazaiImage.ImageUrl) {
+            return mazaiImage.ImageUrl;
+        }
+
+        if (mazaiImage.ImageDateSmall) {
+            return mazaiImage.ImageDateSmall;
+        }
+
+        return undefined;
+    }
+
+    /**
      * アプリで使用する画像に変換する
      * @param image 元画像
      * @param imageUrl 画像のURL　からでも良い
@@ -63,17 +93,18 @@ export class MazaiImageService {
 
 
     private resizeImage(image: HTMLImageElement, resizeWidth: number, resizeHeight: number): string {
-        if (image.width > image.height) {
-            // 横長の画像は横のサイズを指定値にあわせる
-            const ratio: number = image.height / image.width;
-            resizeHeight = resizeWidth * ratio;
-        } else {
-            // 縦長の画像は縦のサイズを指定値にあわせる
-            const ratio = image.width / image.height;
-            resizeWidth = resizeHeight * ratio;
-        }
-        image.width = resizeWidth;
-        image.height = resizeHeight;
+        //TODO リサイズがうまくいかない画像が切り取られる
+        // if (image.width > image.height) {
+        //     // 横長の画像は横のサイズを指定値にあわせる
+        //     const ratio: number = image.height / image.width;
+        //     resizeHeight = resizeWidth * ratio;
+        // } else {
+        //     // 縦長の画像は縦のサイズを指定値にあわせる
+        //     const ratio = image.width / image.height;
+        //     resizeWidth = resizeHeight * ratio;
+        // }
+        // image.width = resizeWidth;
+        // image.height = resizeHeight;
 
         const canvas = document.createElement('canvas');
         canvas.width = image.width;
