@@ -3,7 +3,7 @@ import { Chart } from 'chart.js';
 import { addWeeks, endOfWeek, startOfWeek } from 'date-fns';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInjectionReport.service';
+import { MazaiInjectionWeekReportService } from 'src/app/domain/services/MazaiInjectionWeekReport.service';
 import { MazaiGraph } from '../MazaiGraph';
 
 @Component({
@@ -25,22 +25,22 @@ export class MazaiLineGraphComponent extends MazaiGraph implements OnInit, OnDes
   _beforeMazaiInjectionListCount: number[];
   readonly beforeRangeMazaiInjectionListCountObserver: Observable<number[]>;
 
-  constructor(private injectionRecordServiceSub: MazaiInjectionReportService) {
-    super(injectionRecordServiceSub);
+  constructor(private injectionWeekRecordServiceSub: MazaiInjectionWeekReportService) {
+    super(injectionWeekRecordServiceSub);
 
     this._rangeMazaiInjectionListCount = [];
-    this.rangeMazaiInjectionListCountObserver = this.injectionRecordServiceSub.RangeMazaiInjectionCountListObserver;
+    this.rangeMazaiInjectionListCountObserver = this.injectionWeekRecordServiceSub.RangeMazaiInjectionCountListObserver;
     this.rangeMazaiInjectionListCountObserver.pipe(takeUntil(this.destroy$)).subscribe(list => { this._rangeMazaiInjectionListCount = list; });
 
     this._beforeMazaiInjectionListCount = [];
-    this.beforeRangeMazaiInjectionListCountObserver = this.injectionRecordServiceSub.BeforeRangeMazaiInjectionCountListObserver;
+    this.beforeRangeMazaiInjectionListCountObserver = this.injectionWeekRecordServiceSub.BeforeRangeMazaiInjectionCountListObserver;
     this.beforeRangeMazaiInjectionListCountObserver.pipe(takeUntil(this.destroy$)).subscribe(list => { this._beforeMazaiInjectionListCount = list });
   }
 
 
   async ngOnInit() {
-    await this.injectionRecordServiceSub.fetchRangeMazaiInjectionCountList(startOfWeek(new Date()).getTime(), endOfWeek(new Date()).getTime());
-    await this.injectionRecordServiceSub.fetchBeforeRangeMazaiInjectionCountList(addWeeks(new Date(), -1).getTime(), addWeeks(new Date(), -1).getTime());
+    await this.injectionWeekRecordServiceSub.fetchRangeMazaiInjectionCountList(startOfWeek(new Date()).getTime(), endOfWeek(new Date()).getTime());
+    await this.injectionWeekRecordServiceSub.fetchBeforeRangeMazaiInjectionCountList(addWeeks(new Date(), -1).getTime(), addWeeks(new Date(), -1).getTime());
   }
 
 
@@ -96,20 +96,20 @@ export class MazaiLineGraphComponent extends MazaiGraph implements OnInit, OnDes
   }
 
   public async moveCurrentWeek(start: Date, end: Date): Promise<void> {
-    await this.injectionRecordServiceSub.fetchRangeMazaiInjectionCountList(start.getTime(), end.getTime());
-    await this.injectionRecordServiceSub.fetchBeforeRangeMazaiInjectionCountList(addWeeks(start, -1).getTime(), addWeeks(end, -1).getTime());
+    await this.injectionWeekRecordServiceSub.fetchRangeMazaiInjectionCountList(start.getTime(), end.getTime());
+    await this.injectionWeekRecordServiceSub.fetchBeforeRangeMazaiInjectionCountList(addWeeks(start, -1).getTime(), addWeeks(end, -1).getTime());
     this.initializeGraph(start, end);
   }
 
   public async nextWeek(start: Date, end: Date): Promise<void> {
-    await this.injectionRecordServiceSub.fetchRangeMazaiInjectionCountList(start.getTime(), end.getTime());
-    await this.injectionRecordServiceSub.fetchBeforeRangeMazaiInjectionCountList(addWeeks(start, -1).getTime(), addWeeks(end, -1).getTime());
+    await this.injectionWeekRecordServiceSub.fetchRangeMazaiInjectionCountList(start.getTime(), end.getTime());
+    await this.injectionWeekRecordServiceSub.fetchBeforeRangeMazaiInjectionCountList(addWeeks(start, -1).getTime(), addWeeks(end, -1).getTime());
     this.initializeGraph(start, end);
   }
 
   public async beforeWeek(start: Date, end: Date): Promise<void> {
-    await this.injectionRecordServiceSub.fetchRangeMazaiInjectionCountList(start.getTime(), end.getTime());
-    await this.injectionRecordServiceSub.fetchBeforeRangeMazaiInjectionCountList(addWeeks(start, -1).getTime(), addWeeks(end, -1).getTime());
+    await this.injectionWeekRecordServiceSub.fetchRangeMazaiInjectionCountList(start.getTime(), end.getTime());
+    await this.injectionWeekRecordServiceSub.fetchBeforeRangeMazaiInjectionCountList(addWeeks(start, -1).getTime(), addWeeks(end, -1).getTime());
     this.initializeGraph(start, end);
   }
 

@@ -12,11 +12,14 @@ import { MazaiInjectionReportRepository } from './domain/repositories/MazaiInjec
 import { MockMazaiInjectionReportRepository } from './infra/MazaiInjectionReportRepository/MockMazaiInjectionReport.repository';
 import { MazaiInjectionHelperRepository } from './domain/repositories/MazaiInjectionHelper.repository';
 import { MockMazaiInjectionHelperRepository } from './infra/MazaiInjectionHelperRepository/MockMazaiInjectionHelper.repository';
+import { MazaiInjectionWeekReportRepository } from './domain/repositories/MazaiInjectionWeekReport.repository';
+import { MockMazaiInjectionWeekReportRepository } from './infra/MazaiInjectionWeekReportRepository/MockMazaiInjectionWeekReport.repository';
 
 const MOCK: Provider[] = [
   { provide: MazaiRepository, useClass: MockMazaiRepository },
   { provide: MazaiInjectionReportRepository, useClass: MockMazaiInjectionReportRepository },
   { provide: MazaiInjectionHelperRepository, useClass: MockMazaiInjectionHelperRepository },
+  { provide: MazaiInjectionWeekReportRepository, useClass: MockMazaiInjectionWeekReportRepository },
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 import { ChartOptions } from "chart.js";
 import { addDays } from "date-fns";
-import { MazaiInjectionReportService } from "src/app/domain/services/MazaiInjectionReport.service";
+import { MazaiInjectionWeekReportService } from "src/app/domain/services/MazaiInjectionWeekReport.service";
 
 export abstract class MazaiGraph {
 
@@ -15,7 +15,7 @@ export abstract class MazaiGraph {
         }
     };
 
-    constructor(private injectionRecordService: MazaiInjectionReportService) {
+    constructor(private injectionWeekReportService: MazaiInjectionWeekReportService) {
     }
 
     /**
@@ -56,7 +56,7 @@ export abstract class MazaiGraph {
         let labels: string[] = [];
 
         while (true) {
-            if (this.injectionRecordService.equalDate(work.getTime(), addDays(endDate, 1).getTime())) {
+            if (this.injectionWeekReportService.equalDate(work.getTime(), addDays(endDate, 1).getTime())) {
                 break;
             }
 

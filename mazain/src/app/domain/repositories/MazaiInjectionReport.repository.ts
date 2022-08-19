@@ -1,6 +1,10 @@
+import { Injectable } from "@angular/core";
 import { MazaiData } from "../models/Mazai.data";
 import { MazaiInjectionRecordData } from "../models/MazaiInjectionRecord.data";
 
+@Injectable({
+    providedIn: 'root'
+})
 export abstract class MazaiInjectionReportRepository {
 
     //サムネ用角度テーブル
@@ -95,12 +99,5 @@ export abstract class MazaiInjectionReportRepository {
      * 最後に接種した魔剤を取得する
      */
     abstract getLatestMazaiInjection(): Promise<MazaiData>;
-
-    /**
-     * 指定した期間に注入した魔剤のリストを取得する
-     * @param startDate 
-     * @param endDate 
-     */
-    abstract getRangeMazaiInjectionList(startDate: number, endDate: number): Promise<MazaiData[]>;
 
 }
