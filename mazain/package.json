@@ -21,6 +21,7 @@
     "@angular/router": "^14.0.0",
     "@ionic/angular": "^6.1.9",
     "chart.js": "^3.9.1",
+    "date-fns": "^2.29.2",
     "rxjs": "~6.6.0",
     "swiper": "^8.3.2",
     "tslib": "^2.2.0",

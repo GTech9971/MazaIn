@@ -9,6 +9,7 @@ import { MockMazaiRepository } from "../MazaiRepository/MockMazai.repository";
 })
 export class MockMazaiInjectionReportRepository extends MazaiInjectionReportRepository {
 
+
     constructor(private mazaiRepository: MockMazaiRepository) {
         super();
     }
@@ -18,11 +19,13 @@ export class MockMazaiInjectionReportRepository extends MazaiInjectionReportRepo
         const NOW: Date = new Date();
         this.mazaiRepository.mazaiList.forEach(m => {
             //今日接種したか
-            m.MazaiInjectionDataList = m.MazaiInjectionDataList.filter(record => {
+            const jsonStr: string = JSON.stringify(m);
+            let work: MazaiData = JSON.parse(jsonStr);
+            work.MazaiInjectionDataList = work.MazaiInjectionDataList.filter(record => {
                 return this.containsToday(record, NOW);
             })
 
-            if (m.MazaiInjectionDataList.length > 0) {
+            if (work.MazaiInjectionDataList.length > 0) {
                 todayList.push(m);
             }
         });
@@ -93,6 +96,24 @@ export class MockMazaiInjectionReportRepository extends MazaiInjectionReportRepo
         });
 
         return latestMazai;
+    }
+
+
+    async getRangeMazaiInjectionList(startDate: number, endDate: number): Promise<MazaiData[]> {
+        let targetList: MazaiData[] = [];
+        this.mazaiRepository.mazaiList.forEach(m => {
+            const jsonStr: string = JSON.stringify(m);
+            let work: MazaiData = JSON.parse(jsonStr);
+            work.MazaiInjectionDataList = work.MazaiInjectionDataList.filter(record => {
+                //期間内にあるもののみ
+                return (record.InjecionDateTime <= endDate && record.InjecionDateTime >= startDate);
+            });
+            if (work.MazaiInjectionDataList.length > 0) {
+                targetList.push(work);
+            }
+        });
+
+        return targetList;
     }
 
 }

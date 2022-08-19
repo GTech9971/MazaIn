@@ -96,4 +96,11 @@ export abstract class MazaiInjectionReportRepository {
      */
     abstract getLatestMazaiInjection(): Promise<MazaiData>;
 
+    /**
+     * 指定した期間に注入した魔剤のリストを取得する
+     * @param startDate 
+     * @param endDate 
+     */
+    abstract getRangeMazaiInjectionList(startDate: number, endDate: number): Promise<MazaiData[]>;
+
 }

@@ -9,6 +9,7 @@ import { RecordPageRoutingModule } from './record-routing.module';
 import { SwiperModule } from 'swiper/angular';
 import { RecordPage } from './record.page';
 import { HeaderComponentModule } from '../share/header/header.component.module';
+import { SumPipe } from 'src/app/pipes/sum.pipe';
 
 @NgModule({
   imports: [
@@ -19,6 +20,9 @@ import { HeaderComponentModule } from '../share/header/header.component.module';
     HeaderComponentModule,
     SwiperModule,
   ],
-  declarations: [RecordPage]
+  declarations: [
+    RecordPage,
+    SumPipe,
+  ]
 })
 export class RecordPageModule { }

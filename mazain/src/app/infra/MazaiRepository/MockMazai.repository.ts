@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { addDays, addWeeks } from "date-fns";
 import { MazaiData } from "src/app/domain/models/Mazai.data";
 import { MazaiRepository } from "src/app/domain/repositories/Mazai.repository";
 
@@ -31,6 +32,22 @@ export class MockMazaiRepository extends MazaiRepository {
             }, {
                 InjecionDateTime: Date.now(),
                 ImageDeg: 90
+            }, {
+                InjecionDateTime: addDays(Date.now(), -1).getTime(),
+                ImageDeg: 40
+            }, //前の週
+            {
+                InjecionDateTime: addWeeks(Date.now(), -1).getTime(),
+                ImageDeg: 0
+            }, {
+                InjecionDateTime: addWeeks(Date.now(), -1).getTime(),
+                ImageDeg: 0
+            }, {
+                InjecionDateTime: addDays(Date.now(), -9).getTime(),
+                ImageDeg: 20,
+            }, {
+                InjecionDateTime: addDays(Date.now(), -10).getTime(),
+                ImageDeg: 20,
             }]
         },];
     }

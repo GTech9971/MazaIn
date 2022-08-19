@@ -1,5 +1,9 @@
+import { Injectable } from "@angular/core";
 import { MazaiInjectionHelperRepository } from "src/app/domain/repositories/MazaiInjectionHelper.repository";
 
+@Injectable({
+    providedIn: 'root'
+})
 export class MockMazaiInjectionHelperRepository extends MazaiInjectionHelperRepository {
 
     constructor() {
