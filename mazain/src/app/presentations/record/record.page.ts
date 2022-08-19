@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { addWeeks, endOfWeek, startOfWeek } from "date-fns";
 import { MazaiLineGraphComponent } from '../share/graphs/mazai-line-graph/mazai-line-graph.component';
+import { MazaiPieGraphComponent } from '../share/graphs/mazai-pie-graph/mazai-pie-graph.component';
 
 @Component({
   selector: 'app-record',
@@ -10,6 +11,7 @@ import { MazaiLineGraphComponent } from '../share/graphs/mazai-line-graph/mazai-
 })
 export class RecordPage implements OnInit, AfterViewInit {
   @ViewChild("mazaiLineGraph") mazaiLineGraph: MazaiLineGraphComponent;
+  @ViewChild("mazaiPieGraph") mazaiPieGraph: MazaiPieGraphComponent;
 
   _workDate: Date;
 
@@ -43,6 +45,7 @@ export class RecordPage implements OnInit, AfterViewInit {
     this._workDate = new Date();
     this._workDate = startOfWeek(this._workDate);
     await this.mazaiLineGraph.moveCurrentWeek(this.startOfWeek, this.endOfWeek);
+    await this.mazaiPieGraph.moveCurrentWeek(this.startOfWeek, this.endOfWeek);
   }
 
   /**
@@ -51,6 +54,7 @@ export class RecordPage implements OnInit, AfterViewInit {
   async onClickNextWeekBtn() {
     this._workDate = addWeeks(this._workDate, 1);
     await this.mazaiLineGraph.nextWeek(this.startOfWeek, this.endOfWeek);
+    await this.mazaiPieGraph.nextWeek(this.startOfWeek, this.endOfWeek);
   }
 
   /**
@@ -59,6 +63,7 @@ export class RecordPage implements OnInit, AfterViewInit {
   async onClickBeforeWeekBtn() {
     this._workDate = addWeeks(this._workDate, -1);
     await this.mazaiLineGraph.beforeWeek(this.startOfWeek, this.endOfWeek);
+    await this.mazaiPieGraph.beforeWeek(this.startOfWeek, this.endOfWeek);
   }
 
 }

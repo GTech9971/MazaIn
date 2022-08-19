@@ -10,6 +10,7 @@ import { SwiperModule } from 'swiper/angular';
 import { RecordPage } from './record.page';
 import { HeaderComponentModule } from '../share/header/header.component.module';
 import { MazaiLineGraphComponentModule } from '../share/graphs/mazai-line-graph/mazai-line-graph.module';
+import { MazaiPieGraphComponentModule } from '../share/graphs/mazai-pie-graph/mazai-pie-graph.module';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { MazaiLineGraphComponentModule } from '../share/graphs/mazai-line-graph/
     HeaderComponentModule,
     SwiperModule,
     MazaiLineGraphComponentModule,
+    MazaiPieGraphComponentModule
   ],
   declarations: [
     RecordPage,
