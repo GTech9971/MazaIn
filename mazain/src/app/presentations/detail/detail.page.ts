@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
 import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInjectionReport.service';
+import { MazaiShowcaseComponent } from '../share/mazai-showcase/mazai-showcase.component';
 
 @Component({
   selector: 'app-detail',
@@ -11,6 +12,8 @@ import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInject
   styleUrls: ['./detail.page.scss'],
 })
 export class DetailPage implements OnInit, OnDestroy {
+  @ViewChild('mazaiShowCase') mazaiShowCase: MazaiShowcaseComponent;
+
   /** 推奨一日のカフェイン摂取量 */
   readonly RECOMMEND_COFFEIN: number = 400 + 100;
   /** 推奨一日の糖質摂取量 (男性：３３０、女性：２７０)*/
@@ -79,6 +82,8 @@ export class DetailPage implements OnInit, OnDestroy {
     await this.injectionReportService.fetchTodaySugarInTake();
     await this.injectionReportService.fetchTodayKcalInTake();
 
+
+
     //注入ページから遷移したかどうか
     this.isNavInjectionPage = false;
     this.router.queryParams.pipe(takeUntil(this.destroy$)).subscribe(async params => {
@@ -92,6 +97,10 @@ export class DetailPage implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  async ionViewDidEnter() {
+    await this.mazaiShowCase.refreshData();
   }
 
 }

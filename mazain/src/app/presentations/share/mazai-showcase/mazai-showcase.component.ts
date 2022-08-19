@@ -27,25 +27,28 @@ export class MazaiShowcaseComponent implements OnInit, OnDestroy {
 
     this._todayMazaiInjectionCount = 0;
     this.mazaiInjectionCountObserver = this.injectionReportService.TodayMazaiInjectionCountObserver;
-    this.mazaiInjectionCountObserver.pipe(takeUntil(this.destroy$)).subscribe(count => {
-      this._todayMazaiInjectionCount = count;
-    });
+    this.mazaiInjectionCountObserver.pipe(takeUntil(this.destroy$)).subscribe(count => { this._todayMazaiInjectionCount = count; });
 
     this._todayMazaiInjectionList = [];
     this.mazaiInjectionListObserver = this.injectionReportService.TodayMazaiInjectionListObserver;
-    this.mazaiInjectionListObserver.pipe(takeUntil(this.destroy$)).subscribe(list => {
-      this._todayMazaiInjectionList = list;
-    });
+    this.mazaiInjectionListObserver.pipe(takeUntil(this.destroy$)).subscribe(list => { this._todayMazaiInjectionList = list; });
   }
 
   async ngOnInit() {
-    await this.injectionReportService.fetchTodayMazaiInjectionCount();
-    await this.injectionReportService.fetchTodayMazaiInjectionList();
+    await this.refreshData();
   }
 
   async ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  /**
+   * データを再取得する
+   */
+  public async refreshData() {
+    await this.injectionReportService.fetchTodayMazaiInjectionCount();
+    await this.injectionReportService.fetchTodayMazaiInjectionList();
   }
 
   getAvailableImgSrc(mazai: MazaiData): string {
