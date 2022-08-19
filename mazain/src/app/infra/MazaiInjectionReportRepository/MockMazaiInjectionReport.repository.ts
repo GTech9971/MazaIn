@@ -26,7 +26,7 @@ export class MockMazaiInjectionReportRepository extends MazaiInjectionReportRepo
             })
 
             if (work.MazaiInjectionDataList.length > 0) {
-                todayList.push(m);
+                todayList.push(work);
             }
         });
         return todayList;
@@ -48,7 +48,9 @@ export class MockMazaiInjectionReportRepository extends MazaiInjectionReportRepo
 
     async getTodayCoffeInInTake(): Promise<number> {
         let sum: number = 0;
-        this.mazaiRepository.mazaiList.forEach(m => {
+
+        let list = await this.getTodayMazaiInjectionList()
+        list.forEach(m => {
             sum += m.MzaiCoffeIn * m.MazaiInjectionDataList.length;
         });
         return sum;
@@ -56,7 +58,8 @@ export class MockMazaiInjectionReportRepository extends MazaiInjectionReportRepo
 
     async getTodaySugarInTake(): Promise<number> {
         let sum: number = 0;
-        this.mazaiRepository.mazaiList.forEach(m => {
+        let list = await this.getTodayMazaiInjectionList();
+        list.forEach(m => {
             sum += m.MazaiSugar * m.MazaiInjectionDataList.length;
         });
         return sum;
@@ -64,7 +67,8 @@ export class MockMazaiInjectionReportRepository extends MazaiInjectionReportRepo
 
     async getTodayKcalInTake(): Promise<number> {
         let sum: number = 0;
-        this.mazaiRepository.mazaiList.forEach(m => {
+        let list = await this.getTodayMazaiInjectionList();
+        list.forEach(m => {
             sum += m.MazaiKcal * m.MazaiInjectionDataList.length;
         });
         return sum;
