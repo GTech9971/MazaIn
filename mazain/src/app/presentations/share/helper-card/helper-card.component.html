@@ -1,0 +1,9 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>{{this.now| date:'yyyy/MM/dd'}}の魔材注入状況</ion-card-subtitle>
+    <ion-card-title>{{this.helperCommentTitleObserver | async}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    {{this.helperCommentObserver | async}}
+  </ion-card-content>
+</ion-card>

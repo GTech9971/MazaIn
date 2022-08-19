@@ -74,8 +74,6 @@ export class DetailPage implements OnInit, OnDestroy {
     this.latestMazaiInjectionObserver.pipe(takeUntil(this.destroy$)).subscribe(latest => { this._latestMazaiInjection = latest; });
   }
 
-  get now(): Date { return new Date(); }
-
   async ngOnInit() {
     await this.injectionReportService.fetchTodayCoffeInInTake();
     await this.injectionReportService.fetchTodaySugarInTake();

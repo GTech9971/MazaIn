@@ -9,6 +9,7 @@ import { DetailPageRoutingModule } from './detail-routing.module';
 import { DetailPage } from './detail.page';
 import { HeaderComponentModule } from '../share/header/header.component.module';
 import { MazaiShowcaseComponentModule } from '../share/mazai-showcase/mazai-showcase.component.module';
+import { HelperCardComponentModule } from '../share/helper-card/help-card.component.module';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { MazaiShowcaseComponentModule } from '../share/mazai-showcase/mazai-show
     DetailPageRoutingModule,
     HeaderComponentModule,
     MazaiShowcaseComponentModule,
+    HelperCardComponentModule,
   ],
   declarations: [DetailPage]
 })

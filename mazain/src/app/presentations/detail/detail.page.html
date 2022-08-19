@@ -2,15 +2,10 @@
 
 <ion-content [fullscreen]="true">
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>{{this.now| date:'yyyy/MM/dd'}}の魔材注入状況</ion-card-subtitle>
-      <ion-card-title>Awesome Title</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      Awesome content
-    </ion-card-content>
-  </ion-card>
+  <!-- ヘルパーカード -->
+  <app-helper-card [coffeInTake]="this.todayCoffeInInTakeObserver | async"
+    [sugarInTake]="this.todaySugarInTakeObserver | async" [kcalInTake]="this.todayKcalInTakeObserver | async">
+  </app-helper-card>
 
   <app-mazai-showcase></app-mazai-showcase>
 
