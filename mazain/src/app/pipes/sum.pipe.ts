@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class SumPipe implements PipeTransform {
 
-  transform(list: number[]): unknown {
+  transform(list: number[]): number {
     return list.reduce((a, b) => { return a + b }, 0);
   }
 

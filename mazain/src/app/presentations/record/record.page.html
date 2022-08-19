@@ -38,21 +38,6 @@
     </ion-toolbar>
   </ion-header>
 
-
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-        総エナジー数
-        <br>
-        <span>{{(this.rangeMazaiInjectionListCountObserver | async | sum)}}</span>
-        <span style="font-size: large; color: red;">-4</span>
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <canvas #lineCanvas></canvas>
-    </ion-card-content>
-  </ion-card>
-
+  <app-mazai-line-graph #mazaiLineGraph></app-mazai-line-graph>
 
 </ion-content>

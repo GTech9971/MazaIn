@@ -9,7 +9,8 @@ import { RecordPageRoutingModule } from './record-routing.module';
 import { SwiperModule } from 'swiper/angular';
 import { RecordPage } from './record.page';
 import { HeaderComponentModule } from '../share/header/header.component.module';
-import { SumPipe } from 'src/app/pipes/sum.pipe';
+import { MazaiLineGraphComponentModule } from '../share/graphs/mazai-line-graph/mazai-line-graph.module';
+
 
 @NgModule({
   imports: [
@@ -19,10 +20,10 @@ import { SumPipe } from 'src/app/pipes/sum.pipe';
     RecordPageRoutingModule,
     HeaderComponentModule,
     SwiperModule,
+    MazaiLineGraphComponentModule,
   ],
   declarations: [
     RecordPage,
-    SumPipe,
   ]
 })
 export class RecordPageModule { }

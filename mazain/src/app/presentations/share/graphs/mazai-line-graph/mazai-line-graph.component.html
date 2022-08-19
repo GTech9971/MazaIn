@@ -1,0 +1,19 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>
+      総エナジー数
+      <br>
+      <span>{{(this.rangeMazaiInjectionListCountObserver | async | sum)}}</span>
+      <span class="minus-text" *ngIf="(this.rangeMazaiInjectionListCountObserver | async | sum) -
+       (this.beforeRangeMazaiInjectionListCountObserver | async | sum) < 0">
+
+        {{(this.rangeMazaiInjectionListCountObserver | async | sum) - (this.beforeRangeMazaiInjectionListCountObserver|
+        async | sum)}}
+
+      </span>
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <canvas #lineCanvas></canvas>
+  </ion-card-content>
+</ion-card>

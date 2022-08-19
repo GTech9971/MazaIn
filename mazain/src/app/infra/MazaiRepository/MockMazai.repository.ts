@@ -49,7 +49,26 @@ export class MockMazaiRepository extends MazaiRepository {
                 InjecionDateTime: addDays(Date.now(), -10).getTime(),
                 ImageDeg: 20,
             }]
-        },];
+        }, {
+            MazaiId: this.generateUUID(),
+            MazaiName: 'コカコーラ500ml',
+            MzaiCoffeIn: 30,
+            MazaiKcal: 100,
+            MazaiSugar: 30,
+            MazaiImg: {
+                ImageDataLarge: '',
+                ImageDataMedium: '',
+                ImageDateSmall: '',
+                ImageUrl: '../../../../../assets/samples/IMG_0088.PNG',
+            },
+            MazaiInjectionDataList: [{
+                InjecionDateTime: Date.now(),
+                ImageDeg: 0,
+            }, {
+                InjecionDateTime: Date.now(),
+                ImageDeg: 90
+            },]
+        }];
     }
 
 
