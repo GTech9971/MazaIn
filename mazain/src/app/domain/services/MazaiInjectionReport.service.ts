@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
+import { EnergyInjectionReportData } from "../models/EnergyInjectionReport.data";
 import { MazaiData } from "../models/Mazai.data";
 import { MazaiInjectionReportRepository } from "../repositories/MazaiInjectionReport.repository";
 
@@ -17,20 +18,10 @@ export class MazaiInjectionReportService {
     private readonly _todayMazaiInjectionCountSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
     readonly TodayMazaiInjectionCountObserver: Observable<number> = this._todayMazaiInjectionCountSubject$.asObservable();
 
-    //今日摂取したカフェイン
-    private _todayCoffeInInTake: number = 0;
-    private readonly _todayCoffeInInTakeSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-    readonly TodayCoffeInInTakeObserver: Observable<number> = this._todayCoffeInInTakeSubject$.asObservable();
-
-    //今日摂取した糖質
-    private _todaySugarInTake: number = 0;
-    private readonly _todaySugarInTakeSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-    readonly TodaySugarInTakeObserver: Observable<number> = this._todaySugarInTakeSubject$.asObservable();
-
-    //今日摂取したカロリー
-    private _todayKcalInTake: number = 0;
-    private readonly _todayKcalInTakeSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-    readonly TodayKcalInTakeObserver: Observable<number> = this._todayKcalInTakeSubject$.asObservable();
+    //今日魔剤から摂取したエナジー
+    private _todayEnergyReport: EnergyInjectionReportData = undefined;
+    private readonly _todayEnergyReportSubject$: BehaviorSubject<EnergyInjectionReportData> = new BehaviorSubject<EnergyInjectionReportData>(undefined);
+    readonly TodayEnergyReportObserver: Observable<EnergyInjectionReportData> = this._todayEnergyReportSubject$.asObservable();
 
     //最後に注入した魔剤
     private _latestMazaiInjection: MazaiData = undefined;
@@ -57,30 +48,12 @@ export class MazaiInjectionReportService {
     }
 
     /**
-     * 今日のカフェイン摂取量を取得
+     * 今日魔剤から接種したエナジーを取得
      * @returns 
      */
-    public async fetchTodayCoffeInInTake(): Promise<void> {
-        this._todayCoffeInInTake = await this.repository.getTodayCoffeInInTake();
-        this._todayCoffeInInTakeSubject$.next(this._todayCoffeInInTake);
-    }
-
-    /**
-     * 今日の糖質摂取量を取得
-     * @returns 
-     */
-    public async fetchTodaySugarInTake(): Promise<void> {
-        this._todaySugarInTake = await this.repository.getTodaySugarInTake();
-        this._todaySugarInTakeSubject$.next(this._todaySugarInTake);
-    }
-
-    /**
-     * 今日のカロリー摂取量を取得
-     * @returns
-     */
-    public async fetchTodayKcalInTake(): Promise<void> {
-        this._todayKcalInTake = await this.repository.getTodayKcalInTake();
-        this._todayKcalInTakeSubject$.next(this._todayKcalInTake);
+    public async fetchTodayEnergyReport(): Promise<void> {
+        this._todayEnergyReport = await this.repository.getTodayEnergyInjection();
+        this._todayEnergyReportSubject$.next(this._todayEnergyReport);
     }
 
     /**
@@ -92,9 +65,7 @@ export class MazaiInjectionReportService {
         await this.repository.injectionMazai(mazai);
 
         await this.fetchTodayMazaiInjectionCount();
-        await this.fetchTodayCoffeInInTake();
-        await this.fetchTodaySugarInTake();
-        await this.fetchTodayKcalInTake();
+        await this.fetchTodayEnergyReport();
     }
 
     /**

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { EnergyInjectionReportData } from 'src/app/domain/models/EnergyInjectionReport.data';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
 import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInjectionReport.service';
 import { MazaiShowcaseComponent } from '../share/mazai-showcase/mazai-showcase.component';
@@ -49,38 +50,28 @@ export class DetailPage implements OnInit, OnDestroy {
   }
   readonly latestMazaiInjectionObserver: Observable<MazaiData>;
 
-  //今日のカフェイン
-  _todayCoffeInInTake: number;
-  get TodayCoffeInInTakePer(): number { return this._todayCoffeInInTake / this.RECOMMEND_COFFEIN; }
-  readonly todayCoffeInInTakeObserver: Observable<number>;
-  //今日の糖質
-  _todaySugarInTake: number;
-  get TodaySugarInTakePer(): number { return this._todaySugarInTake / this.RECOMMEND_SUGAR; }
-  readonly todaySugarInTakeObserver: Observable<number>;
-  //今日のカロリー
-  _todayKcalInTake: number;
-  get TodayKcalInTakePer(): number { return this._todayKcalInTake / this.RECOMMEND_KCAL; }
-  readonly todayKcalInTakeObserver: Observable<number>;
+  //今日の接種したエナジー
+  _todayEnergyReport: EnergyInjectionReportData;
+  readonly todayEnergyReportObserver: Observable<EnergyInjectionReportData>;
+
+  //今日のカフェイン  
+  get TodayCoffeInInTakePer(): number { return this._todayEnergyReport?.CoffeInIntake / this.RECOMMEND_COFFEIN; }
+  //今日の糖質  
+  get TodaySugarInTakePer(): number { return this._todayEnergyReport?.SugarInTake / this.RECOMMEND_SUGAR; }
+  //今日のカロリー  
+  get TodayKcalInTakePer(): number { return this._todayEnergyReport?.KcalInTake / this.RECOMMEND_KCAL; }
 
   constructor(private router: ActivatedRoute,
     private injectionReportService: MazaiInjectionReportService) {
-    this.todayCoffeInInTakeObserver = this.injectionReportService.TodayCoffeInInTakeObserver;
-    this.todayCoffeInInTakeObserver.pipe(takeUntil(this.destroy$)).subscribe(val => { this._todayCoffeInInTake = val; });
-
-    this.todaySugarInTakeObserver = this.injectionReportService.TodaySugarInTakeObserver;
-    this.todaySugarInTakeObserver.pipe(takeUntil(this.destroy$)).subscribe(val => { this._todaySugarInTake = val; });
-
-    this.todayKcalInTakeObserver = this.injectionReportService.TodayKcalInTakeObserver;
-    this.todayKcalInTakeObserver.pipe(takeUntil(this.destroy$)).subscribe(val => { this._todayKcalInTake = val; });
+    this.todayEnergyReportObserver = this.injectionReportService.TodayEnergyReportObserver;
+    this.todayEnergyReportObserver.pipe(takeUntil(this.destroy$)).subscribe(report => { this._todayEnergyReport = report; })
 
     this.latestMazaiInjectionObserver = this.injectionReportService.LatestMazaiInjectiondObserver;
     this.latestMazaiInjectionObserver.pipe(takeUntil(this.destroy$)).subscribe(latest => { this._latestMazaiInjection = latest; });
   }
 
   async ngOnInit() {
-    await this.injectionReportService.fetchTodayCoffeInInTake();
-    await this.injectionReportService.fetchTodaySugarInTake();
-    await this.injectionReportService.fetchTodayKcalInTake();
+    await this.injectionReportService.fetchTodayEnergyReport();
 
 
 

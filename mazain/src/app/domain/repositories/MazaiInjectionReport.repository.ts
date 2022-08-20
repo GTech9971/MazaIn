@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { EnergyInjectionReportData } from "../models/EnergyInjectionReport.data";
 import { MazaiData } from "../models/Mazai.data";
 import { MazaiInjectionRecordData } from "../models/MazaiInjectionRecord.data";
 
@@ -62,20 +63,11 @@ export abstract class MazaiInjectionReportRepository {
      */
     abstract getTodayMazaiInjectionCount(): Promise<number>;
 
-    /**
-     * 今日のカフェイン摂取量を取得
-     */
-    abstract getTodayCoffeInInTake(): Promise<number>;
 
     /**
-     * 今日の糖質の摂取量を取得
+     * 今日の魔剤から注入されたエナジーを取得
      */
-    abstract getTodaySugarInTake(): Promise<number>;
-
-    /**
-     * 今日のカロリー摂取量を取得
-     */
-    abstract getTodayKcalInTake(): Promise<number>;
+    abstract getTodayEnergyInjection(): Promise<EnergyInjectionReportData>;
 
 
     /**

@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
+import { EnergyInjectionReportData } from "../models/EnergyInjectionReport.data";
+import { MazaiHelpContextData } from "../models/MazaiHelpContext.data";
 import { MazaiInjectionHelperRepository } from "../repositories/MazaiInjectionHelper.repository";
 
 @Injectable({
@@ -7,44 +9,21 @@ import { MazaiInjectionHelperRepository } from "../repositories/MazaiInjectionHe
 })
 export class MazaiInjectionHelperService {
 
-    private _helperCommentTitle: string;
-    private readonly _helperCommentTitleSubject$: BehaviorSubject<string>;
-    readonly HelperCommentTitleObserver: Observable<string>;
-
-    private _helperComment: string;
-    private readonly _helperCommentSubject$: BehaviorSubject<string>;
-    readonly HelperCommentObserver: Observable<string>;
+    private _helperComment: MazaiHelpContextData;
+    private readonly _helperCommentSubject$: BehaviorSubject<MazaiHelpContextData>;
+    readonly HelperCommentObserver: Observable<MazaiHelpContextData>;
 
     constructor(private repository: MazaiInjectionHelperRepository) {
-        this._helperCommentTitle = "";
-        this._helperCommentTitleSubject$ = new BehaviorSubject<string>("");
-        this.HelperCommentTitleObserver = this._helperCommentTitleSubject$.asObservable();
-
-        this._helperComment = "";
-        this._helperCommentSubject$ = new BehaviorSubject<string>("");
+        this._helperCommentSubject$ = new BehaviorSubject<MazaiHelpContextData>(undefined);
         this.HelperCommentObserver = this._helperCommentSubject$.asObservable();
     }
 
     /**
-     * ヘルプタイトルコメントを取得する
-     * @param coffeInTake 
-     * @param sugarInTake 
-     * @param kcalInTake 
+     * ヘルプコメントを取得する
+     * @param energyReport 
      */
-    public async fetchHelperCommentTitle(coffeInTake: number, sugarInTake: number, kcalInTake: number): Promise<void> {
-        this._helperCommentTitle = await this.repository.getHelpCommentTitle(coffeInTake, sugarInTake, kcalInTake);
-        this._helperCommentTitleSubject$.next(this._helperCommentTitle);
-    }
-
-    /**
-     * ヘルパーコメントを取得する
-     * @param coffeInTake 
-     * @param sugarInTake 
-     * @param kcalInTake 
-     */
-    public async fetchHelperComment(coffeInTake: number, sugarInTake: number, kcalInTake: number): Promise<void> {
-        this._helperComment = await this.repository.getHelpComment(coffeInTake, sugarInTake, kcalInTake);
+    public async fetchHelperComment(energyReport: EnergyInjectionReportData): Promise<void> {
+        this._helperComment = await this.repository.getHelpContext(energyReport);
         this._helperCommentSubject$.next(this._helperComment);
     }
-
 }

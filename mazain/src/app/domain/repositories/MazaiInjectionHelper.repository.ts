@@ -1,4 +1,6 @@
 import { Injectable } from "@angular/core";
+import { EnergyInjectionReportData } from "../models/EnergyInjectionReport.data";
+import { MazaiHelpContextData } from "../models/MazaiHelpContext.data";
 
 @Injectable({
     providedIn: 'root'
@@ -6,19 +8,9 @@ import { Injectable } from "@angular/core";
 export abstract class MazaiInjectionHelperRepository {
 
     /**
-    * ヘルプコメントタイトルを取得する
-    * @param coffeInInTake カフェイン総量
-    * @param sugarInTake 糖質総量
-    * @param kcalInTake カロリー総量
+    * ヘルプコメントタイトルを取得す
+    * @param energyReport 魔剤から注入したエナジー
     */
-    abstract getHelpCommentTitle(coffeInInTake: number, sugarInTake: number, kcalInTake: number): string;
-
-    /**
-     * ヘルプコメントを取得する
-     * @param coffeInInTake カフェイン総量
-     * @param sugarInTake 糖質総量
-     * @param kcalInTake カロリー総量
-     */
-    abstract getHelpComment(coffeInInTake: number, sugarInTake: number, kcalInTake: number): string;
+    abstract getHelpContext(energyReport: EnergyInjectionReportData): Promise<MazaiHelpContextData>;
 
 }

@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { EnergyInjectionReportData } from "src/app/domain/models/EnergyInjectionReport.data";
 import { MazaiData } from "src/app/domain/models/Mazai.data";
 import { MazaiInjectionRecordData } from "src/app/domain/models/MazaiInjectionRecord.data";
 import { MazaiInjectionReportRepository } from "src/app/domain/repositories/MazaiInjectionReport.repository";
@@ -45,33 +46,25 @@ export class MockMazaiInjectionReportRepository extends MazaiInjectionReportRepo
         return injectionCount;
     }
 
-    async getTodayCoffeInInTake(): Promise<number> {
-        let sum: number = 0;
-
-        let list = await this.getTodayMazaiInjectionList()
+    async getTodayEnergyInjection(): Promise<EnergyInjectionReportData> {
+        const list = await this.getTodayMazaiInjectionList();
+        let coffeInInTake: number = 0;
+        let sugarInTake: number = 0;
+        let kcalInTake: number = 0;
         list.forEach(m => {
-            sum += m.MzaiCoffeIn * m.MazaiInjectionDataList.length;
+            coffeInInTake += m.MzaiCoffeIn * m.MazaiInjectionDataList.length;
+            sugarInTake += m.MazaiSugar * m.MazaiInjectionDataList.length;
+            kcalInTake += m.MazaiKcal * m.MazaiInjectionDataList.length;
         });
-        return sum;
+
+        const enrgyReport: EnergyInjectionReportData = {
+            CoffeInIntake: coffeInInTake,
+            SugarInTake: sugarInTake,
+            KcalInTake: kcalInTake
+        };
+        return enrgyReport;
     }
 
-    async getTodaySugarInTake(): Promise<number> {
-        let sum: number = 0;
-        let list = await this.getTodayMazaiInjectionList();
-        list.forEach(m => {
-            sum += m.MazaiSugar * m.MazaiInjectionDataList.length;
-        });
-        return sum;
-    }
-
-    async getTodayKcalInTake(): Promise<number> {
-        let sum: number = 0;
-        let list = await this.getTodayMazaiInjectionList();
-        list.forEach(m => {
-            sum += m.MazaiKcal * m.MazaiInjectionDataList.length;
-        });
-        return sum;
-    }
 
     async injectionMazai(mazai: MazaiData): Promise<void> {
         this.mazaiRepository.mazaiList.forEach(m => {

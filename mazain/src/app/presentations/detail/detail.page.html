@@ -3,8 +3,7 @@
 <ion-content [fullscreen]="true">
 
   <!-- ヘルパーカード -->
-  <app-helper-card [coffeInTake]="this.todayCoffeInInTakeObserver | async"
-    [sugarInTake]="this.todaySugarInTakeObserver | async" [kcalInTake]="this.todayKcalInTakeObserver | async">
+  <app-helper-card [energyReport]="this.todayEnergyReportObserver | async">
   </app-helper-card>
 
   <app-mazai-showcase #mazaiShowCase></app-mazai-showcase>
@@ -20,7 +19,7 @@
 
       <ion-col size="4">
         <ion-text color="primary">
-          <h2> {{this.todayCoffeInInTakeObserver | async}}mg</h2>
+          <h2> {{(this.todayEnergyReportObserver | async)?.CoffeInIntake}}mg</h2>
         </ion-text>
       </ion-col>
 
@@ -49,7 +48,7 @@
 
       <ion-col size="4">
         <ion-text color="primary">
-          <h2> {{this.todaySugarInTakeObserver| async}}mg</h2>
+          <h2> {{(this.todayEnergyReportObserver| async)?.SugarInTake}}mg</h2>
         </ion-text>
       </ion-col>
     </ion-row>
@@ -77,7 +76,7 @@
 
       <ion-col size="4">
         <ion-text color="primary">
-          <h2> {{this.todayKcalInTakeObserver| async}}kcal</h2>
+          <h2> {{(this.todayEnergyReportObserver| async)?.KcalInTake}}kcal</h2>
         </ion-text>
       </ion-col>
     </ion-row>

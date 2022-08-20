@@ -1,6 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { EnergyInjectionReportData } from 'src/app/domain/models/EnergyInjectionReport.data';
+import { MazaiHelpContextData } from 'src/app/domain/models/MazaiHelpContext.data';
 import { MazaiInjectionHelperService } from 'src/app/domain/services/MazaiInjectionHelper.service';
 
 @Component({
@@ -10,37 +12,25 @@ import { MazaiInjectionHelperService } from 'src/app/domain/services/MazaiInject
 })
 export class HelperCardComponent implements OnInit, OnDestroy {
 
-  /** カフェイン総量 */
-  @Input() coffeInTake: number;
-  /** 糖質総量 */
-  @Input() sugarInTake: number;
-  /** カロリー総量 */
-  @Input() kcalInTake: number;
+  /**
+   * 魔剤から得たエナジー
+   */
+  @Input() energyReport: EnergyInjectionReportData;
 
   private destroy$: Subject<void> = new Subject<void>();
 
-  _helperCommentTitle: string;
-  readonly helperCommentTitleObserver: Observable<string>;
-
-  _helperComment: string;
-  readonly helperCommentObserver: Observable<string>;
+  _helperComment: MazaiHelpContextData;
+  readonly helperCommentObserver: Observable<MazaiHelpContextData>;
 
   constructor(private injectionHelperService: MazaiInjectionHelperService) {
-    this._helperCommentTitle = "";
-    this.helperCommentTitleObserver = this.injectionHelperService.HelperCommentTitleObserver;
-    this.helperCommentTitleObserver.pipe(takeUntil(this.destroy$)).subscribe(title => { this._helperCommentTitle = title; });
-
-    this._helperComment = "";
     this.helperCommentObserver = this.injectionHelperService.HelperCommentObserver;
     this.helperCommentObserver.pipe(takeUntil(this.destroy$)).subscribe(comment => { this._helperComment = comment; });
   }
 
-
   get now(): Date { return new Date(); }
 
   async ngOnInit() {
-    await this.injectionHelperService.fetchHelperCommentTitle(this.coffeInTake, this.sugarInTake, this.kcalInTake);
-    await this.injectionHelperService.fetchHelperComment(this.coffeInTake, this.sugarInTake, this.kcalInTake);
+    await this.injectionHelperService.fetchHelperComment(this.energyReport);
   }
 
   ngOnDestroy(): void {
