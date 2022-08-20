@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
+import { EnergyInjectionReportData } from "../models/EnergyInjectionReport.data";
 import { MazaiData } from "../models/Mazai.data";
-import { MazaiRationData } from "../models/MazaiRation.data";
+import { MazaiRationReportData } from "../models/MazaiRationReport.data";
 
 @Injectable({
     providedIn: 'root'
@@ -18,5 +19,13 @@ export abstract class MazaiInjectionWeekReportRepository {
      * @param startDate 
      * @param endDate 
      */
-    abstract getRangeMazaiRationList(startDate: number, endDate: number): Promise<MazaiRationData[]>
+    abstract getRangeMazaiRationList(startDate: number, endDate: number): Promise<MazaiRationReportData[]>
+
+
+    /**
+     * 指定した期間に注入した魔剤からのエナジーリストを取得する
+     * @param startDate 
+     * @param endDate 
+     */
+    abstract getRangeEnergyInjectionList(startDate: number, endDate: number): Promise<EnergyInjectionReportData[]>;
 }

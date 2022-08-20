@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { addDays } from "date-fns";
 import { BehaviorSubject, Observable } from "rxjs";
+import { EnergyInjectionReportData } from "../models/EnergyInjectionReport.data";
 import { MazaiData } from "../models/Mazai.data";
-import { MazaiRationData } from "../models/MazaiRation.data";
+import { MazaiRationReportData } from "../models/MazaiRationReport.data";
 import { MazaiInjectionWeekReportRepository } from "../repositories/MazaiInjectionWeekReport.repository";
 
 @Injectable({
@@ -29,9 +30,14 @@ export class MazaiInjectionWeekReportService {
     readonly BeforeRangeMazaiInjectionCountListObserver: Observable<number[]> = this._beforeRangeMazaiInjectionCountListSubject$.asObservable();
 
     //期間内に注入した魔剤の割合リスト
-    private _rangeMazaiRationList: MazaiRationData[] = [];
-    private readonly _rangeMazaiRationListSubject$: BehaviorSubject<MazaiRationData[]> = new BehaviorSubject<MazaiRationData[]>([]);
-    readonly RangeMazaiRationListObserver: Observable<MazaiRationData[]> = this._rangeMazaiRationListSubject$.asObservable();
+    private _rangeMazaiRationList: MazaiRationReportData[] = [];
+    private readonly _rangeMazaiRationListSubject$: BehaviorSubject<MazaiRationReportData[]> = new BehaviorSubject<MazaiRationReportData[]>([]);
+    readonly RangeMazaiRationListObserver: Observable<MazaiRationReportData[]> = this._rangeMazaiRationListSubject$.asObservable();
+
+    //期間内に注入した魔剤からのエナジーリスト
+    private _rangeEnergyReportList: EnergyInjectionReportData[] = [];
+    private readonly _rangeEnergyReportListSubject$: BehaviorSubject<EnergyInjectionReportData[]> = new BehaviorSubject<EnergyInjectionReportData[]>([]);
+    readonly RangeEnergyReportListObserver: Observable<EnergyInjectionReportData[]> = this._rangeEnergyReportListSubject$.asObservable();
 
     constructor(private repository: MazaiInjectionWeekReportRepository) {
     }
@@ -138,6 +144,16 @@ export class MazaiInjectionWeekReportService {
     public async fetchRangeMazaiRationList(startDate: number, endDate: number): Promise<void> {
         this._rangeMazaiRationList = await this.repository.getRangeMazaiRationList(startDate, endDate);
         this._rangeMazaiRationListSubject$.next(this._rangeMazaiRationList);
+    }
+
+    /**
+     * 期間内に注入した魔剤からのエナジーリストを取得する
+     * @param startDate 
+     * @param endDate 
+     */
+    public async fetchRangeEnergyReportList(startDate: number, endDate: number): Promise<void> {
+        this._rangeEnergyReportList = await this.repository.getRangeEnergyInjectionList(startDate, endDate);
+        this._rangeEnergyReportListSubject$.next(this._rangeEnergyReportList);
     }
 
 }

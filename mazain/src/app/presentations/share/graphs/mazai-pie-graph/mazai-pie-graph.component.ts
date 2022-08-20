@@ -3,7 +3,7 @@ import { Chart } from 'chart.js';
 import { endOfWeek, startOfWeek } from 'date-fns';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MazaiRationData } from 'src/app/domain/models/MazaiRation.data';
+import { MazaiRationReportData } from 'src/app/domain/models/MazaiRationReport.data';
 import { MazaiInjectionWeekReportService } from 'src/app/domain/services/MazaiInjectionWeekReport.service';
 import { MazaiGraph } from '../MazaiGraph';
 
@@ -19,8 +19,8 @@ export class MazaiPieGraphComponent extends MazaiGraph implements OnInit, OnDest
   private readonly destroy$: Subject<void> = new Subject<void>();
 
   //魔剤注入割合リスト
-  _rangeMazaiRaionList: MazaiRationData[];
-  readonly rangeMazaiRationListObserver: Observable<MazaiRationData[]>;
+  _rangeMazaiRaionList: MazaiRationReportData[];
+  readonly rangeMazaiRationListObserver: Observable<MazaiRationReportData[]>;
 
   constructor(private injectionWeekReportServiceSub: MazaiInjectionWeekReportService) {
     super(injectionWeekReportServiceSub);

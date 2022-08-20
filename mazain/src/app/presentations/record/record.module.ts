@@ -11,6 +11,7 @@ import { RecordPage } from './record.page';
 import { HeaderComponentModule } from '../share/header/header.component.module';
 import { MazaiLineGraphComponentModule } from '../share/graphs/mazai-line-graph/mazai-line-graph.module';
 import { MazaiPieGraphComponentModule } from '../share/graphs/mazai-pie-graph/mazai-pie-graph.module';
+import { MazaiBarGraphComponentModule } from '../share/graphs/mazai-bar-graph/mazai-bar-graph.module';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { MazaiPieGraphComponentModule } from '../share/graphs/mazai-pie-graph/ma
     HeaderComponentModule,
     SwiperModule,
     MazaiLineGraphComponentModule,
-    MazaiPieGraphComponentModule
+    MazaiPieGraphComponentModule,
+    MazaiBarGraphComponentModule,
   ],
   declarations: [
     RecordPage,
