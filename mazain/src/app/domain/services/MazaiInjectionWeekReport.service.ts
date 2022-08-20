@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { addDays } from "date-fns";
 import { BehaviorSubject, Observable } from "rxjs";
 import { MazaiData } from "../models/Mazai.data";
+import { MazaiRationData } from "../models/MazaiRation.data";
 import { MazaiInjectionWeekReportRepository } from "../repositories/MazaiInjectionWeekReport.repository";
 
 @Injectable({
@@ -26,6 +27,11 @@ export class MazaiInjectionWeekReportService {
     private _beforeRangeMazaiInjectionCountList: number[] = [];
     private readonly _beforeRangeMazaiInjectionCountListSubject$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
     readonly BeforeRangeMazaiInjectionCountListObserver: Observable<number[]> = this._beforeRangeMazaiInjectionCountListSubject$.asObservable();
+
+    //期間内に注入した魔剤の割合リスト
+    private _rangeMazaiRationList: MazaiRationData[] = [];
+    private readonly _rangeMazaiRationListSubject$: BehaviorSubject<MazaiRationData[]> = new BehaviorSubject<MazaiRationData[]>([]);
+    readonly RangeMazaiRationListObserver: Observable<MazaiRationData[]> = this._rangeMazaiRationListSubject$.asObservable();
 
     constructor(private repository: MazaiInjectionWeekReportRepository) {
     }
@@ -122,6 +128,16 @@ export class MazaiInjectionWeekReportService {
             workDate = addDays(workDate, 1);
         }
         this._beforeRangeMazaiInjectionCountListSubject$.next(this._beforeRangeMazaiInjectionCountList);
+    }
+
+    /**
+     * 期間内に注入した魔剤の割合リストを取得する
+     * @param startDate 
+     * @param endDate 
+     */
+    public async fetchRangeMazaiRationList(startDate: number, endDate: number): Promise<void> {
+        this._rangeMazaiRationList = await this.repository.getRangeMazaiRationList(startDate, endDate);
+        this._rangeMazaiRationListSubject$.next(this._rangeMazaiRationList);
     }
 
 }

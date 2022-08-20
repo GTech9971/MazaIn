@@ -3,6 +3,7 @@ import { Chart } from 'chart.js';
 import { endOfWeek, startOfWeek } from 'date-fns';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MazaiRationData } from 'src/app/domain/models/MazaiRation.data';
 import { MazaiInjectionWeekReportService } from 'src/app/domain/services/MazaiInjectionWeekReport.service';
 import { MazaiGraph } from '../MazaiGraph';
 
@@ -12,28 +13,27 @@ import { MazaiGraph } from '../MazaiGraph';
   styleUrls: ['./mazai-pie-graph.component.scss'],
 })
 export class MazaiPieGraphComponent extends MazaiGraph implements OnInit, OnDestroy, AfterViewInit {
-
   @ViewChild('pieCanvas') private pieCanvas: ElementRef;
   pieChart: Chart;
 
   private readonly destroy$: Subject<void> = new Subject<void>();
 
-  //今週用の魔剤注入数リスト
-  _rangeMazaiInjectionListCount: number[];
-  readonly rangeMazaiInjectionListCountObserver: Observable<number[]>;
-
+  //魔剤注入割合リスト
+  _rangeMazaiRaionList: MazaiRationData[];
+  readonly rangeMazaiRationListObserver: Observable<MazaiRationData[]>;
 
   constructor(private injectionWeekReportServiceSub: MazaiInjectionWeekReportService) {
     super(injectionWeekReportServiceSub);
 
-    this._rangeMazaiInjectionListCount = [];
-    this.rangeMazaiInjectionListCountObserver = this.injectionWeekReportServiceSub.RangeMazaiInjectionCountListObserver;
-    this.rangeMazaiInjectionListCountObserver.pipe(takeUntil(this.destroy$)).subscribe(list => { this._rangeMazaiInjectionListCount = list; });
+    this._rangeMazaiRaionList = [];
+    this.rangeMazaiRationListObserver = this.injectionWeekReportServiceSub.RangeMazaiRationListObserver;
+    this.rangeMazaiRationListObserver.pipe(takeUntil(this.destroy$)).subscribe(list => { this._rangeMazaiRaionList = list });
   }
 
 
   async ngOnInit() {
     await this.injectionWeekReportServiceSub.fetchRangeMazaiInjectionCountList(startOfWeek(Date.now()).getTime(), endOfWeek(Date.now()).getTime());
+    await this.injectionWeekReportServiceSub.fetchRangeMazaiRationList(startOfWeek(Date.now()).getTime(), endOfWeek(Date.now()).getTime());
   }
 
   ngOnDestroy(): void {
@@ -51,14 +51,20 @@ export class MazaiPieGraphComponent extends MazaiGraph implements OnInit, OnDest
     this.pieChart = new Chart(this.pieCanvas.nativeElement, {
       type: 'pie',
       data: {
-        labels: ["A", "B"],
+        labels: this._rangeMazaiRaionList.map(ration => { return ration.MazaiName }),
         datasets: [
           {
             label: "",
-            data: [2, 3],
+            data: this._rangeMazaiRaionList.map(ratio => { return ratio.InjectionCount }),
             backgroundColor: [
               'rgb(255, 99, 132)',
-              'rgb(54, 162, 235)'
+              'rgb(54, 162, 235)',
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
             ],
           }
         ]
@@ -66,16 +72,19 @@ export class MazaiPieGraphComponent extends MazaiGraph implements OnInit, OnDest
     });
   }
 
-  moveCurrentWeek(start: Date, end: Date): Promise<void> {
-    throw new Error('Method not implemented.');
+  async moveCurrentWeek(start: Date, end: Date): Promise<void> {
+    await this.injectionWeekReportServiceSub.fetchRangeMazaiRationList(start.getTime(), end.getTime());
+    this.initializeGraph(start, end);
   }
 
-  nextWeek(start: Date, end: Date): Promise<void> {
-    throw new Error('Method not implemented.');
+  async nextWeek(start: Date, end: Date): Promise<void> {
+    await this.injectionWeekReportServiceSub.fetchRangeMazaiRationList(start.getTime(), end.getTime());
+    this.initializeGraph(start, end);
   }
 
-  beforeWeek(start: Date, end: Date): Promise<void> {
-    throw new Error('Method not implemented.');
+  async beforeWeek(start: Date, end: Date): Promise<void> {
+    await this.injectionWeekReportServiceSub.fetchRangeMazaiRationList(start.getTime(), end.getTime());
+    this.initializeGraph(start, end);
   }
 
 }
