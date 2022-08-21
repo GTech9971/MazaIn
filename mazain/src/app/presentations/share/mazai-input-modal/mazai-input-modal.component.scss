@@ -1,0 +1,13 @@
+.img-box{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+    position: relative;
+}
+
+ion-img{
+    max-width: 145px;
+    //max-height: 355px;
+    max-height: 295px;
+}

@@ -63,7 +63,7 @@
             <ion-input formControlName="kcal" type="number"></ion-input>
           </ion-item>
 
-          <ion-item>
+          <ion-item lines="none">
             <ion-label position="stacked">画像をアップロード<span style="color: red;">*</span></ion-label>
 
             <label for="upload-photo">
@@ -73,8 +73,11 @@
           </ion-item>
 
           <ion-item>
-            <ion-img *ngIf="this.uploadedPhoto" [src]="this.inputForm.get('image').value.src">
-            </ion-img>
+            <div class="img-box">
+              <ion-img *ngIf="this.uploadedPhoto" [src]="this.inputForm.get('image').value.src">
+              </ion-img>
+            </div>
+
           </ion-item>
         </ion-item-group>
 
