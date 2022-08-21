@@ -4,6 +4,8 @@ import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MazaiRepository } from './domain/repositories/Mazai.repository';
@@ -40,6 +42,7 @@ const PROVIDERS: Provider[] = [
     HttpClientModule,
   ],
   providers: [
+    InAppBrowser,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     PROVIDERS,
   ],
