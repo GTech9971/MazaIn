@@ -1,16 +1,49 @@
 <ion-card>
   <ion-card-header>
     <ion-card-title>
-      総魔剤数
-      <br>
+      <span style="margin-right: 5px;">総魔剤数</span>
+
       <span>{{(this.rangeMazaiInjectionListCountObserver | async | sum)}}</span>
-      <span class="minus-text" *ngIf="(this.rangeMazaiInjectionListCountObserver | async | sum) -
-       (this.beforeRangeMazaiInjectionListCountObserver | async | sum) < 0">
 
-        {{(this.rangeMazaiInjectionListCountObserver | async | sum) - (this.beforeRangeMazaiInjectionListCountObserver|
-        async | sum)}}
+      <!-- 前の週と比べての減少数 -->
+      <ion-text color="danger" (click)="onClickMinusText($event)" *ngIf="(this.rangeMazaiInjectionListCountObserver | async | sum) -
+      (this.beforeRangeMazaiInjectionListCountObserver | async | sum) < 0">
+        (
+        {{(this.rangeMazaiInjectionListCountObserver | async | sum) -
+        (this.beforeRangeMazaiInjectionListCountObserver| async | sum)}}
+        )
+      </ion-text>
 
-      </span>
+      <!-- 減少数の説明 -->
+      <ion-popover #minusTextdescPop>
+        <ng-template>
+          <ion-content class="ion-padding">
+            前の週と比べての魔剤注入減少数
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+
+
+      <!-- 前の週と比べての増加数 -->
+      <ion-text color="success" (click)="onClickPlusText($event)" *ngIf="(this.rangeMazaiInjectionListCountObserver | async | sum) -
+      (this.beforeRangeMazaiInjectionListCountObserver | async | sum) > 0">
+        (
+        +
+        {{(this.rangeMazaiInjectionListCountObserver | async | sum) -
+        (this.beforeRangeMazaiInjectionListCountObserver| async | sum)}}
+        )
+      </ion-text>
+
+      <!-- 増加数の説明 -->
+      <ion-popover #plusTextdescPop>
+        <ng-template>
+          <ion-content class="ion-padding">
+            前の週と比べての魔剤注入増加数
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+
+
     </ion-card-title>
   </ion-card-header>
   <ion-card-content>

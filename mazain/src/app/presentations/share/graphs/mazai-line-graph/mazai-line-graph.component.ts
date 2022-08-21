@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { IonPopover } from '@ionic/angular';
 import { Chart } from 'chart.js';
 import { addWeeks, endOfWeek, startOfWeek } from 'date-fns';
 import { Observable, Subject } from 'rxjs';
@@ -12,6 +13,11 @@ import { MazaiGraph } from '../MazaiGraph';
   styleUrls: ['./mazai-line-graph.component.scss'],
 })
 export class MazaiLineGraphComponent extends MazaiGraph implements OnInit, OnDestroy, AfterViewInit {
+  /** マイナステキスト説明 */
+  @ViewChild('minusTextdescPop') private minusTextdescPop: IonPopover;
+  /** プラステキスト説明 */
+  @ViewChild('plusTextdescPop') private plusTextdescPop: IonPopover;
+
   @ViewChild('lineCanvas') private lineCanvas: ElementRef;
   lineChart: Chart;
 
@@ -77,7 +83,7 @@ export class MazaiLineGraphComponent extends MazaiGraph implements OnInit, OnDes
             borderWidth: 1
           },
           {
-            label: `${addWeeks(start, -1).getMonth() + 1}/${addWeeks(end, -1).getDate()}の週`,
+            label: `前の週`,
             data: this._beforeMazaiInjectionListCount,
             borderColor: [
               'rgba(255,99,132,1)',
@@ -111,6 +117,21 @@ export class MazaiLineGraphComponent extends MazaiGraph implements OnInit, OnDes
     await this.injectionWeekRecordServiceSub.fetchRangeMazaiInjectionCountList(start.getTime(), end.getTime());
     await this.injectionWeekRecordServiceSub.fetchBeforeRangeMazaiInjectionCountList(addWeeks(start, -1).getTime(), addWeeks(end, -1).getTime());
     this.initializeGraph(start, end);
+  }
+
+
+  /**
+   * 前の週に比べて魔剤注入数が減っていた場合のテキストの説明ポップ
+   * @param e   
+   */
+  async onClickMinusText(e: Event) {
+    this.minusTextdescPop.event = e;
+    await this.minusTextdescPop.present();
+  }
+
+  async onClickPlusText(e: Event) {
+    this.plusTextdescPop.event = e;
+    await this.plusTextdescPop.present();
   }
 
 }
