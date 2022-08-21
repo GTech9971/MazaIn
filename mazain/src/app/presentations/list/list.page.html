@@ -4,7 +4,7 @@
 
   <ion-grid fixed style="height: 100%;">
     <ion-row>
-      <swiper [pagination]="true">
+      <swiper [pagination]="true" (swiper)="setSwiperInstance($event)">
 
         <ng-container *ngFor="let mazai of this.mazaiObserver | async;">
           <ng-template swiperSlide>
