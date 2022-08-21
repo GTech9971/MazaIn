@@ -17,6 +17,7 @@ export class InjectingPage implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    this.processValue = 0;
     for (let i = 0; i <= 100; i++) {
       await this.setPercentBar(i);
     }
@@ -39,7 +40,7 @@ export class InjectingPage implements OnInit, OnDestroy {
         let apc = (i / 100);
         this.processValue = apc;
         resolve();
-      }, i);
+      }, i * 0.5);
     });
   }
 
