@@ -3,6 +3,8 @@
 }
 
 ion-card{
+    min-height: 533px;
+    min-width: 300px;
     ion-card-content{
         height: 100%;
     }
@@ -12,15 +14,24 @@ ion-fab{
     opacity: 0.8;
 }
 
+//縦
+@media screen and (orientation:portrait){
+    ion-fab{
+        top:60%;
+    }
+}
+//横
+@media screen and (orientation:landscape){
+    ion-fab{
+        top:70%;
+    }
+}
 
-//スマホ
+//スマホ 縦
 @media screen and (min-width:480px) {
     ion-card{
-        height: 533px;
-        width: 300px;
-        ion-card-content{
-            margin-top: 35%;
-        }
+        min-height: 533px;
+        min-width: 300px;
     }
 }
 
@@ -29,8 +40,5 @@ ion-fab{
     ion-card{
         height: 906px;
         width: 600px;
-        ion-card-content{
-            margin-top: 50%;
-        }
     }
 }
