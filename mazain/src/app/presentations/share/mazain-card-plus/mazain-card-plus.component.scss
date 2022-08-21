@@ -3,15 +3,34 @@
 }
 
 ion-card{
-    height: 533px;
-    width: 300px;
-
     ion-card-content{
-        margin-top: 35%;
         height: 100%;
     }
 }
 
 ion-fab{
     opacity: 0.8;
+}
+
+
+//スマホ
+@media screen and (min-width:480px) {
+    ion-card{
+        height: 533px;
+        width: 300px;
+        ion-card-content{
+            margin-top: 35%;
+        }
+    }
+}
+
+//ipad
+@media screen and (min-width:768px) {
+    ion-card{
+        height: 906px;
+        width: 600px;
+        ion-card-content{
+            margin-top: 50%;
+        }
+    }
 }

@@ -19,18 +19,8 @@
 }
 
 ion-card{
-    height: 533px;
-    width: 300px;
-
-    ion-card-title{
-        font-size: clamp(20px,2.9vw, 28px);
-    }
-
     ion-card-subtitle{
         line-height: 0.5;
-    }
-
-    ion-card-subtitle{
         text-transform: none;
     }
 }
@@ -39,4 +29,33 @@ ion-img{
     max-width: 145px;
     //max-height: 355px;
     max-height: 295px;
+}
+
+//スマホ
+@media screen and (min-width:480px) {
+    ion-card{
+        height: 533px;
+        width: 300px;
+
+        ion-card-title{
+            font-size: clamp(20px,2.9vw, 28px);
+        }
+    }
+}
+
+//ipad
+@media screen and (min-width:768px) {
+    ion-card{
+        height: 906px;
+        width: 600px;
+
+        ion-card-title{
+            font-size: clamp(28px,2.9vw, 36px);
+        }
+
+        ion-card-subtitle{
+            line-height: 0.7;
+            font-size: clamp(16px,2.9vw, 24px);
+        }
+    }
 }
