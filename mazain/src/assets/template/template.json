@@ -9,7 +9,7 @@
             "ImageDataLarge": "",
             "ImageDataMedium": "",
             "ImageDateSmall": "",
-            "ImageUrl": "/assets/samples/default.png"
+            "ImageUrl": "/assets/samples/default.svg"
         },
         "MazaiInjectionDataList": []
     },
@@ -23,7 +23,7 @@
             "ImageDataLarge": "",
             "ImageDataMedium": "",
             "ImageDateSmall": "",
-            "ImageUrl": "/assets/samples/default.png"
+            "ImageUrl": "/assets/samples/default.svg"
         },
         "MazaiInjectionDataList": []
     }

@@ -20,7 +20,7 @@ export class MazaiImplRepository extends MazaiRepository {
     async fetchMazaiList(): Promise<MazaiData[]> {
         let mazaiList: MazaiData[] = [];
         await this.storageService.Storage.forEach((val: string, key: string) => {
-            if (key.includes(ApplicationConst.MAZAI_LIST_KEY)) {
+            if (key.includes(ApplicationConst.MAZAI_KEY)) {
                 const work: MazaiData = JSON.parse(val);
                 mazaiList.push(work);
             }

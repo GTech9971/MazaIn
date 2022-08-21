@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { IonModal, ToastController } from '@ionic/angular';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ApplicationConst } from 'src/app/consts/Application.const';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
 import { MazaiImgData } from 'src/app/domain/models/MazaiImg.data';
 import { MazaiService } from 'src/app/domain/services/Mazai.service';
@@ -61,7 +62,7 @@ export class MazaiInputModalComponent implements OnInit {
       await this.mazaiService.fetchTemplateList();
       //デフォルトの画像を設定す
       const img: HTMLImageElement = new Image();
-      img.src = "assets/samples/default.png";
+      img.src = ApplicationConst.DEFAULT_IMG;
       this.inputForm.get('image').setValue(img);
       this.inputForm.updateValueAndValidity();
     } else {

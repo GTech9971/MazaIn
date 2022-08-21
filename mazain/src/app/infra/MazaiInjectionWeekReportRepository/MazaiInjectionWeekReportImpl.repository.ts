@@ -18,7 +18,7 @@ export class MazaiInjectionWeekReportImplRepository extends MazaiInjectionWeekRe
     async getRangeMazaiInjectionList(startDate: number, endDate: number): Promise<MazaiData[]> {
         const targetList: MazaiData[] = [];
         await this.storageService.Storage.forEach((val: string, key: string) => {
-            if (key.includes(ApplicationConst.MAZAI_LIST_KEY)) {
+            if (key.includes(ApplicationConst.MAZAI_KEY)) {
                 const work: MazaiData = JSON.parse(val);
                 work.MazaiInjectionDataList = work.MazaiInjectionDataList.filter(record => {
                     return record.InjecionDateTime <= endDate && record.InjecionDateTime >= startDate;

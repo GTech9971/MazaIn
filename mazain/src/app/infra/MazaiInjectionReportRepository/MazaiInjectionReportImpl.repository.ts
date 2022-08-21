@@ -19,7 +19,7 @@ export class MazaiInjectionReportImplRepository extends MazaiInjectionReportRepo
         let todayList: MazaiData[] = [];
         const NOW: Date = new Date();
         await this.storageService.Storage.forEach((val: string, key: string) => {
-            if (key.includes(ApplicationConst.MAZAI_LIST_KEY)) {
+            if (key.includes(ApplicationConst.MAZAI_KEY)) {
                 //今日接種したか                
                 const work: MazaiData = JSON.parse(val);
                 work.MazaiInjectionDataList = work.MazaiInjectionDataList.filter(record => {
@@ -38,7 +38,7 @@ export class MazaiInjectionReportImplRepository extends MazaiInjectionReportRepo
         let injectionCount: number = 0;
         const NOW: Date = new Date();
         await this.storageService.Storage.forEach((val: string, key: string) => {
-            if (key.includes(ApplicationConst.MAZAI_LIST_KEY)) {
+            if (key.includes(ApplicationConst.MAZAI_KEY)) {
                 const m: MazaiData = JSON.parse(val);
                 m.MazaiInjectionDataList.forEach(record => {
                     if (this.containsToday(record, NOW)) {
@@ -81,7 +81,7 @@ export class MazaiInjectionReportImplRepository extends MazaiInjectionReportRepo
         let latestMazai: MazaiData;
         let latestRecord: MazaiInjectionRecordData;
         await this.storageService.Storage.forEach((val: string, key: string) => {
-            if (key.includes(ApplicationConst.MAZAI_LIST_KEY)) {
+            if (key.includes(ApplicationConst.MAZAI_KEY)) {
                 const m: MazaiData = JSON.parse(val);
                 m.MazaiInjectionDataList.forEach(record => {
                     if (latestRecord === undefined) {
