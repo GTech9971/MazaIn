@@ -25,6 +25,7 @@ export class MockMazaiRepository extends MazaiRepository {
                 ImageDataMedium: '',
                 ImageDateSmall: '',
                 ImageUrl: '/assets/samples/IMG_0087.PNG',
+                MazaiGraphColor: '',
             },
             MazaiInjectionDataList: [{
                 InjecionDateTime: Date.now(),
@@ -60,6 +61,7 @@ export class MockMazaiRepository extends MazaiRepository {
                 ImageDataMedium: '',
                 ImageDateSmall: '',
                 ImageUrl: '/assets/samples/IMG_0088.PNG',
+                MazaiGraphColor: '',
             },
             MazaiInjectionDataList: [{
                 InjecionDateTime: Date.now(),
@@ -112,6 +114,7 @@ export class MockMazaiRepository extends MazaiRepository {
                     ImageDataMedium: '',
                     ImageDateSmall: '',
                     ImageUrl: '/assets/samples/IMG_0087.PNG',
+                    MazaiGraphColor: '',
                 },
                 MazaiInjectionDataList: [{
                     InjecionDateTime: Date.now(),
@@ -129,6 +132,7 @@ export class MockMazaiRepository extends MazaiRepository {
                     ImageDataMedium: '',
                     ImageDateSmall: '',
                     ImageUrl: '/assets/samples/IMG_0088.PNG',
+                    MazaiGraphColor: '',
                 },
                 MazaiInjectionDataList: []
             }

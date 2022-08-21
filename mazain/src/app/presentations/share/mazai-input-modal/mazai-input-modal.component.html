@@ -74,7 +74,7 @@
 
           <ion-item>
             <div class="img-box">
-              <ion-img *ngIf="this.uploadedPhoto" [src]="this.inputForm.get('image').value.src">
+              <ion-img [src]="this.inputForm.get('image').value?.src">
               </ion-img>
             </div>
 

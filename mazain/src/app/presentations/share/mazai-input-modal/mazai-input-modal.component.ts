@@ -25,9 +25,6 @@ export class MazaiInputModalComponent implements OnInit {
   /** 更新対象の魔剤 */
   @Input() updateMazai: MazaiData;
 
-  /** 写真アップロードフラグ */
-  protected uploadedPhoto: boolean;
-
   protected readonly inputForm = this.formBuilder.group<RegistryForm>({
     name: new FormControl('', [Validators.required, Validators.min(1)]),
     coffeIn: new FormControl(0, [Validators.required, Validators.min(0)]),
@@ -55,7 +52,6 @@ export class MazaiInputModalComponent implements OnInit {
 
 
   async ngOnInit() {
-    this.uploadedPhoto = false;
     //編集モードにも関わらず、更新対象の魔剤データがない場合エラー
     if (this.isNew === false && this.updateMazai === undefined) {
       throw "更新対象の魔剤がありません";
@@ -63,6 +59,11 @@ export class MazaiInputModalComponent implements OnInit {
 
     if (this.isNew) {
       await this.mazaiService.fetchTemplateList();
+      //デフォルトの画像を設定す
+      const img: HTMLImageElement = new Image();
+      img.src = "assets/samples/default.png";
+      this.inputForm.get('image').setValue(img);
+      this.inputForm.updateValueAndValidity();
     } else {
       this.inputForm.get('name').setValue(this.updateMazai.MazaiName);
       this.inputForm.get('coffeIn').setValue(this.updateMazai.MzaiCoffeIn);
@@ -72,7 +73,6 @@ export class MazaiInputModalComponent implements OnInit {
       img.src = this.mazaiImageService.getAvalableImage(this.updateMazai.MazaiImg);
       if (img.src) {
         this.inputForm.get('image').setValue(img);
-        this.uploadedPhoto = true;
       }
 
       this.inputForm.updateValueAndValidity();
@@ -98,7 +98,6 @@ export class MazaiInputModalComponent implements OnInit {
    */
   public async dismiss() {
     this.inputForm.reset();
-    this.uploadedPhoto = false;
     await this.modal.dismiss();
     await this.ngOnDestroy();
   }
@@ -128,7 +127,6 @@ export class MazaiInputModalComponent implements OnInit {
     if (selectMazai.MazaiImg && selectMazai.MazaiImg.ImageUrl) {
       image.src = selectMazai.MazaiImg.ImageUrl;
       this.inputForm.get('image').setValue(image);
-      this.uploadedPhoto = true;
     }
 
     this.inputForm.updateValueAndValidity();
@@ -145,8 +143,6 @@ export class MazaiInputModalComponent implements OnInit {
       let image: HTMLImageElement = new Image();
       image.src = e.target.result as string;
       this.inputForm.get('image').setValue(image);
-
-      this.uploadedPhoto = true;
     });
     reader.readAsDataURL(file);
   }

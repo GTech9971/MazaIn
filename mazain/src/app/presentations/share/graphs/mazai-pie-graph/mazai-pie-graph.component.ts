@@ -56,13 +56,10 @@ export class MazaiPieGraphComponent extends MazaiGraph implements OnInit, OnDest
           {
             label: "",
             data: this._rangeMazaiRaionList.map(ratio => { return ratio.InjectionCount }),
-            backgroundColor: [ //TODO 固定にしているので動的にさせる Mazaiモデルにカラーを組み込んで、編集画面で色を選ばせるか？
-              'rgb(255, 99, 132,0.2)',
-              'rgb(54, 162, 235,0.2)',
-            ], borderColor: [ //TODO 固定にしているので動的にさせる
-              'rgb(255, 99, 132)',
-              'rgb(54, 162, 235)',
-            ]
+            backgroundColor: this._rangeMazaiRaionList.map(ratio => {
+              return ratio.MazaiGraphColor.substring(0, ratio.MazaiGraphColor.length - 1) + ", 0.2)";
+            })
+            , borderColor: this._rangeMazaiRaionList.map(ratio => { return ratio.MazaiGraphColor }),
           }
         ]
       },

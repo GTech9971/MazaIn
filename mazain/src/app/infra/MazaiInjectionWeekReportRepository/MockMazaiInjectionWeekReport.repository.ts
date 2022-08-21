@@ -36,7 +36,7 @@ export class MockMazaiInjectionWeekReportRepository extends MazaiInjectionWeekRe
         const rationList: MazaiRationReportData[] = [];
         const targetList: MazaiData[] = await this.getRangeMazaiInjectionList(startDate, endDate);
         targetList.forEach(m => {
-            rationList.push({ MazaiName: m.MazaiName, InjectionCount: m.MazaiInjectionDataList.length });
+            rationList.push({ MazaiName: m.MazaiName, MazaiGraphColor: m.MazaiImg.MazaiGraphColor, InjectionCount: m.MazaiInjectionDataList.length });
         });
 
         return rationList;

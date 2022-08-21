@@ -61,12 +61,19 @@ export class MazaiImageService {
         //小
         const base64StrSmall: string = this.resizeImageSmall(image);
 
+        //魔剤割合グラフ色の設定
+        const r = Math.round(Math.random() * 255);
+        const g = Math.round(Math.random() * 255);
+        const b = Math.round(Math.random() * 255);
+
         let mazaiImage: MazaiImgData = {
             ImageDataLarge: base64StrBig,
             ImageDataMedium: base64StrMed,
             ImageDateSmall: base64StrSmall,
-            ImageUrl: imageUrl
+            ImageUrl: imageUrl,
+            MazaiGraphColor: `rgb(${r},${g},${b})`
         };
+
         return mazaiImage;
     }
 

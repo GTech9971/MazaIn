@@ -40,6 +40,7 @@ export class MazaiService {
      * @param mazai 
      */
     public async registryMazai(mazai: MazaiData): Promise<void> {
+        //UUIDの設定
         mazai.MazaiId = this.repository.generateUUID();
         await this.repository.registryMazai(mazai);
     }
