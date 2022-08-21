@@ -13,11 +13,13 @@ export abstract class MazaiInjectionReportRepository {
 
     /**
      * 魔剤画像の角度をランダムに取得する
+     * 真っ直ぐの方が良いので修正
      * @returns 
      */
     public getRandomImageDeg(): number {
         let rand: number = Math.floor(Math.random() * this.DEG_TABLE.length);
-        return this.DEG_TABLE[rand];
+        //return this.DEG_TABLE[rand];
+        return 0;
     }
 
     /**
