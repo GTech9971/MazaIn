@@ -1,9 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DetailPage } from '../detail/detail.page';
-import { ListPage } from '../list/list.page';
-import { RecordPage } from '../record/record.page';
-
 import { TabPage } from './tab.page';
 
 const routes: Routes = [

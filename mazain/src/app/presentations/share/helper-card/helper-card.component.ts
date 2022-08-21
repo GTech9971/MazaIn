@@ -19,18 +19,20 @@ export class HelperCardComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
 
-  _helperComment: MazaiHelpContextData;
-  readonly helperCommentObserver: Observable<MazaiHelpContextData>;
+  // _helperComment: MazaiHelpContextData;
+  // readonly helperCommentObserver: Observable<MazaiHelpContextData>;
 
   constructor(private injectionHelperService: MazaiInjectionHelperService) {
-    this.helperCommentObserver = this.injectionHelperService.HelperCommentObserver;
-    this.helperCommentObserver.pipe(takeUntil(this.destroy$)).subscribe(comment => { this._helperComment = comment; });
+    //TODO ヘルプコメントは一旦なし
+    // this.helperCommentObserver = this.injectionHelperService.HelperCommentObserver;
+    // this.helperCommentObserver.pipe(takeUntil(this.destroy$)).subscribe(comment => { this._helperComment = comment; });
   }
 
   get now(): Date { return new Date(); }
 
   async ngOnInit() {
-    await this.injectionHelperService.fetchHelperComment(this.energyReport);
+    //TODO ヘルプコメントは一旦なし
+    //await this.injectionHelperService.fetchHelperComment(this.energyReport);    
   }
 
   ngOnDestroy(): void {
