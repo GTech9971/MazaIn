@@ -210,6 +210,17 @@ export class MazaiInputModalComponent implements OnInit {
     await this.router.navigate(['tab/list']);
   }
 
+
+  /**
+   * 画像をデフォルトに戻す
+   */
+  onResetImgBtn() {
+    const img: HTMLImageElement = new Image();
+    img.src = ApplicationConst.DEFAULT_IMG;
+    this.inputForm.get('image').setValue(img);
+    this.inputForm.updateValueAndValidity();
+  }
+
 }
 
 interface RegistryForm {

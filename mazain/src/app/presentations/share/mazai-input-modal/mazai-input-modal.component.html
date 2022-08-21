@@ -76,6 +76,9 @@
             <div class="img-box">
               <ion-img [src]="this.inputForm.get('image').value?.src">
               </ion-img>
+
+              <ion-icon (click)="onResetImgBtn()" class="delete-icon" name="close-circle-outline"></ion-icon>
+
             </div>
 
           </ion-item>
