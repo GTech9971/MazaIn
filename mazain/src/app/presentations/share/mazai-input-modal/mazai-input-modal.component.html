@@ -31,7 +31,7 @@
           <ion-item>
             <ion-label position="stacked">テンプレートから選ぶ</ion-label>
 
-            <ion-select multiple="false" placeholder="魔剤を選択" (ionChange)="onSelectTemplate($event)">
+            <ion-select multiple="false" placeholder="魔剤を選択(※成分は参考値です)" (ionChange)="onSelectTemplate($event)">
               <ng-container *ngFor="let template of this.templateObserver | async">
                 <ion-select-option value="{{template.MazaiId}}">{{template.MazaiName}}</ion-select-option>
               </ng-container>
