@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Platform } from '@ionic/angular';
 import { StorageService } from './domain/services/Storage.service';
 
 @Component({
@@ -7,11 +8,21 @@ import { StorageService } from './domain/services/Storage.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private storageService: StorageService) {
+  constructor(private platform: Platform,
+    private storageService: StorageService) {
   }
 
   async ngOnInit() {
+    await this.platform.ready();
     await this.storageService.init();
+  }
+
+
+  /**
+   * プライバシーポリシーページに飛ぶ
+   */
+  onClickPrivacyPolicyBtn() {
+
   }
 
 }

@@ -9,4 +9,6 @@ export class ApplicationConst {
 
     public static readonly DEFAULT_IMG: string = "/assets/samples/default.svg";
 
+
+    public static readonly PRVACY_POLICY_URL: string = "";
 }
