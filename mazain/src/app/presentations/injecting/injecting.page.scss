@@ -1,7 +1,14 @@
+.injection-box{
+    justify-content: center;
+    height: 60%;
+    position: relative;
+}
+
 .injection{
     -webkit-transform: rotate(90deg);
     height: 20%;
-    margin-top: 50%;
+    position: absolute;
+    top: 50%;
 }
 
 .injection-text{
@@ -9,4 +16,40 @@
     margin-top: 70px;
     text-align: center;
     font-weight: bold;
+}
+
+
+//スマホ 縦向き
+@media screen and (min-width:480px) and (orientation:portrait){
+    .injection{
+        width: 85%;
+      }
+}
+
+//スマホ 横向き
+@media screen and (min-width:480px) and (orientation:landscape){
+    .injection{
+        width: 40%;
+    }
+}
+
+//ipad
+@media screen and (min-width:768px){
+    h1{
+        font-size: clamp(50px,2.9vw, 60px);
+    }
+}
+
+//ipad 縦向き
+@media screen and (min-width:768px) and (orientation:portrait){
+  .injection{
+    width: 85%;
+  }
+}
+
+//ipad 縦向き
+@media screen and (min-width:768px) and (orientation:landscape){
+    .injection{
+      width: 40%;
+    }
 }

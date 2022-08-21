@@ -3,18 +3,24 @@
 <ion-content [fullscreen]="true">
 
   <ion-grid fixed style="height: 100%;">
-    <ion-row style="height: 100%;">
+
+    <ion-row class="injection-box">
       <ion-progress-bar class="injection" type="determinate" [value]="this.processValue" color="success">
       </ion-progress-bar>
+    </ion-row>
 
-      <br>
 
+    <ion-row>
       <ion-text class="injection-text" color="primary">
         <h1>魔剤注入中</h1>
       </ion-text>
+    </ion-row>
 
+    <ion-row>
       <ion-progress-bar type="indeterminate"></ion-progress-bar>
     </ion-row>
+
+
   </ion-grid>
 
 </ion-content>
