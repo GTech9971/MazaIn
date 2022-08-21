@@ -30,7 +30,7 @@ export class ListPage implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.mazaiService.fetchMazaiList();
+    await this.mazaiService.fetchMazaiList();
   }
 
   ngOnDestroy(): void {

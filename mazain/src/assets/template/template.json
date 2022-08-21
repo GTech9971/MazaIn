@@ -1,0 +1,30 @@
+[
+    {
+        "MazaiId": "000",
+        "MazaiName": "モンスターエナジー355ml",
+        "MzaiCoffeIn": 126,
+        "MazaiKcal": 147,
+        "MazaiSugar": 38.5,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "/assets/samples/IMG_0087.PNG"
+        },
+        "MazaiInjectionDataList": []
+    },
+    {
+        "MazaiId": "001",
+        "MazaiName": "レッドブル250ml",
+        "MzaiCoffeIn": 80,
+        "MazaiKcal": 113.5,
+        "MazaiSugar": 27.5,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "/assets/samples/IMG_0088.PNG"
+        },
+        "MazaiInjectionDataList": []
+    }
+]

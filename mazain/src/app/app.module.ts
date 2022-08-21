@@ -14,12 +14,20 @@ import { MazaiInjectionHelperRepository } from './domain/repositories/MazaiInjec
 import { MockMazaiInjectionHelperRepository } from './infra/MazaiInjectionHelperRepository/MockMazaiInjectionHelper.repository';
 import { MazaiInjectionWeekReportRepository } from './domain/repositories/MazaiInjectionWeekReport.repository';
 import { MockMazaiInjectionWeekReportRepository } from './infra/MazaiInjectionWeekReportRepository/MockMazaiInjectionWeekReport.repository';
+import { IonicStorageModule } from '@ionic/storage-angular';
+import { HttpClientModule } from '@angular/common/http';
+import { MazaiImplRepository } from './infra/MazaiRepository/MazaiImpl.repository';
+import { MazaiInjectionReportImplRepository } from './infra/MazaiInjectionReportRepository/MazaiInjectionReportImpl.repository';
+import { MazaiInjectionWeekReportImplRepository } from './infra/MazaiInjectionWeekReportRepository/MazaiInjectionWeekReportImpl.repository';
 
-const MOCK: Provider[] = [
-  { provide: MazaiRepository, useClass: MockMazaiRepository },
-  { provide: MazaiInjectionReportRepository, useClass: MockMazaiInjectionReportRepository },
-  { provide: MazaiInjectionHelperRepository, useClass: MockMazaiInjectionHelperRepository },
-  { provide: MazaiInjectionWeekReportRepository, useClass: MockMazaiInjectionWeekReportRepository },
+/** Mockを使用するかどうか */
+const isMock: boolean = false;
+
+const PROVIDERS: Provider[] = [
+  { provide: MazaiRepository, useClass: isMock ? MockMazaiRepository : MazaiImplRepository },
+  { provide: MazaiInjectionReportRepository, useClass: isMock ? MockMazaiInjectionReportRepository : MazaiInjectionReportImplRepository },
+  { provide: MazaiInjectionHelperRepository, useClass: MockMazaiInjectionHelperRepository },//TODO
+  { provide: MazaiInjectionWeekReportRepository, useClass: isMock ? MockMazaiInjectionWeekReportRepository : MazaiInjectionWeekReportImplRepository },
 ];
 
 @NgModule({
@@ -27,11 +35,13 @@ const MOCK: Provider[] = [
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    IonicStorageModule.forRoot(),
+    HttpClientModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    MOCK,
+    PROVIDERS,
   ],
   bootstrap: [AppComponent],
 })

@@ -28,19 +28,19 @@ export class MazaiImageService {
      * @returns 
      */
     public getAvalableImage(mazaiImage: MazaiImgData): string {
-        if (mazaiImage.ImageDataMedium) {
+        if (mazaiImage?.ImageDataMedium && mazaiImage.ImageDataMedium.length > 0) {
             return mazaiImage.ImageDataMedium;
         }
 
-        if (mazaiImage.ImageDataLarge) {
+        if (mazaiImage?.ImageDataLarge && mazaiImage.ImageDataLarge.length > 0) {
             return mazaiImage.ImageDataLarge;
         }
 
-        if (mazaiImage.ImageUrl) {
+        if (mazaiImage?.ImageUrl && mazaiImage.ImageUrl.length > 0) {
             return mazaiImage.ImageUrl;
         }
 
-        if (mazaiImage.ImageDateSmall) {
+        if (mazaiImage?.ImageDateSmall && mazaiImage.ImageDateSmall.length > 0) {
             return mazaiImage.ImageDateSmall;
         }
 

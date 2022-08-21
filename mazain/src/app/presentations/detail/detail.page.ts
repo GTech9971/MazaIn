@@ -32,19 +32,19 @@ export class DetailPage implements OnInit, OnDestroy {
   get LatestCoffeInPer(): number {
     //注入ページから遷移した場合、プログレスバーに注入分のバッファを表示させる
     if (this.isNavInjectionPage) {
-      return this.TodayCoffeInInTakePer - this._latestMazaiInjection.MzaiCoffeIn / this.RECOMMEND_COFFEIN;
+      return this.TodayCoffeInInTakePer - this._latestMazaiInjection?.MzaiCoffeIn / this.RECOMMEND_COFFEIN;
     }
     return this.TodayCoffeInInTakePer;
   }
   get LatestSugarPer(): number {
     if (this.isNavInjectionPage) {
-      return this.TodaySugarInTakePer - this._latestMazaiInjection.MazaiSugar / this.RECOMMEND_SUGAR;
+      return this.TodaySugarInTakePer - this._latestMazaiInjection?.MazaiSugar / this.RECOMMEND_SUGAR;
     }
     return this.TodaySugarInTakePer
   }
   get LatestKcalPer(): number {
     if (this.isNavInjectionPage) {
-      return this.TodayKcalInTakePer - this._latestMazaiInjection.MazaiKcal / this.RECOMMEND_KCAL;
+      return this.TodayKcalInTakePer - this._latestMazaiInjection?.MazaiKcal / this.RECOMMEND_KCAL;
     }
     return this.TodayKcalInTakePer;
   }
@@ -73,8 +73,6 @@ export class DetailPage implements OnInit, OnDestroy {
   async ngOnInit() {
     await this.injectionReportService.fetchTodayEnergyReport();
 
-
-
     //注入ページから遷移したかどうか
     this.isNavInjectionPage = false;
     this.router.queryParams.pipe(takeUntil(this.destroy$)).subscribe(async params => {
@@ -92,6 +90,7 @@ export class DetailPage implements OnInit, OnDestroy {
 
   async ionViewDidEnter() {
     await this.mazaiShowCase.refreshData();
+    await this.injectionReportService.fetchTodayEnergyReport();
   }
 
 }
