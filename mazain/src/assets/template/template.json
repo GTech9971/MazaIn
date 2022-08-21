@@ -1,6 +1,21 @@
 [
     {
         "MazaiId": "000",
+        "MazaiName": "モンスターエナジー500ml",
+        "MzaiCoffeIn": 180,
+        "MazaiKcal": 250,
+        "MazaiSugar": 55,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "/assets/samples/default.svg",
+            "MazaiGraphColor": ""
+        },
+        "MazaiInjectionDataList": []
+    },
+    {
+        "MazaiId": "001",
         "MazaiName": "モンスターエナジー355ml",
         "MzaiCoffeIn": 126,
         "MazaiKcal": 147,
@@ -9,12 +24,13 @@
             "ImageDataLarge": "",
             "ImageDataMedium": "",
             "ImageDateSmall": "",
-            "ImageUrl": "/assets/samples/default.svg"
+            "ImageUrl": "/assets/samples/default.svg",
+            "MazaiGraphColor": ""
         },
         "MazaiInjectionDataList": []
     },
     {
-        "MazaiId": "001",
+        "MazaiId": "002",
         "MazaiName": "レッドブル250ml",
         "MzaiCoffeIn": 80,
         "MazaiKcal": 113.5,
@@ -23,7 +39,113 @@
             "ImageDataLarge": "",
             "ImageDataMedium": "",
             "ImageDateSmall": "",
-            "ImageUrl": "/assets/samples/default.svg"
+            "ImageUrl": "/assets/samples/default.svg",
+            "MazaiGraphColor": ""
+        },
+        "MazaiInjectionDataList": []
+    },
+    {
+        "MazaiId": "002-1",
+        "MazaiName": "レッドブル355ml",
+        "MzaiCoffeIn": 106.5,
+        "MazaiKcal": 152.09,
+        "MazaiSugar": 35.5,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "/assets/samples/default.svg",
+            "MazaiGraphColor": ""
+        },
+        "MazaiInjectionDataList": []
+    },
+    {
+        "MazaiId": "002-2",
+        "MazaiName": "レッドブル500ml",
+        "MzaiCoffeIn": 150,
+        "MazaiKcal": 227,
+        "MazaiSugar": 50,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "/assets/samples/default.svg",
+            "MazaiGraphColor": ""
+        },
+        "MazaiInjectionDataList": []
+    },
+    {
+        "MazaiId": "002-3",
+        "MazaiName": "ZONe Ver.2.2.0 type-T",
+        "MzaiCoffeIn": 150,
+        "MazaiKcal": 265,
+        "MazaiSugar": 61,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "/assets/samples/default.svg",
+            "MazaiGraphColor": ""
+        },
+        "MazaiInjectionDataList": []
+    },
+    {
+        "MazaiId": "003",
+        "MazaiName": "コカコーラ500ml",
+        "MzaiCoffeIn": 50,
+        "MazaiKcal": 225,
+        "MazaiSugar": 61,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "/assets/samples/default.svg",
+            "MazaiGraphColor": ""
+        },
+        "MazaiInjectionDataList": []
+    },
+    {
+        "MazaiId": "004",
+        "MazaiName": "コカコーラ350ml",
+        "MzaiCoffeIn": 35,
+        "MazaiKcal": 157.5,
+        "MazaiSugar": 42,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "/assets/samples/default.svg",
+            "MazaiGraphColor": ""
+        },
+        "MazaiInjectionDataList": []
+    },
+    {
+        "MazaiId": "005",
+        "MazaiName": "コカコーラ・ゼロ500ml",
+        "MzaiCoffeIn": 50,
+        "MazaiKcal": 0,
+        "MazaiSugar": 0,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "/assets/samples/default.svg",
+            "MazaiGraphColor": ""
+        },
+        "MazaiInjectionDataList": []
+    },
+    {
+        "MazaiId": "006",
+        "MazaiName": "コカコーラ・ゼロ350ml",
+        "MzaiCoffeIn": 35,
+        "MazaiKcal": 0,
+        "MazaiSugar": 0,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "/assets/samples/default.svg",
+            "MazaiGraphColor": ""
         },
         "MazaiInjectionDataList": []
     }
