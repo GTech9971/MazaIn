@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { IonPopover } from '@ionic/angular';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
+import { MazaiInjectionRecordData } from 'src/app/domain/models/MazaiInjectionRecord.data';
 import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInjectionReport.service';
 
 @Component({
@@ -10,6 +12,7 @@ import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInject
   styleUrls: ['./mazai-showcase.component.scss'],
 })
 export class MazaiShowcaseComponent implements OnInit, OnDestroy {
+  @ViewChild('mazaiPopver') mazaiPopver: IonPopover;
 
   private readonly destroy$: Subject<void> = new Subject<void>();
 
@@ -46,5 +49,23 @@ export class MazaiShowcaseComponent implements OnInit, OnDestroy {
   public async refreshData() {
     await this.injectionReportService.fetchTodayMazaiInjectionCount();
     await this.injectionReportService.fetchTodayMazaiInjectionList();
+  }
+
+  /**
+   * 魔剤のサムネクリック時
+   * @param e 
+   */
+  async onClickMazaiThumbnail(e: Event) {
+    this.mazaiPopver.event = e;
+    await this.mazaiPopver.present();
+  }
+
+  /**
+   * 魔剤注入取消
+   * @param mazai 
+   * @param record
+   */
+  async onClickDeleteInjevtion(mazai: MazaiData, record: MazaiInjectionRecordData) {
+    //TODO confrmで確認ご、注入の取り消し、最fetch
   }
 }

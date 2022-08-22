@@ -1,14 +1,22 @@
 <div class="root">
   <ng-container *ngFor="let mazai of this.mazaiInjectionListObserver | async">
-    <ng-container *ngFor="let record of mazai.MazaiInjectionDataList">
+    <ng-container *ngFor="let record of mazai?.MazaiInjectionDataList">
 
-      <app-mazai-thumbnail id="{{mazai.MazaiId}}-{{record.InjecionDateTime}}" [mazai]="mazai">
+      <app-mazai-thumbnail (click)="onClickMazaiThumbnail($event)" [mazai]="mazai">
       </app-mazai-thumbnail>
 
-      <ion-popover trigger="{{mazai.MazaiId}}-{{record.InjecionDateTime}}">
+      <ion-popover #mazaiPopver>
         <ng-template>
-          <ion-content class="ion-padding">
-            {{record.InjecionDateTime | date:'yyyy/MM/dd hh:mm:ss'}}注入
+          <ion-content class="ion-padding" style="width: fit-content;">
+            <ion-list>
+              <ion-item lines="none">
+                <ion-label>{{record.InjecionDateTime | date:'a hh:mm:ss'}}注入</ion-label>
+              </ion-item>
+              <ion-item (click)="onClickDeleteInjevtion(mazai, record)" button="true" lines="none">
+                <ion-label color="danger">注入取消</ion-label>
+              </ion-item>
+            </ion-list>
+
           </ion-content>
         </ng-template>
       </ion-popover>
