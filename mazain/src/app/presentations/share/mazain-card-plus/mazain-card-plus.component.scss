@@ -1,44 +1,20 @@
-:host{
-    height: 100%;
-}
-
 ion-card{
-    min-height: 533px;
-    min-width: 300px;
-    ion-card-content{
-        height: 100%;
-    }
+    height: 533px !important;
+    width: 332px !important;    
 }
 
 ion-fab{
     opacity: 0.8;
 }
 
-//縦
-@media screen and (orientation:portrait){
-    ion-fab{
-        top:60%;
+//スマホ横
+@media screen and (min-width:480px) and (orientation:landscape){
+    ion-card{
+        height: 245px !important;
+        width: 498px !important;
     }
-}
-//横
-@media screen and (orientation:landscape){
+
     ion-fab{
         top:70%;
-    }
-}
-
-//スマホ 縦
-@media screen and (min-width:480px) {
-    ion-card{
-        min-height: 533px;
-        min-width: 300px;
-    }
-}
-
-//ipad
-@media screen and (min-width:768px) {
-    ion-card{
-        height: 906px;
-        width: 600px;
     }
 }
