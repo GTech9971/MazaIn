@@ -2,9 +2,8 @@
   <ng-container *ngFor="let mazai of this.mazaiInjectionListObserver | async">
     <ng-container *ngFor="let record of mazai.MazaiInjectionDataList">
 
-      <ion-img id="{{mazai.MazaiId}}-{{record.InjecionDateTime}}" [src]="this.getAvailableImgSrc(mazai)"
-        [style.transform]="'rotate(' + record.ImageDeg + 'deg)'">
-      </ion-img>
+      <app-mazai-thumbnail id="{{mazai.MazaiId}}-{{record.InjecionDateTime}}" [mazai]="mazai">
+      </app-mazai-thumbnail>
 
       <ion-popover trigger="{{mazai.MazaiId}}-{{record.InjecionDateTime}}">
         <ng-template>
@@ -13,6 +12,7 @@
           </ion-content>
         </ng-template>
       </ion-popover>
+
     </ng-container>
   </ng-container>
 </div>

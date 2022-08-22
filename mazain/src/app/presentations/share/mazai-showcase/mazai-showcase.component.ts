@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
-import { MazaiImageService } from 'src/app/domain/services/MazaiImage.service';
 import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInjectionReport.service';
 
 @Component({
@@ -22,9 +21,7 @@ export class MazaiShowcaseComponent implements OnInit, OnDestroy {
   _todayMazaiInjectionList: MazaiData[];
   readonly mazaiInjectionListObserver: Observable<MazaiData[]>;
 
-  constructor(private injectionReportService: MazaiInjectionReportService,
-    private mazaiImageService: MazaiImageService) {
-
+  constructor(private injectionReportService: MazaiInjectionReportService,) {
     this._todayMazaiInjectionCount = 0;
     this.mazaiInjectionCountObserver = this.injectionReportService.TodayMazaiInjectionCountObserver;
     this.mazaiInjectionCountObserver.pipe(takeUntil(this.destroy$)).subscribe(count => { this._todayMazaiInjectionCount = count; });
@@ -49,9 +46,5 @@ export class MazaiShowcaseComponent implements OnInit, OnDestroy {
   public async refreshData() {
     await this.injectionReportService.fetchTodayMazaiInjectionCount();
     await this.injectionReportService.fetchTodayMazaiInjectionList();
-  }
-
-  getAvailableImgSrc(mazai: MazaiData): string {
-    return this.mazaiImageService.getAvalableImage(mazai.MazaiImg);
   }
 }
