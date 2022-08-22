@@ -74,8 +74,8 @@
 
           <ion-item>
             <div class="img-box">
-              <ion-img [src]="this.inputForm.get('image').value?.src">
-              </ion-img>
+
+              <app-mazai-image [imgSrc]="this.inputForm.get('image').value?.src"></app-mazai-image>
 
               <ion-icon (click)="onResetImgBtn()" class="delete-icon" name="close-circle-outline"></ion-icon>
 

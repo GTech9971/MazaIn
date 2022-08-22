@@ -10,12 +10,20 @@ import { MazaiImageService } from 'src/app/domain/services/MazaiImage.service';
 export class MazaiImageComponent implements OnInit {
 
   /**
-  * 魔剤データ
+  * 魔剤データ 指定した場合優先
   */
-  @Input() mazai: MazaiData;
+  @Input() mazai: MazaiData = undefined;
+
+  /**
+   * 魔剤画像ソース
+   */
+  @Input() imgSrc: string;
 
   get ImageSrc(): string {
-    return this.mazaiImageSercvice.getAvalableImage(this.mazai.MazaiImg);
+    if (this.mazai !== undefined && this.mazai !== null) {
+      return this.mazaiImageSercvice.getAvalableImage(this.mazai.MazaiImg);
+    }
+    return this.imgSrc;
   }
 
   constructor(private mazaiImageSercvice: MazaiImageService,) { }
