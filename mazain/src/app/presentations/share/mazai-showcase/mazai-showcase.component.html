@@ -10,7 +10,7 @@
           <ion-content class="ion-padding" style="width: fit-content;">
             <ion-list>
               <ion-item lines="none">
-                <ion-label>{{record.InjecionDateTime | date:'a hh:mm:ss'}}注入</ion-label>
+                <ion-label>{{record.InjecionDateTime | date:'a hh:mm'}}注入</ion-label>
               </ion-item>
               <ion-item (click)="onClickDeleteInjevtion(mazai, record)" button="true" lines="none">
                 <ion-label color="danger">注入取消</ion-label>
