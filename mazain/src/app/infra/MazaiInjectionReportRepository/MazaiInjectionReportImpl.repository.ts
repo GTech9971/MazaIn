@@ -77,6 +77,15 @@ export class MazaiInjectionReportImplRepository extends MazaiInjectionReportRepo
         await this.storageService.set(ApplicationConst.getMazaiStorageKey(mazai), JSON.stringify(target));
     }
 
+    async deleteInjectionMazai(mazai: MazaiData, record: MazaiInjectionRecordData): Promise<void> {
+        const jsonStr: string = await this.storageService.get(ApplicationConst.getMazaiStorageKey(mazai));
+        const work: MazaiData = JSON.parse(jsonStr);
+        work.MazaiInjectionDataList = work.MazaiInjectionDataList.filter(r => {
+            return r.InjecionDateTime !== record.InjecionDateTime;
+        });
+        await this.storageService.set(ApplicationConst.getMazaiStorageKey(work), JSON.stringify(work));
+    }
+
     async getLatestMazaiInjection(): Promise<MazaiData> {
         let latestMazai: MazaiData;
         let latestRecord: MazaiInjectionRecordData;

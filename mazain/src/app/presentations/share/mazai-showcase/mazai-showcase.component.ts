@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { IonPopover } from '@ionic/angular';
+import { AlertController, IonPopover, ToastController } from '@ionic/angular';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
@@ -24,7 +24,9 @@ export class MazaiShowcaseComponent implements OnInit, OnDestroy {
   _todayMazaiInjectionList: MazaiData[];
   readonly mazaiInjectionListObserver: Observable<MazaiData[]>;
 
-  constructor(private injectionReportService: MazaiInjectionReportService,) {
+  constructor(private alertCtrl: AlertController,
+    private toastCtrl: ToastController,
+    private injectionReportService: MazaiInjectionReportService,) {
     this._todayMazaiInjectionCount = 0;
     this.mazaiInjectionCountObserver = this.injectionReportService.TodayMazaiInjectionCountObserver;
     this.mazaiInjectionCountObserver.pipe(takeUntil(this.destroy$)).subscribe(count => { this._todayMazaiInjectionCount = count; });
@@ -66,6 +68,31 @@ export class MazaiShowcaseComponent implements OnInit, OnDestroy {
    * @param record
    */
   async onClickDeleteInjevtion(mazai: MazaiData, record: MazaiInjectionRecordData) {
-    //TODO confrmで確認ご、注入の取り消し、最fetch
+    const DEL: string = "confirm";
+    const confirm: HTMLIonAlertElement = await this.alertCtrl.create({
+      header: '警告',
+      subHeader: `${mazai.MazaiName}の注入記録を削除してもよろしいですか。`,
+      buttons: [
+        {
+          text: 'キャンセル',
+          role: 'cancel'
+        },
+        {
+          text: '削除',
+          role: 'confirm'
+        }
+      ]
+    });
+
+    await confirm.present();
+    const { role } = await confirm.onDidDismiss();
+    //魔剤注入記録を削除する
+    if (role === DEL) {
+      await this.injectionReportService.deleteInjectionMazai(mazai, record);
+      await this.refreshData();
+      const toast: HTMLIonToastElement = await this.toastCtrl.create({ message: `${mazai.MazaiName}の注入記録を削除しました。`, duration: 1500 });
+      await toast.present();
+    }
+
   }
 }

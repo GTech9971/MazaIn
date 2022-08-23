@@ -88,6 +88,13 @@ export abstract class MazaiInjectionReportRepository {
      */
     abstract injectionMazai(mazai: MazaiData): Promise<void>;
 
+    /**
+     * 魔剤注入記録を削除
+     * @param mazai 
+     * @param record 
+     */
+    abstract deleteInjectionMazai(mazai: MazaiData, record: MazaiInjectionRecordData): Promise<void>;
+
 
     /**
      * 最後に接種した魔剤を取得する

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { EnergyInjectionReportData } from "../models/EnergyInjectionReport.data";
 import { MazaiData } from "../models/Mazai.data";
+import { MazaiInjectionRecordData } from "../models/MazaiInjectionRecord.data";
 import { MazaiInjectionReportRepository } from "../repositories/MazaiInjectionReport.repository";
 
 @Injectable({
@@ -63,6 +64,17 @@ export class MazaiInjectionReportService {
      */
     public async injectionMazai(mazai: MazaiData): Promise<void> {
         await this.repository.injectionMazai(mazai);
+
+        await this.fetchTodayMazaiInjectionCount();
+        await this.fetchTodayEnergyReport();
+    }
+
+    /**
+     * 魔剤注入削除
+     * 自動で、今日の注入数、エナジーレポートを再取得する
+     */
+    public async deleteInjectionMazai(mazai: MazaiData, record: MazaiInjectionRecordData): Promise<void> {
+        await this.repository.deleteInjectionMazai(mazai, record);
 
         await this.fetchTodayMazaiInjectionCount();
         await this.fetchTodayEnergyReport();

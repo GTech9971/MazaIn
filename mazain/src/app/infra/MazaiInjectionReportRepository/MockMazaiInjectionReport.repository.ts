@@ -74,6 +74,16 @@ export class MockMazaiInjectionReportRepository extends MazaiInjectionReportRepo
         });
     }
 
+    async deleteInjectionMazai(mazai: MazaiData, record: MazaiInjectionRecordData): Promise<void> {
+        this.mazaiRepository.mazaiList.forEach(m => {
+            if (mazai.MazaiId === m.MazaiId) {
+                m.MazaiInjectionDataList = m.MazaiInjectionDataList.filter(r => {
+                    return r.InjecionDateTime !== record.InjecionDateTime;
+                });
+            }
+        });
+    }
+
     async getLatestMazaiInjection(): Promise<MazaiData> {
         let latestMazai: MazaiData;
         let latestRecord: MazaiInjectionRecordData;
