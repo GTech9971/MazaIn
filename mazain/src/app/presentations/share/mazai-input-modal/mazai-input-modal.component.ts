@@ -137,9 +137,10 @@ export class MazaiInputModalComponent implements OnInit {
    * 写真データの設定
    * @param event 
    */
-  protected previewPhoto(event) {
+  protected async previewPhoto(event): Promise<void> {
     const reader: FileReader = new FileReader();
-    const file = event.target.files[0];
+    //画像を圧縮
+    const file: File = await this.mazaiImageService.compressImage(event.target.files[0]);
     reader.onload = ((e) => {
       let image: HTMLImageElement = new Image();
       image.src = e.target.result as string;

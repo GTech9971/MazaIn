@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import imageCompression from "browser-image-compression";
 import { MazaiImgData } from "../models/MazaiImg.data";
 
 @Injectable({
@@ -15,7 +16,22 @@ export class MazaiImageService {
     public readonly SMALL_WIDTH: number = 14;
     public readonly SMALL_HEIGHT: number = 35;
 
+    private readonly COMPRESS_OPTION = {
+        maxSizeMB: 0.25,
+        maxWidthOrHeight: 500,
+        alwaysKeepResolution: true,
+    };
+
     constructor() { }
+
+    /**
+     * 画像を圧縮する
+     * @param imageFile 
+     * @returns 
+     */
+    public async compressImage(imageFile: File): Promise<File> {
+        return await imageCompression(imageFile, this.COMPRESS_OPTION);
+    }
 
     /**
      * 取得可能な画像データを返す
@@ -89,7 +105,6 @@ export class MazaiImageService {
     private resizeImageSmall(image: HTMLImageElement): string {
         return this.resizeImage(image, this.SMALL_WIDTH, this.SMALL_HEIGHT);
     }
-
 
     private resizeImage(image: HTMLImageElement, resizeWidth: number, resizeHeight: number): string {
         //TODO リサイズがうまくいかない画像が切り取られる
