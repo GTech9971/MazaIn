@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { addDays, format } from "date-fns";
 import { ApplicationConst } from "src/app/consts/Application.const";
 import { EnergyInjectionReportData } from "src/app/domain/models/EnergyInjectionReport.data";
 import { MazaiData } from "src/app/domain/models/Mazai.data";
@@ -41,15 +42,53 @@ export class MazaiInjectionWeekReportImplRepository extends MazaiInjectionWeekRe
         return rationList;
     }
 
+    private createDateKey(date: number): string {
+        return format(date, 'yyyy-MM-dd');
+    }
+
     async getRangeEnergyInjectionList(startDate: number, endDate: number): Promise<EnergyInjectionReportData[]> {
         const enrgyReportList: EnergyInjectionReportData[] = [];
         const targetList: MazaiData[] = await this.getRangeMazaiInjectionList(startDate, endDate);
-        targetList.forEach(m => {
-            enrgyReportList.push({
-                CoffeInIntake: m.MzaiCoffeIn * m.MazaiInjectionDataList.length,
-                SugarInTake: m.MazaiSugar * m.MazaiInjectionDataList.length,
-                KcalInTake: m.MazaiKcal * m.MazaiInjectionDataList.length
+        let list: { dateKey: string, mazaiList: MazaiData[] }[] = [];
+
+        let workDate: Date = new Date(startDate);
+        while (true) {
+            const DATE_KEY: string = this.createDateKey(workDate.getTime());
+            if (DATE_KEY === this.createDateKey(addDays(endDate, 1).getTime())) { break; }
+
+            targetList.forEach(m => {
+                const jsonStr: string = JSON.stringify(m);
+                const work: MazaiData = JSON.parse(jsonStr);
+                work.MazaiInjectionDataList = work.MazaiInjectionDataList.filter(record => {
+                    console.log("INJ:" + this.createDateKey(record.InjecionDateTime));
+                    console.log("KEY:" + DATE_KEY);
+                    return this.createDateKey(record.InjecionDateTime) === DATE_KEY;
+                });
+
+                if (work.MazaiInjectionDataList.length > 0) {
+                    const idx: number = list.findIndex(itm => { return itm.dateKey === DATE_KEY });
+                    if (idx === -1) {
+                        list.push({ dateKey: DATE_KEY, mazaiList: Array.of(work) });
+                    } else {
+                        list[idx].mazaiList.push(work);
+                    }
+                }
             });
+
+            workDate = addDays(workDate, 1);
+        }
+
+        console.log(list);
+
+        // TODO listまではあっているが、list foreachだと上からデータが入ってしまう。返り値に日付データもキーで必要
+        list.forEach(work => {
+            const energy: EnergyInjectionReportData = { CoffeInIntake: 0, SugarInTake: 0, KcalInTake: 0 };
+            work.mazaiList.forEach(mazai => {
+                energy.CoffeInIntake += mazai.MzaiCoffeIn * mazai.MazaiInjectionDataList.length;
+                energy.SugarInTake += mazai.MazaiSugar * mazai.MazaiInjectionDataList.length;
+                energy.KcalInTake += mazai.MazaiKcal * mazai.MazaiInjectionDataList.length;
+            });
+            enrgyReportList.push(energy);
         });
 
         return enrgyReportList;
