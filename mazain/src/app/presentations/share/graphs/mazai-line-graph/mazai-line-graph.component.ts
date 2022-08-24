@@ -70,7 +70,7 @@ export class MazaiLineGraphComponent extends MazaiGraph implements OnInit, OnDes
         labels: this.createCurrentWeekLabels(start, end),
         datasets: [
           {
-            label: `${start.getMonth() + 1}/${end.getDate()}の週`,
+            label: `${start.getMonth() + 1}/${start.getDate()}の週`,
             data: this._rangeMazaiInjectionListCount,
             borderColor: [
               'rgba(255,99,132,1)',
