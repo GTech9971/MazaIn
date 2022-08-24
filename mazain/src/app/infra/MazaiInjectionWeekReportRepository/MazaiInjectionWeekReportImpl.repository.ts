@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
-import { addDays, format } from "date-fns";
+import { addDays } from "date-fns";
 import { ApplicationConst } from "src/app/consts/Application.const";
 import { EnergyInjectionReportData } from "src/app/domain/models/EnergyInjectionReport.data";
 import { MazaiData } from "src/app/domain/models/Mazai.data";
 import { MazaiRationReportData } from "src/app/domain/models/MazaiRationReport.data";
 import { MazaiInjectionWeekReportRepository } from "src/app/domain/repositories/MazaiInjectionWeekReport.repository";
 import { StorageService } from "src/app/domain/services/Storage.service";
+import { DateUtil } from "src/app/utils/Date.util";
 
 @Injectable({
     providedIn: 'root'
@@ -42,29 +43,34 @@ export class MazaiInjectionWeekReportImplRepository extends MazaiInjectionWeekRe
         return rationList;
     }
 
-    private createDateKey(date: number): string {
-        return format(date, 'yyyy-MM-dd');
-    }
 
+    /**
+     * 週間のエナジー注入リストを返す
+     * @param startDate 
+     * @param endDate 
+     * @returns 
+     */
     async getRangeEnergyInjectionList(startDate: number, endDate: number): Promise<EnergyInjectionReportData[]> {
         const enrgyReportList: EnergyInjectionReportData[] = [];
+        //指定した期間内に注入した魔剤リストを取得
         const targetList: MazaiData[] = await this.getRangeMazaiInjectionList(startDate, endDate);
         let list: { dateKey: string, mazaiList: MazaiData[] }[] = [];
 
+        //開始日から1日づつ進める
         let workDate: Date = new Date(startDate);
         while (true) {
-            const DATE_KEY: string = this.createDateKey(workDate.getTime());
-            if (DATE_KEY === this.createDateKey(addDays(endDate, 1).getTime())) { break; }
+            const DATE_KEY: string = DateUtil.createDateKey(workDate.getTime());
+            if (DATE_KEY === DateUtil.createDateKey(addDays(endDate, 1).getTime())) { break; }
 
+            //日付ごとに注入した記録をフィルターする
             targetList.forEach(m => {
                 const jsonStr: string = JSON.stringify(m);
                 const work: MazaiData = JSON.parse(jsonStr);
                 work.MazaiInjectionDataList = work.MazaiInjectionDataList.filter(record => {
-                    console.log("INJ:" + this.createDateKey(record.InjecionDateTime));
-                    console.log("KEY:" + DATE_KEY);
-                    return this.createDateKey(record.InjecionDateTime) === DATE_KEY;
+                    return DateUtil.createDateKey(record.InjecionDateTime) === DATE_KEY;
                 });
 
+                //注入記録があった場合
                 if (work.MazaiInjectionDataList.length > 0) {
                     const idx: number = list.findIndex(itm => { return itm.dateKey === DATE_KEY });
                     if (idx === -1) {
@@ -78,17 +84,20 @@ export class MazaiInjectionWeekReportImplRepository extends MazaiInjectionWeekRe
             workDate = addDays(workDate, 1);
         }
 
-        console.log(list);
 
-        // TODO listまではあっているが、list foreachだと上からデータが入ってしまう。返り値に日付データもキーで必要
-        list.forEach(work => {
+        //１週間の空のリストを作成
+        for (let i = 0; i < 7; i++) {
             const energy: EnergyInjectionReportData = { CoffeInIntake: 0, SugarInTake: 0, KcalInTake: 0 };
-            work.mazaiList.forEach(mazai => {
-                energy.CoffeInIntake += mazai.MzaiCoffeIn * mazai.MazaiInjectionDataList.length;
-                energy.SugarInTake += mazai.MazaiSugar * mazai.MazaiInjectionDataList.length;
-                energy.KcalInTake += mazai.MazaiKcal * mazai.MazaiInjectionDataList.length;
-            });
             enrgyReportList.push(energy);
+        }
+
+        list.forEach(work => {
+            const idx: number = DateUtil.getWeekIdx(work.dateKey, startDate, endDate);
+            work.mazaiList.forEach(mazai => {
+                enrgyReportList[idx].CoffeInIntake += mazai.MzaiCoffeIn * mazai.MazaiInjectionDataList.length;
+                enrgyReportList[idx].SugarInTake += mazai.MazaiSugar * mazai.MazaiInjectionDataList.length;
+                enrgyReportList[idx].KcalInTake += mazai.MazaiKcal * mazai.MazaiInjectionDataList.length;
+            });
         });
 
         return enrgyReportList;
