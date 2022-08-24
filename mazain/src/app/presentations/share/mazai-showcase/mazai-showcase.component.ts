@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AlertController, IonPopover, ToastController } from '@ionic/angular';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
 import { MazaiInjectionRecordData } from 'src/app/domain/models/MazaiInjectionRecord.data';
 import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInjectionReport.service';
+import { MazaiInjectionPopoverComponent } from '../mazai-injection-popover/mazai-injection-popover.component';
 
 @Component({
   selector: 'app-mazai-showcase',
@@ -12,8 +13,6 @@ import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInject
   styleUrls: ['./mazai-showcase.component.scss'],
 })
 export class MazaiShowcaseComponent implements OnInit, OnDestroy {
-  @ViewChild('mazaiPopver') mazaiPopver: IonPopover;
-
   private readonly destroy$: Subject<void> = new Subject<void>();
 
   //今日接種した魔剤の本数
@@ -24,8 +23,7 @@ export class MazaiShowcaseComponent implements OnInit, OnDestroy {
   _todayMazaiInjectionList: MazaiData[];
   readonly mazaiInjectionListObserver: Observable<MazaiData[]>;
 
-  constructor(private alertCtrl: AlertController,
-    private toastCtrl: ToastController,
+  constructor(private popoverController: PopoverController,
     private injectionReportService: MazaiInjectionReportService,) {
     this._todayMazaiInjectionCount = 0;
     this.mazaiInjectionCountObserver = this.injectionReportService.TodayMazaiInjectionCountObserver;
@@ -57,42 +55,18 @@ export class MazaiShowcaseComponent implements OnInit, OnDestroy {
    * 魔剤のサムネクリック時
    * @param e 
    */
-  async onClickMazaiThumbnail(e: Event) {
-    this.mazaiPopver.event = e;
-    await this.mazaiPopver.present();
-  }
-
-  /**
-   * 魔剤注入取消
-   * @param mazai 
-   * @param record
-   */
-  async onClickDeleteInjevtion(mazai: MazaiData, record: MazaiInjectionRecordData) {
-    const DEL: string = "confirm";
-    const confirm: HTMLIonAlertElement = await this.alertCtrl.create({
-      header: '警告',
-      subHeader: `${mazai.MazaiName}の注入記録を削除してもよろしいですか。`,
-      buttons: [
-        {
-          text: 'キャンセル',
-          role: 'cancel'
+  async onClickMazaiThumbnail(e: Event, m: MazaiData, r: MazaiInjectionRecordData) {
+    const popover: HTMLIonPopoverElement = await this.popoverController.create({
+      event: e,
+      component: MazaiInjectionPopoverComponent,
+      componentProps: {
+        mazai: m, record: r, onClickDelete: () => {
+          popover.dismiss();
         },
-        {
-          text: '削除',
-          role: 'confirm'
-        }
-      ]
+      },
     });
 
-    await confirm.present();
-    const { role } = await confirm.onDidDismiss();
-    //魔剤注入記録を削除する
-    if (role === DEL) {
-      await this.injectionReportService.deleteInjectionMazai(mazai, record);
-      await this.refreshData();
-      const toast: HTMLIonToastElement = await this.toastCtrl.create({ message: `${mazai.MazaiName}の注入記録を削除しました。`, duration: 1500 });
-      await toast.present();
-    }
-
+    await popover.present();
   }
+
 }
