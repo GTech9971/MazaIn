@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonModal, ToastController } from '@ionic/angular';
@@ -20,6 +20,8 @@ import { MazaiImageService } from 'src/app/domain/services/MazaiImage.service';
 })
 export class MazaiInputModalComponent implements OnInit {
   @ViewChild(IonModal) protected modal: IonModal;
+  /** 画像ファイル入力 valueリセット用 */
+  @ViewChild('fileInput') fileInput: ElementRef;
 
   /** 新規追加かどうか */
   @Input() isNew: boolean = true;
@@ -118,7 +120,7 @@ export class MazaiInputModalComponent implements OnInit {
    * テンプレート選択時
    * @param e 
    */
-  protected onSelectTemplate(e) {
+  protected onSelectTemplate(e: any) {
     let selectMazai: MazaiData = this._templateList.find(m => { return m.MazaiId === e.detail.value });
     this.inputForm.get('name').setValue(selectMazai.MazaiName);
     this.inputForm.get('coffeIn').setValue(selectMazai.MzaiCoffeIn);
@@ -126,6 +128,8 @@ export class MazaiInputModalComponent implements OnInit {
     this.inputForm.get('kcal').setValue(selectMazai.MazaiKcal);
     const image: HTMLImageElement = new Image();
     if (selectMazai.MazaiImg && selectMazai.MazaiImg.ImageUrl) {
+      //画像ファイル入力エレメント初期化
+      this.fileInput.nativeElement.value = "";
       image.src = selectMazai.MazaiImg.ImageUrl;
       this.inputForm.get('image').setValue(image);
     }
@@ -216,6 +220,8 @@ export class MazaiInputModalComponent implements OnInit {
    * 画像をデフォルトに戻す
    */
   onResetImgBtn() {
+    //画像ファイル入力エレメント初期化
+    this.fileInput.nativeElement.value = "";
     const img: HTMLImageElement = new Image();
     img.src = ApplicationConst.DEFAULT_IMG;
     this.inputForm.get('image').setValue(img);

@@ -68,7 +68,7 @@
 
             <label for="upload-photo">
               <ion-icon size="large" color="primary" name="image-outline"></ion-icon>
-              <input type="file" hidden accept="image/*" id="upload-photo" (change)="previewPhoto($event)">
+              <input #fileInput type="file" hidden accept="image/*" id="upload-photo" (change)="previewPhoto($event)">
             </label>
           </ion-item>
 
