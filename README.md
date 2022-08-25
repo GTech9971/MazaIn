@@ -2,6 +2,13 @@
  魔剤管理アプリ
 
 
+## homebrewインストール
+- `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` 
+
+## Xcodeライブラリインストール
+- `xcode-select --install`
+- `brew install cocoapods`
+
 ## iosビルド
 プロジェクトフォルダ内で以下のコマンドを実行
 - `ionic build --prod`
