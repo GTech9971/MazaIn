@@ -127,13 +127,10 @@ export class MazaiInputModalComponent implements OnInit {
     this.inputForm.get('sugar').setValue(selectMazai.MazaiSugar);
     this.inputForm.get('kcal').setValue(selectMazai.MazaiKcal);
     const image: HTMLImageElement = new Image();
-    if (selectMazai.MazaiImg && selectMazai.MazaiImg.ImageUrl) {
-      //画像ファイル入力エレメント初期化
-      this.fileInput.nativeElement.value = "";
-      image.src = selectMazai.MazaiImg.ImageUrl;
-      this.inputForm.get('image').setValue(image);
-    }
-
+    //画像ファイル入力エレメント初期化
+    this.fileInput.nativeElement.value = "";
+    image.src = ApplicationConst.DEFAULT_IMG;
+    this.inputForm.get('image').setValue(image);
     this.inputForm.updateValueAndValidity();
   }
 
