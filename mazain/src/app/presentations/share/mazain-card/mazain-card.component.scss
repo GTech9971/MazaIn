@@ -15,8 +15,9 @@
 }
 
 ion-card{
-    height: 533px !important;
-    width: 332px !important;
+    height: 80vh !important;
+    width: 85vw !important;
+
     ion-card-title{
         font-size: clamp(20px,2.9vw, 26px) !important;
     }
@@ -28,10 +29,10 @@ ion-card{
 }
 
 //スマホ横
-@media screen and (min-width:480px) and (orientation:landscape){
+@media screen and (orientation:landscape){
     ion-card{
-        height: 245px !important;
-        width: 498px !important;
+        height: 65vh !important;
+        width: 70vw !important;
 
         ion-card-title{
             font-size: clamp(12px,2.9vw, 14px) !important;
@@ -52,19 +53,29 @@ ion-card{
     }
 }
 
-// ipad
-@media screen and (min-width:768px) {
+
+/* タブレット 1024pxとそれ以下*/
+@media screen and (max-width: 1024px) and (min-width:768px) and (orientation: portrait) {
     ion-card{
-        height: 906px;
-        width: 600px;
+
+        height: 80vh !important;
+        width: 85vw !important;
 
         ion-card-title{
-            font-size: clamp(28px,2.9vw, 36px);
+            font-size: clamp(48px,2.9vw, 54px) !important;
         }
 
         ion-card-content{
-            line-height: 0.7;
-            font-size: clamp(16px,2.9vw, 24px) !important;            
+            line-height: 1;
+            font-size: clamp(36px,2.9vw, 48px) !important;            
         }
+
+        ion-card-header{
+            padding: 20px 20px 5px;
+        }
+    }
+
+    ion-button{
+        font-size: clamp(36px,2.9vw, 48px);        
     }
 }

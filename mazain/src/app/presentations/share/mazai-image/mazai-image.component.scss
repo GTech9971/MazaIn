@@ -1,12 +1,12 @@
 img{
-    width: 145px !important;
-    height: 295px !important;
+    width: 65vw  !important;
+    height: 35vh !important;
     object-fit: contain;
 }
 
-//スマホ縦
-@media screen and (min-width:480px) and (orientation:landscape){
+//スマホ横
+@media screen and (orientation:landscape){
     img{
-        height: 85px !important;
+       height: 15vh !important;
     }
 }

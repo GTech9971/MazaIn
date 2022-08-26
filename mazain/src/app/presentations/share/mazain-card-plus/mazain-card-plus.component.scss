@@ -1,6 +1,6 @@
 ion-card{
-    height: 533px !important;
-    width: 332px !important;    
+    height: 80vh !important;
+    width: 85vw !important; 
 }
 
 ion-fab{
@@ -8,10 +8,10 @@ ion-fab{
 }
 
 //スマホ横
-@media screen and (min-width:480px) and (orientation:landscape){
+@media screen and (orientation:landscape){
     ion-card{
-        height: 245px !important;
-        width: 498px !important;
+        height: 65vh !important;
+        width: 70vw !important;
     }
 
     ion-fab{
