@@ -1,10 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PopoverController } from '@ionic/angular';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ApplicationConst } from 'src/app/consts/Application.const';
+import { EnergyType } from 'src/app/consts/EnergyType.conts';
 import { EnergyInjectionReportData } from 'src/app/domain/models/EnergyInjectionReport.data';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
 import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInjectionReport.service';
+import { MazaiEnergyInfoPopoverComponent } from '../share/mazai-energy-info-popover/mazai-energy-info-popover.component';
 import { MazaiShowcaseComponent } from '../share/mazai-showcase/mazai-showcase.component';
 
 @Component({
@@ -15,12 +19,9 @@ import { MazaiShowcaseComponent } from '../share/mazai-showcase/mazai-showcase.c
 export class DetailPage implements OnInit, OnDestroy {
   @ViewChild('mazaiShowCase') mazaiShowCase: MazaiShowcaseComponent;
 
-  /** 推奨一日のカフェイン摂取量 */
-  readonly RECOMMEND_COFFEIN: number = 400 + 100;
-  /** 推奨一日の糖質摂取量 (男性：３３０、女性：２７０)*/
-  readonly RECOMMEND_SUGAR: number = 330 + 100;
-  /** 推奨一日のカロリー摂取量（女性１４００〜２０００、男子２０００〜２４００） */
-  readonly RECOMMEND_KCAL: number = 2400 + 100;
+  get COFFEIN_TYPE(): EnergyType { return EnergyType.CoffeIn; }
+  get SUGAR_TYPE(): EnergyType { return EnergyType.Sugar; }
+  get KCAL_TYPE(): EnergyType { return EnergyType.Kcal; }
 
   /** 注入ページから遷移したかどうか */
   isNavInjectionPage: boolean;
@@ -32,19 +33,19 @@ export class DetailPage implements OnInit, OnDestroy {
   get LatestCoffeInPer(): number {
     //注入ページから遷移した場合、プログレスバーに注入分のバッファを表示させる
     if (this.isNavInjectionPage) {
-      return this.TodayCoffeInInTakePer - this._latestMazaiInjection?.MzaiCoffeIn / this.RECOMMEND_COFFEIN;
+      return this.TodayCoffeInInTakePer - this._latestMazaiInjection?.MzaiCoffeIn / ApplicationConst.RECOMMEND_COFFEIN;
     }
     return this.TodayCoffeInInTakePer;
   }
   get LatestSugarPer(): number {
     if (this.isNavInjectionPage) {
-      return this.TodaySugarInTakePer - this._latestMazaiInjection?.MazaiSugar / this.RECOMMEND_SUGAR;
+      return this.TodaySugarInTakePer - this._latestMazaiInjection?.MazaiSugar / ApplicationConst.RECOMMEND_SUGAR;
     }
     return this.TodaySugarInTakePer
   }
   get LatestKcalPer(): number {
     if (this.isNavInjectionPage) {
-      return this.TodayKcalInTakePer - this._latestMazaiInjection?.MazaiKcal / this.RECOMMEND_KCAL;
+      return this.TodayKcalInTakePer - this._latestMazaiInjection?.MazaiKcal / ApplicationConst.RECOMMEND_KCAL;
     }
     return this.TodayKcalInTakePer;
   }
@@ -55,13 +56,14 @@ export class DetailPage implements OnInit, OnDestroy {
   readonly todayEnergyReportObserver: Observable<EnergyInjectionReportData>;
 
   //今日のカフェイン  
-  get TodayCoffeInInTakePer(): number { return this._todayEnergyReport?.CoffeInIntake / this.RECOMMEND_COFFEIN; }
+  get TodayCoffeInInTakePer(): number { return this._todayEnergyReport?.CoffeInIntake / ApplicationConst.RECOMMEND_COFFEIN; }
   //今日の糖質  
-  get TodaySugarInTakePer(): number { return this._todayEnergyReport?.SugarInTake / this.RECOMMEND_SUGAR; }
+  get TodaySugarInTakePer(): number { return this._todayEnergyReport?.SugarInTake / ApplicationConst.RECOMMEND_SUGAR; }
   //今日のカロリー  
-  get TodayKcalInTakePer(): number { return this._todayEnergyReport?.KcalInTake / this.RECOMMEND_KCAL; }
+  get TodayKcalInTakePer(): number { return this._todayEnergyReport?.KcalInTake / ApplicationConst.RECOMMEND_KCAL; }
 
   constructor(private router: ActivatedRoute,
+    private popoverCtrl: PopoverController,
     private injectionReportService: MazaiInjectionReportService) {
     this.todayEnergyReportObserver = this.injectionReportService.TodayEnergyReportObserver;
     this.todayEnergyReportObserver.pipe(takeUntil(this.destroy$)).subscribe(report => { this._todayEnergyReport = report; })
@@ -91,6 +93,20 @@ export class DetailPage implements OnInit, OnDestroy {
   async ionViewDidEnter() {
     await this.mazaiShowCase.refreshData();
     await this.injectionReportService.fetchTodayEnergyReport();
+  }
+
+  /**
+   * 魔剤エナジー情報のポッポオーバー表示
+   * @param energyType 
+   */
+  async onClickEnergyInfoPopoverBtn(e: Event, energyType: EnergyType) {
+    const popover: HTMLIonPopoverElement = await this.popoverCtrl.create({
+      event: e,
+      component: MazaiEnergyInfoPopoverComponent,
+      componentProps: { energyType: energyType }
+    });
+
+    await popover.present();
   }
 
 }

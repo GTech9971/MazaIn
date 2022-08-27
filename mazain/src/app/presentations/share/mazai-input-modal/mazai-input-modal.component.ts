@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { IonModal, ToastController } from '@ionic/angular';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ApplicationConst } from 'src/app/consts/Application.const';
+import { DefaultImageConst } from 'src/app/consts/DefaultImage.const';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
 import { MazaiImgData } from 'src/app/domain/models/MazaiImg.data';
 import { MazaiService } from 'src/app/domain/services/Mazai.service';
@@ -64,7 +64,7 @@ export class MazaiInputModalComponent implements OnInit {
       await this.mazaiService.fetchTemplateList();
       //デフォルトの画像を設定す
       const img: HTMLImageElement = new Image();
-      img.src = ApplicationConst.DEFAULT_IMG;
+      img.src = DefaultImageConst.DEFAULT_IMG;
       this.inputForm.get('image').setValue(img);
       this.inputForm.updateValueAndValidity();
     } else {
@@ -129,7 +129,7 @@ export class MazaiInputModalComponent implements OnInit {
     const image: HTMLImageElement = new Image();
     //画像ファイル入力エレメント初期化
     this.fileInput.nativeElement.value = "";
-    image.src = ApplicationConst.DEFAULT_IMG;
+    image.src = DefaultImageConst.DEFAULT_IMG;
     this.inputForm.get('image').setValue(image);
     this.inputForm.updateValueAndValidity();
   }
@@ -220,7 +220,7 @@ export class MazaiInputModalComponent implements OnInit {
     //画像ファイル入力エレメント初期化
     this.fileInput.nativeElement.value = "";
     const img: HTMLImageElement = new Image();
-    img.src = ApplicationConst.DEFAULT_IMG;
+    img.src = DefaultImageConst.DEFAULT_IMG;
     this.inputForm.get('image').setValue(img);
     this.inputForm.updateValueAndValidity();
   }

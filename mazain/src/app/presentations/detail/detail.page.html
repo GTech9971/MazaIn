@@ -11,7 +11,7 @@
   <ion-grid fixed>
 
     <ion-row>
-      <ion-col size="8" id="coffeIn-trigger">
+      <ion-col size="8" (click)="onClickEnergyInfoPopoverBtn($event, this.COFFEIN_TYPE)">
         <ion-text color="primary">
           <h2>
             カフェイン
@@ -35,17 +35,8 @@
       </ion-progress-bar>
     </ion-row>
 
-    <ion-popover trigger="coffeIn-trigger" triggerAction="click" side="top">
-      <ng-template>
-        <ion-content class="ion-padding">
-          推奨一日のカフェイン摂取量:{{this.RECOMMEND_COFFEIN}}mg
-        </ion-content>
-      </ng-template>
-    </ion-popover>
-
-
     <ion-row>
-      <ion-col size="8" id="sugar-trigger">
+      <ion-col size="8" (click)="onClickEnergyInfoPopoverBtn($event,this.SUGAR_TYPE)">
         <ion-text color="primary">
           <h2>
             糖質
@@ -67,17 +58,9 @@
       </ion-progress-bar>
     </ion-row>
 
-    <ion-popover trigger="sugar-trigger" triggerAction="click" side="top">
-      <ng-template>
-        <ion-content class="ion-padding">
-          推奨一日の糖質摂取量:{{this.RECOMMEND_SUGAR}}mg
-        </ion-content>
-      </ng-template>
-    </ion-popover>
-
 
     <ion-row>
-      <ion-col size="8" id="kcal-trigger">
+      <ion-col size="8" (click)="onClickEnergyInfoPopoverBtn($event,this.KCAL_TYPE)">
         <ion-text color="primary">
           <h2>
             カロリー
@@ -98,14 +81,6 @@
         [buffer]="this.TodayKcalInTakePer" color="primary">
       </ion-progress-bar>
     </ion-row>
-
-    <ion-popover trigger="kcal-trigger" triggerAction="click" side="top">
-      <ng-template>
-        <ion-content class="ion-padding">
-          推奨一日のカロリー摂取量:{{this.RECOMMEND_KCAL}}kcal
-        </ion-content>
-      </ng-template>
-    </ion-popover>
 
   </ion-grid>
 
