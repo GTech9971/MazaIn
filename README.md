@@ -1,6 +1,15 @@
 # MazaIn
  魔剤管理アプリ
+ 魔剤の注入数、エナジー接種状況などを管理する
 
+# 開発環境
+- Mac mini(M1,2020), MacBookAir(M1,2020)
+- macOS Monterey 12.5.1
+- Xcode 12.0
+- nodejs 16.14.0
+- angular@14.0.0
+- ionic/cli@6.19.1
+- capacitor@4.1.0
 
 ## homebrewインストール
 - `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` 
@@ -22,11 +31,20 @@ Xcodeで開く
 - `ionic build --prod`
 - `npx cap copy`
 
-## プラグイン
+## プラグイン(capacitor)
 
-### ブラウザ表示(InAppBrowser)
 
-https://ionicframework.com/docs/native/in-app-browser
+### [アイコン](https://capacitorjs.com/docs/guides/splash-screens-and-icons)
+以下のプラグインをインストール
+
+- `sudo npm install -g cordova-res`
+
+- アプリのrootフォルダに`resources`フォルダを作成
+- `icon.png`ファイルを配置 [アルファチャネルは削除する](http://blog.be-style.jpn.com/article/105597923.html)
+- `cordova-res ios --skip-config --copy --type icon` (※アイコンだけの場合、--type iconを入れないとエラーが発生し、ネイティブフォルダに画像が反映されない)
+
+
+### [ブラウザ表示(InAppBrowser)](https://ionicframework.com/docs/native/in-app-browser)
 
 - `npm install cordova-plugin-inappbrowser `
 - `npm install @awesome-cordova-plugins/in-app-browser `
