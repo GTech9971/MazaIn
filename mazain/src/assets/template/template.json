@@ -30,6 +30,66 @@
         "MazaiInjectionDataList": []
     },
     {
+        "MazaiId": "001-1",
+        "MazaiName": "モンスターエナジー ゼロシュガー355ml",
+        "MzaiCoffeIn": 142,
+        "MazaiKcal": 0,
+        "MazaiSugar": 0,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "",
+            "MazaiGraphColor": ""
+        },
+        "MazaiInjectionDataList": []
+    },
+    {
+        "MazaiId": "001-2",
+        "MazaiName": "モンスターエナジー ウルトラ355ml",
+        "MzaiCoffeIn": 142,
+        "MazaiKcal": 0,
+        "MazaiSugar": 0,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "",
+            "MazaiGraphColor": ""
+        },
+        "MazaiInjectionDataList": []
+    },
+    {
+        "MazaiId": "001-3",
+        "MazaiName": "モンスターエナジー ウルトラパラダイス355ml",
+        "MzaiCoffeIn": 142,
+        "MazaiKcal": 0,
+        "MazaiSugar": 0,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "",
+            "MazaiGraphColor": ""
+        },
+        "MazaiInjectionDataList": []
+    },
+    {
+        "MazaiId": "001-4",
+        "MazaiName": "モンスターエナジー パイプラインパンチ355ml",
+        "MzaiCoffeIn": 142,
+        "MazaiKcal": 156.2,
+        "MazaiSugar": 39,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "",
+            "MazaiGraphColor": ""
+        },
+        "MazaiInjectionDataList": []
+    },
+    {
         "MazaiId": "002",
         "MazaiName": "レッドブル250ml",
         "MzaiCoffeIn": 80,
