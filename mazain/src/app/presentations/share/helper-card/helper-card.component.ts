@@ -4,6 +4,8 @@ import { takeUntil } from 'rxjs/operators';
 import { EnergyInjectionReportData } from 'src/app/domain/models/EnergyInjectionReport.data';
 import { MazaiHelpContextData } from 'src/app/domain/models/MazaiHelpContext.data';
 import { MazaiInjectionHelperService } from 'src/app/domain/services/MazaiInjectionHelper.service';
+import { MazaiShareService } from 'src/app/domain/services/MazaiShare.service';
+
 
 @Component({
   selector: 'app-helper-card',
@@ -22,7 +24,8 @@ export class HelperCardComponent implements OnInit, OnDestroy {
   // _helperComment: MazaiHelpContextData;
   // readonly helperCommentObserver: Observable<MazaiHelpContextData>;
 
-  constructor(private injectionHelperService: MazaiInjectionHelperService) {
+  constructor(private injectionHelperService: MazaiInjectionHelperService,
+    private mazaiShareService: MazaiShareService) {
     //TODO ヘルプコメントは一旦なし
     // this.helperCommentObserver = this.injectionHelperService.HelperCommentObserver;
     // this.helperCommentObserver.pipe(takeUntil(this.destroy$)).subscribe(comment => { this._helperComment = comment; });
@@ -38,6 +41,21 @@ export class HelperCardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+
+  /**
+   * シェアボタン押下時
+   */
+  async onClickShareBtn() {
+    if (await this.mazaiShareService.canUseShare() === false) {
+      console.warn("ios native support only");
+      return;
+    }
+
+    //TODO シェアモデルの生成
+    await this.mazaiShareService.shareMazai(undefined);
+
   }
 
 }
