@@ -1,3 +1,4 @@
+import { ApplicationConst } from "src/app/consts/Application.const";
 import { BaseShareData } from "./BaseShare.data";
 import { MazaiData } from "./Mazai.data";
 import { MazaiShareModel } from "./MazaiShare.model";
@@ -19,20 +20,17 @@ export class MazaiInjectionShareModel extends MazaiShareModel {
 
 
     convertShareData(): BaseShareData {
-        let text: string = `今日の魔剤注入状況をシェア`;
+        let text: string = `【今日の魔剤注入状況をシェア】
+`;
         this._todayInjectionMazaiList.forEach(m => {
-            text += `${m.MazaiName} ${m.MazaiInjectionDataList.length}本注入¥n`;
-            text += ", ";
+            text += `${m.MazaiName} ${m.MazaiInjectionDataList.length}本注入
+`;
         });
-        //最後の,を取り除く
-        if (text.length > 0) {
-            text = text.substring(0, text.length - 2);
-        }
 
         const result: BaseShareData = {
-            title: '#今日の魔剤',
+            title: '今日の魔剤注入をシェア',
             text: text,
-            url: 'https://apps.apple.com/jp/app/mazain/id1642061728',
+            url: ApplicationConst.APPLE_STORE_URL,
             dialogTitle: ''
         };
 
