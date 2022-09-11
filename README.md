@@ -100,3 +100,23 @@ export class AppComponent implements OnInit {
 }
 ```
 
+### [シェア機能(share)](https://capacitorjs.com/docs/apis/share)
+
+iosのシェア機能を有効にする
+
+[サンプル動画](https://www.youtube.com/watch?v=p7f6yamZxCk)
+
+- `npm install @capacitor/share`
+- `ionic cap sync`
+
+サンプルコード
+```
+import { Share } from '@capacitor/share';
+
+await Share.share({
+  title: 'See cool stuff',
+  text: 'Really awesome thing you need to see right meow',
+  url: 'http://ionicframework.com/',
+  dialogTitle: 'Share with buddies',
+});
+```
