@@ -7,6 +7,7 @@ import { ApplicationConst } from 'src/app/consts/Application.const';
 import { EnergyType } from 'src/app/consts/EnergyType.conts';
 import { EnergyInjectionReportData } from 'src/app/domain/models/EnergyInjectionReport.data';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
+import { MazaiInjectionBaseReportService } from 'src/app/domain/services/MazaiInjectionBaseReport.service';
 import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInjectionReport.service';
 import { MazaiEnergyInfoPopoverComponent } from '../share/mazai-energy-info-popover/mazai-energy-info-popover.component';
 import { MazaiShowcaseComponent } from '../share/mazai-showcase/mazai-showcase.component';
@@ -52,28 +53,28 @@ export class DetailPage implements OnInit, OnDestroy {
   readonly latestMazaiInjectionObserver: Observable<MazaiData>;
 
   //今日の接種したエナジー
-  _todayEnergyReport: EnergyInjectionReportData;
-  readonly todayEnergyReportObserver: Observable<EnergyInjectionReportData>;
+  _energyReport: EnergyInjectionReportData;
+  readonly energyReportObserver: Observable<EnergyInjectionReportData>;
 
   //今日のカフェイン  
-  get TodayCoffeInInTakePer(): number { return this._todayEnergyReport?.CoffeInIntake / ApplicationConst.RECOMMEND_COFFEIN; }
+  get TodayCoffeInInTakePer(): number { return this._energyReport?.CoffeInIntake / ApplicationConst.RECOMMEND_COFFEIN; }
   //今日の糖質  
-  get TodaySugarInTakePer(): number { return this._todayEnergyReport?.SugarInTake / ApplicationConst.RECOMMEND_SUGAR; }
+  get TodaySugarInTakePer(): number { return this._energyReport?.SugarInTake / ApplicationConst.RECOMMEND_SUGAR; }
   //今日のカロリー  
-  get TodayKcalInTakePer(): number { return this._todayEnergyReport?.KcalInTake / ApplicationConst.RECOMMEND_KCAL; }
+  get TodayKcalInTakePer(): number { return this._energyReport?.KcalInTake / ApplicationConst.RECOMMEND_KCAL; }
 
   constructor(private router: ActivatedRoute,
     private popoverCtrl: PopoverController,
-    private injectionReportService: MazaiInjectionReportService) {
-    this.todayEnergyReportObserver = this.injectionReportService.TodayEnergyReportObserver;
-    this.todayEnergyReportObserver.pipe(takeUntil(this.destroy$)).subscribe(report => { this._todayEnergyReport = report; })
+    private injectionReportService: MazaiInjectionBaseReportService) {
+    this.energyReportObserver = this.injectionReportService.EnergyReportObserver;
+    this.energyReportObserver.pipe(takeUntil(this.destroy$)).subscribe(report => { this._energyReport = report; })
 
     this.latestMazaiInjectionObserver = this.injectionReportService.LatestMazaiInjectiondObserver;
     this.latestMazaiInjectionObserver.pipe(takeUntil(this.destroy$)).subscribe(latest => { this._latestMazaiInjection = latest; });
   }
 
   async ngOnInit() {
-    await this.injectionReportService.fetchTodayEnergyReport();
+    await this.injectionReportService.fetchEnergyReport();
 
     //注入ページから遷移したかどうか
     this.isNavInjectionPage = false;
@@ -92,7 +93,7 @@ export class DetailPage implements OnInit, OnDestroy {
 
   async ionViewDidEnter() {
     await this.mazaiShowCase.refreshData();
-    await this.injectionReportService.fetchTodayEnergyReport();
+    await this.injectionReportService.fetchEnergyReport();
   }
 
   /**
