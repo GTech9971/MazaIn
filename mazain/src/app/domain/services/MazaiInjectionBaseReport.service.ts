@@ -8,14 +8,11 @@ import { MazaiInjectionBaseReportRepository } from "../repositories/MazaiInjecti
 @Injectable({
     providedIn: 'root'
 })
-export class MazaiInjectionBaseReportService {
+export abstract class MazaiInjectionBaseReportService {
 
-    /** 作業用日付 */
-    private _workDate: Date;
+    abstract get WorkDate(): Date;
 
-    public get WorkDate(): Date { return new Date(this._workDate); }
-
-    public set WorkDate(val: Date) { this._workDate = new Date(val); }
+    abstract set WorkDate(val: Date);
 
     /** 摂取した魔剤のリスト */
     private _mazaiInjectionList: MazaiData[] = [];
@@ -38,14 +35,13 @@ export class MazaiInjectionBaseReportService {
     readonly LatestMazaiInjectiondObserver: Observable<MazaiData> = this._latestMazaiInjectionSubject$.asObservable();
 
     constructor(private repository: MazaiInjectionBaseReportRepository) {
-        this._workDate = new Date();
     }
 
     /**
      * 接種した魔剤のリストを取得
      */
     public async fetchMazaiInjectionList(): Promise<void> {
-        this._mazaiInjectionList = await this.repository.getMazaiInjectionList(this._workDate);
+        this._mazaiInjectionList = await this.repository.getMazaiInjectionList(this.WorkDate);
         this._mazaiInjectionListSubject$.next(this._mazaiInjectionList);
     }
 
@@ -53,7 +49,7 @@ export class MazaiInjectionBaseReportService {
      * 今日接種した魔剤の本数を取得
      */
     public async fetchMazaiInjectionCount(): Promise<void> {
-        this._mazaiInjectionCount = await this.repository.getMazaiInjectionCount(this._workDate);
+        this._mazaiInjectionCount = await this.repository.getMazaiInjectionCount(this.WorkDate);
         this._mazaiInjectionCountSubject$.next(this._mazaiInjectionCount);
     }
 
@@ -62,7 +58,7 @@ export class MazaiInjectionBaseReportService {
      * @returns 
      */
     public async fetchEnergyReport(): Promise<void> {
-        this._energyReport = await this.repository.getEnergyInjection(this._workDate);
+        this._energyReport = await this.repository.getEnergyInjection(this.WorkDate);
         this._energyReportSubject$.next(this._energyReport);
     }
 
@@ -72,7 +68,7 @@ export class MazaiInjectionBaseReportService {
      * @param mazai 
      */
     public async injectionMazai(mazai: MazaiData): Promise<void> {
-        await this.repository.injectionMazai(this._workDate, mazai);
+        await this.repository.injectionMazai(this.WorkDate, mazai);
 
         await this.fetchMazaiInjectionCount();
         await this.fetchEnergyReport();
@@ -93,7 +89,7 @@ export class MazaiInjectionBaseReportService {
      * 最後に注入した魔剤のレコードを取得
      */
     public async fetchLatestMazaiInjection(): Promise<void> {
-        this._latestMazaiInjection = await this.repository.getLatestMazaiInjection(this._workDate);
+        this._latestMazaiInjection = await this.repository.getLatestMazaiInjection(this.WorkDate);
         this._latestMazaiInjectionSubject$.next(this._latestMazaiInjection);
     }
 

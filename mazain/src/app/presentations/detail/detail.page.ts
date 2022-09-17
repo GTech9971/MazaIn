@@ -7,8 +7,7 @@ import { ApplicationConst } from 'src/app/consts/Application.const';
 import { EnergyType } from 'src/app/consts/EnergyType.conts';
 import { EnergyInjectionReportData } from 'src/app/domain/models/EnergyInjectionReport.data';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
-import { MazaiInjectionBaseReportService } from 'src/app/domain/services/MazaiInjectionBaseReport.service';
-import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInjectionReport.service';
+import { MazaiInjectionVariableReportService } from 'src/app/domain/services/MazaiInjectionVariableReport.service';
 import { MazaiEnergyInfoPopoverComponent } from '../share/mazai-energy-info-popover/mazai-energy-info-popover.component';
 import { MazaiShowcaseComponent } from '../share/mazai-showcase/mazai-showcase.component';
 
@@ -65,9 +64,9 @@ export class DetailPage implements OnInit, OnDestroy {
 
   constructor(private router: ActivatedRoute,
     private popoverCtrl: PopoverController,
-    private injectionReportService: MazaiInjectionBaseReportService) {
+    private injectionReportService: MazaiInjectionVariableReportService) {
     this.energyReportObserver = this.injectionReportService.EnergyReportObserver;
-    this.energyReportObserver.pipe(takeUntil(this.destroy$)).subscribe(report => { this._energyReport = report; })
+    this.energyReportObserver.pipe(takeUntil(this.destroy$)).subscribe(report => { this._energyReport = report; });
 
     this.latestMazaiInjectionObserver = this.injectionReportService.LatestMazaiInjectiondObserver;
     this.latestMazaiInjectionObserver.pipe(takeUntil(this.destroy$)).subscribe(latest => { this._latestMazaiInjection = latest; });
