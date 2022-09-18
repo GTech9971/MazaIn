@@ -30,7 +30,7 @@
     <ion-row>
       <ion-progress-bar class="mazai-progress-bar" type="determinate"
         [value]="this.LatestCoffeInPer === 0 ? this.TodayCoffeInInTakePer : this.LatestCoffeInPer"
-        [buffer]="this.TodayCoffeInInTakePer" color="primary">
+        [buffer]="this.TodayCoffeInInTakePer" color="{{this.CoffeInProgressColor}}">
       </ion-progress-bar>
     </ion-row>
 
@@ -53,7 +53,7 @@
     <ion-row>
       <ion-progress-bar class="mazai-progress-bar" type="determinate"
         [value]="this.LatestSugarPer === 0 ? this.TodaySugarInTakePer : this.LatestSugarPer"
-        [buffer]="this.TodaySugarInTakePer" color="primary">
+        [buffer]="this.TodaySugarInTakePer" color="{{this.SugarProgressColor}}">
       </ion-progress-bar>
     </ion-row>
 
@@ -76,8 +76,8 @@
     </ion-row>
     <ion-row>
       <ion-progress-bar class="mazai-progress-bar" type="determinate"
-        [value]="this.LatestKcalPer === 0 ? this.TodayKcalInTakePer : this.LatestCoffeInPer"
-        [buffer]="this.TodayKcalInTakePer" color="primary">
+        [value]="this.LatestKcalPer === 0 ? this.TodayKcalInTakePer : this.LatestKcalPer"
+        [buffer]="this.TodayKcalInTakePer" color="{{this.KcalProgressColor}}">
       </ion-progress-bar>
     </ion-row>
 

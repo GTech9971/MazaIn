@@ -62,6 +62,20 @@ export class DetailPage implements OnInit, OnDestroy {
   //今日のカロリー  
   get TodayKcalInTakePer(): number { return this._energyReport?.KcalInTake / ApplicationConst.RECOMMEND_KCAL; }
 
+  //プログレスバーの色
+  private getProgressColor(per: number): string {
+    if (!per) { return 'primary'; }
+    if (per < 0.65) { return 'primary'; }
+    if (per > 0.65 && per < 0.9) { return 'warning'; }
+    if (per > 0.9) { return 'danger'; }
+  }
+  //カフェインプログレスバーの色
+  get CoffeInProgressColor(): string { return this.getProgressColor(this.TodayCoffeInInTakePer); }
+  // 糖質プログレスバーの色
+  get SugarProgressColor(): string { return this.getProgressColor(this.TodaySugarInTakePer); }
+  // カロリープログレスバーの色
+  get KcalProgressColor(): string { return this.getProgressColor(this.TodayKcalInTakePer); }
+
   constructor(private router: ActivatedRoute,
     private popoverCtrl: PopoverController,
     private injectionReportService: MazaiInjectionVariableReportService) {
