@@ -9,6 +9,8 @@ export class ApplicationConst {
 
     /** プライバシーポリシーURL */
     public static readonly PRVACY_POLICY_URL: string = "https://nukomabo.work/post-1379/";
+    /** アプリ説明ページURL */
+    public static readonly APP_DESC_PAGE: string = "https://nukomabo.work/post-1383/";
 
     /** Apple Store URL */
     public static readonly APPLE_STORE_URL: string = "https://apps.apple.com/jp/app/mazain/id1642061728";

@@ -28,4 +28,11 @@ export class AppComponent implements OnInit {
     this.iab.create(ApplicationConst.PRVACY_POLICY_URL);
   }
 
+  /**
+   * アプリ説明ページに飛ぶ
+   */
+  onClickAppDescBtn() {
+    this.iab.create(ApplicationConst.APP_DESC_PAGE);
+  }
+
 }
