@@ -70,7 +70,7 @@ export class HelperCardComponent implements OnInit, OnDestroy {
   /**
    * シェアボタン押下時
    */
-  async onClickShareBtn() {
+  async onClickShareBtn(dateLabel: string) {
     //今日注入した魔剤をシェア
     if (await this.mazaiShareService.canUseShare() === false) {
       console.warn("ios native support only");
@@ -78,7 +78,7 @@ export class HelperCardComponent implements OnInit, OnDestroy {
     }
 
     //今日注入した魔剤をシェア
-    const mazaiInjectionShareModel: MazaiInjectionShareModel = new MazaiInjectionShareModel(this._todayMazaiInjectionList);
+    const mazaiInjectionShareModel: MazaiInjectionShareModel = new MazaiInjectionShareModel(this._todayMazaiInjectionList, dateLabel);
     await this.mazaiShareService.shareMazai(mazaiInjectionShareModel);
   }
 
@@ -100,7 +100,6 @@ export class HelperCardComponent implements OnInit, OnDestroy {
     this.prevSlideIndex = await this.slides.getActiveIndex();
 
     //this.prevSlideIndex = this.swiper.swiperRef.activeIndex;    
-    //TODO なぜかユーザがDetailPageの何かしらの要素をクリックしたらデータが反映される
   }
 
 }

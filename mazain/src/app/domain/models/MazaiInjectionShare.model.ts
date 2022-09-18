@@ -9,20 +9,31 @@ import { MazaiShareModel } from "./MazaiShare.model";
 export class MazaiInjectionShareModel extends MazaiShareModel {
 
     /**
-     * 今日注入した魔剤リスト
+     * 注入した魔剤リスト
      */
-    private readonly _todayInjectionMazaiList: MazaiData[];
+    private readonly _injectionMazaiList: MazaiData[];
 
-    constructor(todayInjecionMazaiList: MazaiData[]) {
+    /**
+     * 日付ラベル
+     */
+    private readonly _dateLabel: string;
+
+    /**
+     * 
+     * @param injecionMazaiList 注入した魔剤リスト
+     * @param dateLabel 日付ラベル(例：今日)
+     */
+    constructor(injecionMazaiList: MazaiData[], dateLabel: string) {
         super();
-        this._todayInjectionMazaiList = todayInjecionMazaiList;
+        this._injectionMazaiList = injecionMazaiList;
+        this._dateLabel = dateLabel;
     }
 
 
     convertShareData(): BaseShareData {
-        let text: string = `【今日の魔剤注入状況をシェア】
+        let text: string = `【${this._dateLabel}の魔剤注入状況をシェア】
 `;
-        this._todayInjectionMazaiList.forEach(m => {
+        this._injectionMazaiList.forEach(m => {
             text += `${m.MazaiName} ${m.MazaiInjectionDataList.length}本注入
 `;
         });

@@ -208,5 +208,20 @@
             "MazaiGraphColor": ""
         },
         "MazaiInjectionDataList": []
+    },
+    {
+        "MazaiId": "007",
+        "MazaiName": "チルアウト185ml",
+        "MzaiCoffeIn": 0,
+        "MazaiKcal": 74,
+        "MazaiSugar": 18.13,
+        "MazaiImg": {
+            "ImageDataLarge": "",
+            "ImageDataMedium": "",
+            "ImageDateSmall": "",
+            "ImageUrl": "",
+            "MazaiGraphColor": ""
+        },
+        "MazaiInjectionDataList": []
     }
 ]
