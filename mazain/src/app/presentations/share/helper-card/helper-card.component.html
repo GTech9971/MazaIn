@@ -1,14 +1,31 @@
-<ion-card>
-  <ion-card-header>
-    <!-- <ion-card-subtitle>{{this.now| date:'yyyy/MM/dd'}}の魔材注入状況</ion-card-subtitle>
-    <ion-card-title>{{(this.helperCommentObserver | async)?.TitleComment}}</ion-card-title> -->
-    <ion-card-title>{{this.now| date:'yyyy/MM/dd'}}</ion-card-title>
+<!-- <swiper (slideChange)="onChangeSlide()" #swiper>
+  <ng-container *ngFor="let date of this.weekDateList">
+    <ng-template swiperSlide>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{date | date:'yyyy/MM/dd'}}</ion-card-title>
+          <ion-icon (click)="onClickShareBtn()" class="share-icon" name="share-outline"></ion-icon>
+        </ion-card-header>
+        <ion-card-content>
+          今日の魔材注入状況
+        </ion-card-content>
+      </ion-card>
+    </ng-template>
 
-    <ion-icon (click)="onClickShareBtn()" class="share-icon" name="share-outline"></ion-icon>
+  </ng-container>
 
-  </ion-card-header>
-  <ion-card-content>
-    <!-- {{(this.helperCommentObserver | async)?.Comment}} -->
-    今日の魔材注入状況
-  </ion-card-content>
-</ion-card>
+</swiper> -->
+
+<ion-slides [pager]="true" #slides (ionSlideDidChange)="onChangeSlide()">
+  <ion-slide *ngFor="let dateObj of this.weekDateList">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{dateObj.date| date:'yyyy/MM/dd'}}</ion-card-title>
+        <ion-icon (click)="onClickShareBtn(dateObj.dateLabel)" class="share-icon" name="share-outline"></ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+        {{dateObj.dateLabel}}の魔材注入状況
+      </ion-card-content>
+    </ion-card>
+  </ion-slide>
+</ion-slides>

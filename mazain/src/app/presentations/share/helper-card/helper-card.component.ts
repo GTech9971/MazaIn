@@ -1,14 +1,13 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { IonSlides } from '@ionic/angular';
+import { addDays } from 'date-fns';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { EnergyInjectionReportData } from 'src/app/domain/models/EnergyInjectionReport.data';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
-import { MazaiHelpContextData } from 'src/app/domain/models/MazaiHelpContext.data';
 import { MazaiInjectionShareModel } from 'src/app/domain/models/MazaiInjectionShare.model';
-import { MazaiInjectionHelperService } from 'src/app/domain/services/MazaiInjectionHelper.service';
-import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInjectionReport.service';
+import { MazaiInjectionVariableReportService } from 'src/app/domain/services/MazaiInjectionVariableReport.service';
 import { MazaiShareService } from 'src/app/domain/services/MazaiShare.service';
-
+//import { SwiperComponent } from 'swiper/angular';
 
 @Component({
   selector: 'app-helper-card',
@@ -16,40 +15,50 @@ import { MazaiShareService } from 'src/app/domain/services/MazaiShare.service';
   styleUrls: ['./helper-card.component.scss'],
 })
 export class HelperCardComponent implements OnInit, OnDestroy {
+  // @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
 
-  /**
-   * 魔剤から得たエナジー
-   */
-  @Input() energyReport: EnergyInjectionReportData;
+  @ViewChild('slides') slides: IonSlides;
+
+  private prevSlideIndex: number;
 
   private destroy$: Subject<void> = new Subject<void>();
 
-  // _helperComment: MazaiHelpContextData;
-  // readonly helperCommentObserver: Observable<MazaiHelpContextData>;
 
   //今日接種した魔剤リスト
   _todayMazaiInjectionList: MazaiData[];
   readonly mazaiInjectionListObserver: Observable<MazaiData[]>;
 
-  constructor(private injectionHelperService: MazaiInjectionHelperService,
-    private injectionReportService: MazaiInjectionReportService,
-    private mazaiShareService: MazaiShareService) {
-    //TODO ヘルプコメントは一旦なし
-    // this.helperCommentObserver = this.injectionHelperService.HelperCommentObserver;
-    // this.helperCommentObserver.pipe(takeUntil(this.destroy$)).subscribe(comment => { this._helperComment = comment; });
+  weekDateList: { date: Date, dateLabel: string }[];
+  readonly WorkDate: Date;
 
+  constructor(private injectionReportService: MazaiInjectionVariableReportService,
+    private mazaiShareService: MazaiShareService,) {
+
+    this.WorkDate = new Date();
+    this.weekDateList = [];
     this._todayMazaiInjectionList = [];
-    this.mazaiInjectionListObserver = this.injectionReportService.TodayMazaiInjectionListObserver;
+    this.mazaiInjectionListObserver = this.injectionReportService.MazaiInjectionListObserver;
     this.mazaiInjectionListObserver.pipe(takeUntil(this.destroy$)).subscribe(list => { this._todayMazaiInjectionList = list });
   }
 
-  get now(): Date { return new Date(); }
-
   async ngOnInit() {
-    //TODO ヘルプコメントは一旦なし
-    //await this.injectionHelperService.fetchHelperComment(this.energyReport);    
+    await this.injectionReportService.fetchMazaiInjectionList();
 
-    await this.injectionReportService.fetchTodayMazaiInjectionList();
+    // 過去1週間分のデータを作る
+    let tmp: Date = new Date(this.WorkDate);
+    this.weekDateList.push({ date: tmp, dateLabel: "今日" });
+    for (let i = 0; i < 6; i++) {
+      tmp = addDays(tmp, -1);
+      this.weekDateList.push({ date: tmp, dateLabel: `${i + 1}日前` });
+    }
+    this.weekDateList = this.weekDateList.reverse();
+    //this.swiper.swiperRef.activeIndex = 7;
+    await this.slides.slideTo(7);
+
+    //動的に日付を移動させる影響でonSlideChangeが実行されて日付が1日ずれてしまうので進めている
+    //this.prevSlideIndex = this.swiper.swiperRef.activeIndex
+    this.prevSlideIndex = await this.slides.getActiveIndex();
+    await this.injectionReportService.nextWorkDate();
   }
 
   ngOnDestroy(): void {
@@ -61,7 +70,7 @@ export class HelperCardComponent implements OnInit, OnDestroy {
   /**
    * シェアボタン押下時
    */
-  async onClickShareBtn() {
+  async onClickShareBtn(dateLabel: string) {
     //今日注入した魔剤をシェア
     if (await this.mazaiShareService.canUseShare() === false) {
       console.warn("ios native support only");
@@ -69,8 +78,28 @@ export class HelperCardComponent implements OnInit, OnDestroy {
     }
 
     //今日注入した魔剤をシェア
-    const mazaiInjectionShareModel: MazaiInjectionShareModel = new MazaiInjectionShareModel(this._todayMazaiInjectionList);
+    const mazaiInjectionShareModel: MazaiInjectionShareModel = new MazaiInjectionShareModel(this._todayMazaiInjectionList, dateLabel);
     await this.mazaiShareService.shareMazai(mazaiInjectionShareModel);
+  }
+
+  /**
+   * 日付スライド変更時   
+   */
+  async onChangeSlide() {
+    // if (this.prevSlideIndex < this.swiper.swiperRef.activeIndex) {
+    //   await this.injectionReportService.nextWorkDate();
+    // } else {
+    //   await this.injectionReportService.prevWorkDate();
+    // }
+
+    if (this.prevSlideIndex < await this.slides.getActiveIndex()) {
+      await this.injectionReportService.nextWorkDate();
+    } else {
+      await this.injectionReportService.prevWorkDate();
+    }
+    this.prevSlideIndex = await this.slides.getActiveIndex();
+
+    //this.prevSlideIndex = this.swiper.swiperRef.activeIndex;    
   }
 
 }

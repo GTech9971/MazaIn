@@ -3,8 +3,7 @@
 <ion-content [fullscreen]="true">
 
   <!-- ヘルパーカード -->
-  <app-helper-card [energyReport]="this.todayEnergyReportObserver | async">
-  </app-helper-card>
+  <app-helper-card></app-helper-card>
 
   <app-mazai-showcase #mazaiShowCase></app-mazai-showcase>
 
@@ -23,15 +22,15 @@
 
       <ion-col size="4">
         <ion-text color="primary">
-          <h2> {{(this.todayEnergyReportObserver | async)?.CoffeInIntake}}mg</h2>
+          <h2> {{(this.energyReportObserver | async)?.CoffeInIntake}}mg</h2>
         </ion-text>
       </ion-col>
 
     </ion-row>
     <ion-row>
       <ion-progress-bar class="mazai-progress-bar" type="determinate"
-        [value]="this.LatestCoffeInPer === 0 ? this.TodayCoffeInInTakePer : this.LatestCoffeInPer"
-        [buffer]="this.TodayCoffeInInTakePer" color="primary">
+        [value]="this.LatestCoffeInPer === 0 ? this.CoffeInInTakePer : this.LatestCoffeInPer"
+        [buffer]="this.CoffeInInTakePer" color="{{this.CoffeInProgressColor}}">
       </ion-progress-bar>
     </ion-row>
 
@@ -47,14 +46,14 @@
 
       <ion-col size="4">
         <ion-text color="primary">
-          <h2> {{(this.todayEnergyReportObserver| async)?.SugarInTake}}mg</h2>
+          <h2> {{(this.energyReportObserver| async)?.SugarInTake}}mg</h2>
         </ion-text>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-progress-bar class="mazai-progress-bar" type="determinate"
-        [value]="this.LatestSugarPer === 0 ? this.TodaySugarInTakePer : this.LatestSugarPer"
-        [buffer]="this.TodaySugarInTakePer" color="primary">
+        [value]="this.LatestSugarPer === 0 ? this.SugarInTakePer : this.LatestSugarPer" [buffer]="this.SugarInTakePer"
+        color="{{this.SugarProgressColor}}">
       </ion-progress-bar>
     </ion-row>
 
@@ -71,14 +70,25 @@
 
       <ion-col size="4">
         <ion-text color="primary">
-          <h2> {{(this.todayEnergyReportObserver| async)?.KcalInTake}}kcal</h2>
+          <ng-container *ngIf="(this.energyReportObserver| async)?.KcalInTake < 1000 then xm else sm">
+          </ng-container>
+
+          <!-- 3桁以内なら画面に収まる -->
+          <ng-template #xm>
+            <h2> {{(this.energyReportObserver| async)?.KcalInTake}}kcal</h2>
+          </ng-template>
+          <!-- 3桁を超えたら小さくする -->
+          <ng-template #sm>
+            <h3> {{(this.energyReportObserver| async)?.KcalInTake}}kcal</h3>
+          </ng-template>
+
         </ion-text>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-progress-bar class="mazai-progress-bar" type="determinate"
-        [value]="this.LatestKcalPer === 0 ? this.TodayKcalInTakePer : this.LatestCoffeInPer"
-        [buffer]="this.TodayKcalInTakePer" color="primary">
+        [value]="this.LatestKcalPer === 0 ? this.KcalInTakePer : this.LatestKcalPer" [buffer]="this.KcalInTakePer"
+        color="{{this.KcalProgressColor}}">
       </ion-progress-bar>
     </ion-row>
 

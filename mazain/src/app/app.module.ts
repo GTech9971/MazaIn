@@ -21,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MazaiImplRepository } from './infra/MazaiRepository/MazaiImpl.repository';
 import { MazaiInjectionReportImplRepository } from './infra/MazaiInjectionReportRepository/MazaiInjectionReportImpl.repository';
 import { MazaiInjectionWeekReportImplRepository } from './infra/MazaiInjectionWeekReportRepository/MazaiInjectionWeekReportImpl.repository';
+import { MazaiInjectionBaseReportRepository } from './domain/repositories/MazaiInjectionBaseReport.repository';
+import { MazaiInjectionBaseReportImplRepository } from './infra/MazaiInjectionBaseReportRepository/MazaiInjectionBaseReportImpl.repository';
 
 /** Mockを使用するかどうか */
 const isMock: boolean = false;
@@ -28,6 +30,7 @@ const isMock: boolean = false;
 const PROVIDERS: Provider[] = [
   { provide: MazaiRepository, useClass: isMock ? MockMazaiRepository : MazaiImplRepository },
   { provide: MazaiInjectionReportRepository, useClass: isMock ? MockMazaiInjectionReportRepository : MazaiInjectionReportImplRepository },
+  { provide: MazaiInjectionBaseReportRepository, useClass: MazaiInjectionBaseReportImplRepository },
   { provide: MazaiInjectionHelperRepository, useClass: MockMazaiInjectionHelperRepository },//TODO
   { provide: MazaiInjectionWeekReportRepository, useClass: isMock ? MockMazaiInjectionWeekReportRepository : MazaiInjectionWeekReportImplRepository },
 ];

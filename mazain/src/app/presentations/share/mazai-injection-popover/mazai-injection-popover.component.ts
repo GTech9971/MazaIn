@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
 import { MazaiInjectionRecordData } from 'src/app/domain/models/MazaiInjectionRecord.data';
-import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInjectionReport.service';
+import { MazaiInjectionVariableReportService } from 'src/app/domain/services/MazaiInjectionVariableReport.service';
 
 @Component({
   selector: 'app-mazai-injection-popover',
@@ -16,7 +16,7 @@ export class MazaiInjectionPopoverComponent implements OnInit {
 
   constructor(private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    private injectionReportService: MazaiInjectionReportService) { }
+    private injectionReportService: MazaiInjectionVariableReportService) { }
 
   ngOnInit() { }
 
@@ -42,8 +42,8 @@ export class MazaiInjectionPopoverComponent implements OnInit {
     //魔剤注入記録を削除する
     if (role === DEL) {
       await this.injectionReportService.deleteInjectionMazai(this.mazai, this.record);
-      await this.injectionReportService.fetchTodayMazaiInjectionCount();
-      await this.injectionReportService.fetchTodayMazaiInjectionList();
+      await this.injectionReportService.fetchMazaiInjectionCount();
+      await this.injectionReportService.fetchMazaiInjectionList();
       const toast: HTMLIonToastElement = await this.toastCtrl.create({ message: `${this.mazai.MazaiName}の注入記録を削除しました。`, duration: 1500 });
       await toast.present();
     }

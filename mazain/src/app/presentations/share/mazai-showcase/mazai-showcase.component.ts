@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MazaiData } from 'src/app/domain/models/Mazai.data';
 import { MazaiInjectionRecordData } from 'src/app/domain/models/MazaiInjectionRecord.data';
-import { MazaiInjectionReportService } from 'src/app/domain/services/MazaiInjectionReport.service';
+import { MazaiInjectionVariableReportService } from 'src/app/domain/services/MazaiInjectionVariableReport.service';
 import { MazaiInjectionPopoverComponent } from '../mazai-injection-popover/mazai-injection-popover.component';
 
 @Component({
@@ -24,13 +24,13 @@ export class MazaiShowcaseComponent implements OnInit, OnDestroy {
   readonly mazaiInjectionListObserver: Observable<MazaiData[]>;
 
   constructor(private popoverController: PopoverController,
-    private injectionReportService: MazaiInjectionReportService,) {
+    private injectionReportService: MazaiInjectionVariableReportService,) {
     this._todayMazaiInjectionCount = 0;
-    this.mazaiInjectionCountObserver = this.injectionReportService.TodayMazaiInjectionCountObserver;
+    this.mazaiInjectionCountObserver = this.injectionReportService.MazaiInjectionCountObserver;
     this.mazaiInjectionCountObserver.pipe(takeUntil(this.destroy$)).subscribe(count => { this._todayMazaiInjectionCount = count; });
 
     this._todayMazaiInjectionList = [];
-    this.mazaiInjectionListObserver = this.injectionReportService.TodayMazaiInjectionListObserver;
+    this.mazaiInjectionListObserver = this.injectionReportService.MazaiInjectionListObserver;
     this.mazaiInjectionListObserver.pipe(takeUntil(this.destroy$)).subscribe(list => { this._todayMazaiInjectionList = list; });
   }
 
@@ -47,8 +47,8 @@ export class MazaiShowcaseComponent implements OnInit, OnDestroy {
    * データを再取得する
    */
   public async refreshData() {
-    await this.injectionReportService.fetchTodayMazaiInjectionCount();
-    await this.injectionReportService.fetchTodayMazaiInjectionList();
+    await this.injectionReportService.fetchMazaiInjectionCount();
+    await this.injectionReportService.fetchMazaiInjectionList();
   }
 
   /**
