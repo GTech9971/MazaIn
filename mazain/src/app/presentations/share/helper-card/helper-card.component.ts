@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { IonSlides } from '@ionic/angular';
 import { addDays } from 'date-fns';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -6,7 +7,7 @@ import { MazaiData } from 'src/app/domain/models/Mazai.data';
 import { MazaiInjectionShareModel } from 'src/app/domain/models/MazaiInjectionShare.model';
 import { MazaiInjectionVariableReportService } from 'src/app/domain/services/MazaiInjectionVariableReport.service';
 import { MazaiShareService } from 'src/app/domain/services/MazaiShare.service';
-import { SwiperComponent } from 'swiper/angular';
+//import { SwiperComponent } from 'swiper/angular';
 
 @Component({
   selector: 'app-helper-card',
@@ -14,7 +15,9 @@ import { SwiperComponent } from 'swiper/angular';
   styleUrls: ['./helper-card.component.scss'],
 })
 export class HelperCardComponent implements OnInit, OnDestroy {
-  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+  // @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+
+  @ViewChild('slides') slides: IonSlides;
 
   private prevSlideIndex: number;
 
@@ -25,12 +28,14 @@ export class HelperCardComponent implements OnInit, OnDestroy {
   _todayMazaiInjectionList: MazaiData[];
   readonly mazaiInjectionListObserver: Observable<MazaiData[]>;
 
-  weekDateList: Date[] = [];
-  WorkDate: Date = new Date();
+  weekDateList: Date[];
+  readonly WorkDate: Date;
 
   constructor(private injectionReportService: MazaiInjectionVariableReportService,
-    private mazaiShareService: MazaiShareService) {
+    private mazaiShareService: MazaiShareService,) {
 
+    this.WorkDate = new Date();
+    this.weekDateList = [];
     this._todayMazaiInjectionList = [];
     this.mazaiInjectionListObserver = this.injectionReportService.MazaiInjectionListObserver;
     this.mazaiInjectionListObserver.pipe(takeUntil(this.destroy$)).subscribe(list => { this._todayMazaiInjectionList = list });
@@ -47,10 +52,12 @@ export class HelperCardComponent implements OnInit, OnDestroy {
       this.weekDateList.push(tmp);
     }
     this.weekDateList = this.weekDateList.reverse();
-    this.swiper.swiperRef.activeIndex = 7;
+    //this.swiper.swiperRef.activeIndex = 7;
+    await this.slides.slideTo(7);
 
     //動的に日付を移動させる影響でonSlideChangeが実行されて日付が1日ずれてしまうので進めている
-    this.prevSlideIndex = this.swiper.swiperRef.activeIndex;
+    //this.prevSlideIndex = this.swiper.swiperRef.activeIndex
+    this.prevSlideIndex = await this.slides.getActiveIndex();
     await this.injectionReportService.nextWorkDate();
   }
 
@@ -79,13 +86,21 @@ export class HelperCardComponent implements OnInit, OnDestroy {
    * 日付スライド変更時   
    */
   async onChangeSlide() {
-    if (this.prevSlideIndex < this.swiper?.swiperRef?.activeIndex) {
+    // if (this.prevSlideIndex < this.swiper.swiperRef.activeIndex) {
+    //   await this.injectionReportService.nextWorkDate();
+    // } else {
+    //   await this.injectionReportService.prevWorkDate();
+    // }
+
+    if (this.prevSlideIndex < await this.slides.getActiveIndex()) {
       await this.injectionReportService.nextWorkDate();
     } else {
       await this.injectionReportService.prevWorkDate();
     }
+    this.prevSlideIndex = await this.slides.getActiveIndex();
 
-    this.prevSlideIndex = this.swiper?.swiperRef?.activeIndex;
+    //this.prevSlideIndex = this.swiper.swiperRef.activeIndex;    
     //TODO なぜかユーザがDetailPageの何かしらの要素をクリックしたらデータが反映される
   }
+
 }

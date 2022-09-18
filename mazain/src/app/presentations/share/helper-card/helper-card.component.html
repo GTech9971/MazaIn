@@ -1,4 +1,4 @@
-<swiper (slideChange)="onChangeSlide()" #swiper>
+<!-- <swiper (slideChange)="onChangeSlide()" #swiper>
   <ng-container *ngFor="let date of this.weekDateList">
     <ng-template swiperSlide>
       <ion-card>
@@ -14,4 +14,18 @@
 
   </ng-container>
 
-</swiper>
+</swiper> -->
+
+<ion-slides [pager]="true" #slides (ionSlideDidChange)="onChangeSlide()">
+  <ion-slide *ngFor="let date of this.weekDateList">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{date | date:'yyyy/MM/dd'}}</ion-card-title>
+        <ion-icon (click)="onClickShareBtn()" class="share-icon" name="share-outline"></ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+        今日の魔材注入状況
+      </ion-card-content>
+    </ion-card>
+  </ion-slide>
+</ion-slides>

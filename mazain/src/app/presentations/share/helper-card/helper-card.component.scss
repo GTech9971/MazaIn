@@ -1,5 +1,5 @@
-@import "swiper/css";
-@import "@ionic/angular/css/ionic-swiper";
+//@import "swiper/css";
+//@import "@ionic/angular/css/ionic-swiper";
 
 .share-icon{
     position: absolute;
@@ -10,7 +10,23 @@
     margin-right: 5px;
 }
 
-swiper{
+//Swiperのバグで不使用
+// swiper{
+//     width: 100%;
+//     ion-card{
+//         width: 100%;
+
+//         ion-card-title{
+//             text-align: left;
+//         }
+
+//         ion-card-content{
+//             text-align: left;
+//         }
+//     }
+// }
+
+ion-slides{
     width: 100%;
     ion-card{
         width: 100%;
