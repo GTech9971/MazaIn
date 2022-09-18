@@ -63,6 +63,7 @@ export class MazaiService {
     }
 
     private nextMazaiList() {
+        this._mazaiList = this._mazaiList.sort((a, b) => a.MazaiName > b.MazaiName ? -1 : 1);
         this._mazaiListSubject$.next(this._mazaiList);
     }
 

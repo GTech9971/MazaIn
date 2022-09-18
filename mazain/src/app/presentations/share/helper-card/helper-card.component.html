@@ -17,14 +17,14 @@
 </swiper> -->
 
 <ion-slides [pager]="true" #slides (ionSlideDidChange)="onChangeSlide()">
-  <ion-slide *ngFor="let date of this.weekDateList">
+  <ion-slide *ngFor="let dateObj of this.weekDateList">
     <ion-card>
       <ion-card-header>
-        <ion-card-title>{{date | date:'yyyy/MM/dd'}}</ion-card-title>
+        <ion-card-title>{{dateObj.date| date:'yyyy/MM/dd'}}</ion-card-title>
         <ion-icon (click)="onClickShareBtn()" class="share-icon" name="share-outline"></ion-icon>
       </ion-card-header>
       <ion-card-content>
-        今日の魔材注入状況
+        {{dateObj.dateLabel}}の魔材注入状況
       </ion-card-content>
     </ion-card>
   </ion-slide>

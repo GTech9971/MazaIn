@@ -28,7 +28,7 @@ export class HelperCardComponent implements OnInit, OnDestroy {
   _todayMazaiInjectionList: MazaiData[];
   readonly mazaiInjectionListObserver: Observable<MazaiData[]>;
 
-  weekDateList: Date[];
+  weekDateList: { date: Date, dateLabel: string }[];
   readonly WorkDate: Date;
 
   constructor(private injectionReportService: MazaiInjectionVariableReportService,
@@ -46,10 +46,10 @@ export class HelperCardComponent implements OnInit, OnDestroy {
 
     // 過去1週間分のデータを作る
     let tmp: Date = new Date(this.WorkDate);
-    this.weekDateList.push(tmp);
+    this.weekDateList.push({ date: tmp, dateLabel: "今日" });
     for (let i = 0; i < 6; i++) {
       tmp = addDays(tmp, -1);
-      this.weekDateList.push(tmp);
+      this.weekDateList.push({ date: tmp, dateLabel: `${i + 1}日前` });
     }
     this.weekDateList = this.weekDateList.reverse();
     //this.swiper.swiperRef.activeIndex = 7;
