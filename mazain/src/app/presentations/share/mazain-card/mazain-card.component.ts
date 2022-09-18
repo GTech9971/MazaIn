@@ -41,7 +41,13 @@ export class MazainCardComponent implements OnInit {
    */
   async onClickInjectingBtn() {
     await this.injectionRecordService.injectionMazai(this.mazai);
-    await this.router.navigate(['injecting']);
+    await this.router.navigate(['injecting'], {
+      queryParams: {
+        coffein: this.mazai.MzaiCoffeIn,
+        sugar: this.mazai.MazaiSugar,
+        kcal: this.mazai.MazaiKcal
+      }
+    });
   }
 
   /**

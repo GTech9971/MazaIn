@@ -70,7 +70,7 @@
 
       <ion-col size="4">
         <ion-text color="primary">
-          <ng-container *ngIf="(this.energyReportObserver| async)?.KcalInTake > 1000 then xm else sm">
+          <ng-container *ngIf="(this.energyReportObserver| async)?.KcalInTake < 1000 then xm else sm">
           </ng-container>
 
           <!-- 3桁以内なら画面に収まる -->
@@ -81,6 +81,7 @@
           <ng-template #sm>
             <h3> {{(this.energyReportObserver| async)?.KcalInTake}}kcal</h3>
           </ng-template>
+
         </ion-text>
       </ion-col>
     </ion-row>
