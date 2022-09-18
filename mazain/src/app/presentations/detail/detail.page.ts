@@ -33,21 +33,21 @@ export class DetailPage implements OnInit, OnDestroy {
   get LatestCoffeInPer(): number {
     //注入ページから遷移した場合、プログレスバーに注入分のバッファを表示させる
     if (this.isNavInjectionPage) {
-      return this.TodayCoffeInInTakePer - this._latestMazaiInjection?.MzaiCoffeIn / ApplicationConst.RECOMMEND_COFFEIN;
+      return this.CoffeInInTakePer - this._latestMazaiInjection?.MzaiCoffeIn / ApplicationConst.RECOMMEND_COFFEIN;
     }
-    return this.TodayCoffeInInTakePer;
+    return this.CoffeInInTakePer;
   }
   get LatestSugarPer(): number {
     if (this.isNavInjectionPage) {
-      return this.TodaySugarInTakePer - this._latestMazaiInjection?.MazaiSugar / ApplicationConst.RECOMMEND_SUGAR;
+      return this.SugarInTakePer - this._latestMazaiInjection?.MazaiSugar / ApplicationConst.RECOMMEND_SUGAR;
     }
-    return this.TodaySugarInTakePer
+    return this.SugarInTakePer;
   }
   get LatestKcalPer(): number {
     if (this.isNavInjectionPage) {
-      return this.TodayKcalInTakePer - this._latestMazaiInjection?.MazaiKcal / ApplicationConst.RECOMMEND_KCAL;
+      return this.KcalInTakePer - this._latestMazaiInjection?.MazaiKcal / ApplicationConst.RECOMMEND_KCAL;
     }
-    return this.TodayKcalInTakePer;
+    return this.KcalInTakePer;
   }
   readonly latestMazaiInjectionObserver: Observable<MazaiData>;
 
@@ -55,12 +55,12 @@ export class DetailPage implements OnInit, OnDestroy {
   _energyReport: EnergyInjectionReportData;
   readonly energyReportObserver: Observable<EnergyInjectionReportData>;
 
-  //今日のカフェイン  
-  get TodayCoffeInInTakePer(): number { return this._energyReport?.CoffeInIntake / ApplicationConst.RECOMMEND_COFFEIN; }
-  //今日の糖質  
-  get TodaySugarInTakePer(): number { return this._energyReport?.SugarInTake / ApplicationConst.RECOMMEND_SUGAR; }
-  //今日のカロリー  
-  get TodayKcalInTakePer(): number { return this._energyReport?.KcalInTake / ApplicationConst.RECOMMEND_KCAL; }
+  //摂取カフェイン  
+  get CoffeInInTakePer(): number { return this._energyReport?.CoffeInIntake / ApplicationConst.RECOMMEND_COFFEIN; }
+  //摂取糖質  
+  get SugarInTakePer(): number { return this._energyReport?.SugarInTake / ApplicationConst.RECOMMEND_SUGAR; }
+  //摂取カロリー  
+  get KcalInTakePer(): number { return this._energyReport?.KcalInTake / ApplicationConst.RECOMMEND_KCAL; }
 
   //プログレスバーの色
   private getProgressColor(per: number): string {
@@ -70,11 +70,11 @@ export class DetailPage implements OnInit, OnDestroy {
     if (per > 0.9) { return 'danger'; }
   }
   //カフェインプログレスバーの色
-  get CoffeInProgressColor(): string { return this.getProgressColor(this.TodayCoffeInInTakePer); }
+  get CoffeInProgressColor(): string { return this.getProgressColor(this.CoffeInInTakePer); }
   // 糖質プログレスバーの色
-  get SugarProgressColor(): string { return this.getProgressColor(this.TodaySugarInTakePer); }
+  get SugarProgressColor(): string { return this.getProgressColor(this.SugarInTakePer); }
   // カロリープログレスバーの色
-  get KcalProgressColor(): string { return this.getProgressColor(this.TodayKcalInTakePer); }
+  get KcalProgressColor(): string { return this.getProgressColor(this.KcalInTakePer); }
 
   constructor(private router: ActivatedRoute,
     private popoverCtrl: PopoverController,
